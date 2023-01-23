@@ -25,26 +25,26 @@ public class TicketList {
         System.out.println("In case you need a helmet, please type y, type n in case you don't");
         String helmet = util.captureString();
         System.out.println("Type B to borrow a bicycle, S to borrow a scooter");
-        String vehicleType= util.captureString();
+        String vehicleTypes= util.captureString();
+        System.out.println("option is:" +vehicleTypes);
 
-        System.out.println();
-        if (vehicles.checkAvailable("B")){
-            System.out.println("whaaat");
-            Integer ticketsSize = tickets.size();
-            String ticketID = ticketsSize.toString();
+
+
+        //Error here!!! solving the conditional to take the string from input
+        if (vehicles.checkAvailable(vehicleTypes.toString())){
+
             String vehicleId =
                     vehicles.getVehicles()
-                    .stream()
-                    .filter(x -> x.getVtype() == vehicleType && x.isAvailable())
-                    .findFirst()
-                    .get()
-                    .getId();
-
-
+                            .stream()
+                            .filter(x -> x.getVtype() == "B" && x.isAvailable())
+                            .findFirst()
+                            .get()
+                            .getId();
+            Integer ticketsSize = tickets.size();
+            String ticketID = ticketsSize.toString();
             Ticket t= new Ticket(ticketID,helmet,userId, vehicleId);
             System.out.println(t);
             tickets.add(new Ticket(ticketID,helmet,userId, vehicleId));
-
         }
         System.out.println(tickets);
 
