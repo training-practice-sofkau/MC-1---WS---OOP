@@ -1,6 +1,5 @@
 package co.com.movingu.user;
 
-//TO DO: Complete/Rewrite the class according to the requirements
 public abstract class User {
     //TO DO: Attributes
     protected String dni;
@@ -20,4 +19,43 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isTicketOn() {
+        return ticketOn;
+    }
+
+    public void setTicketOn(boolean ticketOn) {
+        this.ticketOn = ticketOn;
+    }
 }
