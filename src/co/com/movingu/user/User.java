@@ -1,7 +1,7 @@
 package co.com.movingu.user;
 
 //TO DO: Complete/Rewrite the class according to the requirements
-public abstract class User {
+public abstract class User implements updateBlockedStatus {
     //TO DO: Attributes
     protected String dni;
 
@@ -24,7 +24,9 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
-
-
+    @Override
+    public void updateBlockedStatus(boolean value) {
+        this.blocked = value;
+    }
 
 }
