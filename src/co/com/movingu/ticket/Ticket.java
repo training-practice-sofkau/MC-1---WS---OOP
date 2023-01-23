@@ -29,7 +29,9 @@ public class Ticket {
         this.vehicle = vehicle;
     }
 
-    @Override
+    public String getId() {
+        return this.id;
+    }
     public String toString() {
         return "Ticket " + id + "\n" +
                 "startTime: " + startTime + "\n" +

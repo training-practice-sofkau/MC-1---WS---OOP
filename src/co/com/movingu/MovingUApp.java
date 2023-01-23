@@ -62,7 +62,12 @@ public class MovingUApp {
                     case 2 :
                         borrowReturn(in);
                         break;
-
+                    case 4:
+                        System.out.println("Vehicles - is available?");
+                        for (int i = 0; i < vehicles.size(); i++) {
+                            System.out.println(vehicles.get(i).getId() + " - " + vehicles.get(i).isAvailable());
+                        }
+                        break;
                     case 5 :
                         System.out.println("Bye!");
                         break;
@@ -98,9 +103,10 @@ public class MovingUApp {
 
         switch (action){
             case "B":
-                borrow(in);
+                borrowVehicle(in);
                 break;
             case "R":
+                returnVehicle(in);
                 break;
             default:
                 System.out.println("Invalid option");
@@ -108,7 +114,27 @@ public class MovingUApp {
         }
     }
 
-    public static void borrow(Scanner in) {
+    public static void returnVehicle(Scanner in){
+        System.out.println("Ticket number");
+        String ticketId = in.next();
+
+        Ticket ticket = findTicket(ticketId);
+
+
+    }
+
+    public static Ticket findTicket(String id){
+        Ticket ticketFound = null;
+
+        for (Ticket ticket : tickets) {
+            if(ticket.getId().equals(id)){
+                ticketFound = ticket;
+            }
+        }
+        return ticketFound;
+    }
+
+    public static void borrowVehicle(Scanner in) {
         System.out.println("Available vehicles:");
         for (int i = 0; i < vehicles.size(); i++) {
             if (vehicles.get(i).isAvailable()) {
@@ -130,7 +156,6 @@ public class MovingUApp {
         }
         User user = users.get(in.nextInt());
         genTicket(user, vehicle);
-
     }
 
     public static void genTicket(User user, Vehicle vehicle){
