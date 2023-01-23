@@ -4,6 +4,7 @@ import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
+import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
@@ -21,11 +22,11 @@ public class MovingUApp {
     }};
 
     public static List<Vehicle> vehicles= new ArrayList<>(){{
-        //add(new Bicycle("B-001","red",true, true, "M"));
-        //add(new Bicycle("B-002","blue",false, false, "M"));
-        //add(new Bicycle("B-003","red",true, true, "R"));
-        //add(new Bicycle("B-004","green",false, true, "R"));
-        //add(new Bicycle("B-005","grey",true, true, "M"));
+        add(new Bicycle("B-001","red",true, Vehicle.Condition.NEW, Bicycle.BicycleType.MOUNTAIN));
+        add(new Bicycle("B-002","blue",false, Vehicle.Condition.GOOD, Bicycle.BicycleType.MOUNTAIN));
+        add(new Bicycle("B-003","red",true, Vehicle.Condition.NEAR_MINT, Bicycle.BicycleType.ROAD));
+        add(new Bicycle("B-004","green",false, Vehicle.Condition.NEAR_MINT, Bicycle.BicycleType.ROAD));
+        add(new Bicycle("B-005","grey",true, Vehicle.Condition.GOOD, Bicycle.BicycleType.MOUNTAIN));
         //add(new Scooter("S-001","black",false, true, 20));
         //add(new Scooter("S-002","blue",true, true, 50));
         //add(new Scooter("S-003","grey",true, true, 80));
@@ -55,10 +56,19 @@ public class MovingUApp {
                 menuOption = in.nextInt();
 
                 switch (menuOption) {
-                    case 1 -> registerUser(in);
-                    //case 4 ->
-                    default -> System.out.println("Invalid menu option");
+                    case 1 :
+                        registerUser(in);
+                        break;
+                    case 2 :
+                        borrowReturn(in);
+                        break;
 
+                    case 5 :
+                        System.out.println("Bye!");
+                        break;
+                    default :
+                        System.out.println("Invalid menu option");
+                        break;
                 }
             } while (menuOption != 5);
         } catch (InputMismatchException e) {
@@ -82,6 +92,26 @@ public class MovingUApp {
         System.out.println("5. Exit");
     }
 
+    public static void borrowReturn(Scanner in){
+        System.out.print("Action to do: Borrow (B) / Return (R)");
+        String action = in.next().toUpperCase();
+
+        switch (action){
+            case "B":
+                System.out.println("Available vehicles:");
+                for (Vehicle vehicle: vehicles) {
+                    if (vehicle.isAvailable()) {
+                        if (vehicle.getId().startsWith("B")){
+                            System.out.println("Bicycle: " + vehicle.getColor());
+                        }
+                        if (vehicle.getId().startsWith("S")){
+                            System.out.println("Scooter: " + vehicle.getColor());
+                        }
+                    }
+                }
+        }
+    }
+
     public static void registerUser(Scanner in){
         System.out.println("DNI number:");
         String userDni = in.next();
@@ -96,7 +126,7 @@ public class MovingUApp {
         String userType = in.next().toUpperCase();
 
         switch (userType) {
-            case "S" -> {
+            case "S" :
                 System.out.println("Student college DNI");
                 String userCollegeDni = in.next();
                 System.out.println("Student faculty");
@@ -104,15 +134,17 @@ public class MovingUApp {
                 User s = new Student(userDni, userName, userAge, userCollegeDni, userFaculty);
                 users.add(s);
                 System.out.println("Student " + userName + " created successfully");
-            }
-            case "T" -> {
+                break;
+            case "T":
                 System.out.println("Trainer category: ");
                 String userCategory = in.next();
                 User t = new Trainer(userDni, userName, userAge, userCategory);
                 users.add(t);
                 System.out.println("Trainer " + userName + " created successfully");
-            }
-            default -> System.out.println("Invalid option");
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
         }
     }
 

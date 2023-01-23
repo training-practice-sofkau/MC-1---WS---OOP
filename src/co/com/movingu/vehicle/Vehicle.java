@@ -20,6 +20,16 @@ public abstract class Vehicle implements Loanable{
         this.isAvailable = value;
     }
 
+    public String getId() {
+        return this.id;
+    }
+    public String getColor() {
+        return this.color;
+    }
+    public boolean isAvailable() {
+        return this.isAvailable;
+    }
+
     public enum Condition {
         NEW,
         NEAR_MINT,
