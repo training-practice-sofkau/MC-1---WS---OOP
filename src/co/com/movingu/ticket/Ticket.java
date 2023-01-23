@@ -33,11 +33,69 @@ public class Ticket implements DebtInterface, StatusInterface{
         this.user = user;
     }
 
+    public boolean isHelmet() {
+        return helmet;
+    }
+
+    public void setHelmet(boolean helmet) {
+        this.helmet = helmet;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getDebt() {
+        return debt;
+    }
+
+    public void setDebt(int debt) {
+        this.debt = debt;
+    }
+
+    public Date getStartedDate() {
+        return startedDate;
+    }
+
+    public void setStartedDate(Date startedDate) {
+        this.startedDate = startedDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
-    public void updateDebt(Date date, boolean helmet, String helmetCondition,
-                           String vehicleCondition) {
-        if (date.after(endDate)){
-            
+    public void updateDebt(Date date, boolean helmet, boolean helmetDamage,
+                           boolean vehicleDamage, String typeVehicule) {
+        if (date.after(this.getEndDate())){
+            int timeSave = (date.getMinutes() - this.getEndDate().getMinutes())/30;
+            this.setDebt(this.getDebt() + (timeSave * 3));
+
+        }
+
+        if (!helmet) {
+            this.setDebt(this.getDebt()+10);
+        }
+
+        if (helmetDamage || vehicleDamage) {
+            switch (typeVehicule){
+                case "bicycle":{
+                    this.setDebt(this.getDebt()+20);
+                }
+                case  "scooter":{
+                    this.setDebt(this.getDebt()+20);
+            }
+
+            }
         }
 
     }
