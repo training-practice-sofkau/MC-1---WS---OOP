@@ -89,6 +89,14 @@ public class MovingUApp {
     }
 
     private static void returning() {
+        System.out.println("Type the ticket id: ");
+        String ticketId = input.nextLine();
+        searchTicket(ticketId);
+        pressIntro();
+    }
+
+    public static void searchTicket(String ticketId){
+
     }
 
     public static void registerUser() {
