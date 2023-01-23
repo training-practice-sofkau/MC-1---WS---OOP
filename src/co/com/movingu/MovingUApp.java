@@ -59,12 +59,12 @@ public class MovingUApp {
                             break;
                     case 2:
                     default:
-                        System.out.println("Opcion invalida");
+                        System.out.println("Invalid menu option");
                         break;
                 }
             } while (menuOption != 5);
         } catch (InputMismatchException e) {
-            System.out.println("Tipo de caracter incorrecto");
+            System.out.println("Invalid input type option");
         }catch (Exception e) {
             System.out.println(e);
         }
@@ -85,22 +85,33 @@ public class MovingUApp {
     }
 
     public static void registerUser(Scanner in){
-        System.out.println("Número de identificación");
+        System.out.println("DNI number:");
+        String userDni = in.next();
+
+        System.out.println("User name:");
         String userName = in.next();
 
-        System.out.println("Nombre del usuario");
-        String userName = in.next();
+        System.out.println("User age:");
+        int userAge = in.nextInt();
 
-        //Ask the commom data: DNI, Name, age.
         System.out.print("User is: Student (S) / Trainer (T)");
-        switch (type){
+        String userType = in.next().toUpperCase();
+
+        switch (userType){
             case "S":
-                // Ask the college DNI and he faculty
-                //create the student object
-                User s = new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC");
+                System.out.println("Studet college DNI");
+                String userCollegeDni = in.next();
+
+                System.out.println("Studet faculty");
+                String userFaculty = in.next();
+
+                User s = new Student(userDni, userName, userAge, userCollegeDni, userFaculty);
                 users.add(s);
-                //Display a message: User was registered
+
+                System.out.println("Student "+ userName + " created successfully");
                 break;
+            default:
+                System.out.println("Invalid option");
         }
     }
 
