@@ -94,6 +94,7 @@ public class MovingUApp {
 
     public static void registerUser(){
         Scanner sc = new Scanner(System.in);
+        Scanner sc1 = new Scanner(System.in);
         //Ask the commom data: DNI, Name, age.
         System.out.print("User is: Student (S) / Trainer (T)");
         String type = sc.nextLine();
@@ -106,16 +107,15 @@ public class MovingUApp {
             case "s":
                 System.out.println("Enter your DNI:");
                 dni=sc.nextLine();
-
                 if(lookForUser(dni).isEmpty()){
                     System.out.println("Provide us your name:");
                     name= sc.nextLine();
                     System.out.println("Enter your age");
                     age= sc.nextInt();
                     System.out.println("Enter your collegeDNI");
-                    String collegeDni=sc.nextLine();
+                    String collegeDni=sc1.nextLine();
                     System.out.println("Enter your faculty");
-                    String faculty=sc.nextLine();
+                    String faculty=sc1.nextLine();
                     User s = new Student(dni,name,age,collegeDni,faculty);
                     users.add(s);
                     System.out.println("User with name "+s.getName()+"and DNI: "+s.getDni()+" was registered");
