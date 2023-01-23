@@ -24,7 +24,7 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
-
-
-
+    public String getDni() {
+        return dni;
+    }
 }
