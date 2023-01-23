@@ -99,9 +99,19 @@ public class Ticket implements DebtInterface, StatusInterface{
         }
 
     }
-
     @Override
-    public void updateStatus() {
+    public void updateStatus(Date date, boolean vehicleDamage, boolean payedDebt,
+                             boolean available) {
+        if ((date.before(this.getEndDate()) && !vehicleDamage) &&  payedDebt){
+            this.setStatus("OK");
+        }
 
+        if (date.after(this.getEndDate()) && vehicleDamage){
+            this.setStatus("Pending");
+        }
+
+        if (available){
+            setStatus("Active");
+        }
     }
 }
