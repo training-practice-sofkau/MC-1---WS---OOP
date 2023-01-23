@@ -7,10 +7,7 @@ import co.com.movingu.user.User;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
@@ -67,7 +64,7 @@ public class MovingUApp {
 
                 switch (menuOpt){
                     case 1:
-                        System.out.println("1");
+                        registerUser();
                         break;
                     case 2:
                         System.out.println("1");
@@ -97,16 +94,40 @@ public class MovingUApp {
     public static void registerUser(){
         Scanner sc = new Scanner(System.in);
         //Ask the commom data: DNI, Name, age.
-        System.out.print("User is: Student (S) / Trainer (T)");
+        System.out.println("Enter a name:");
+        String name = sc.nextLine();
+        System.out.println("Enter a DNI:");
+        String dni = sc.nextLine();
+        System.out.println("Enter a Age:");
+        int age = sc.nextInt();
+        sc.nextLine();
+        System.out.print("User is: Student (S) / Trainer (T): ");
         String type = sc.nextLine();
+
         switch (type){
             case "S":
-                // Ask the college DNI and he faculty
-                //create the student object
-                User s = new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC");
+                System.out.println("Enter the college DNI");
+                String collegeDni = sc.nextLine();
+                System.out.println("Enter the Faculty");
+                String faculty = sc.nextLine();
+
+                User s = new Student(name, dni, age, collegeDni, faculty);
                 users.add(s);
-                //Display a message: User was registered
+
+                System.out.println("Student succesfully register");
+
                 break;
+            case "T":
+                System.out.print("Trainer is: Proffesor (P) / Lecture (L): ");
+                String category = sc.nextLine();
+
+                User t = new Trainer(name, dni, age, category);
+                users.add(t);
+
+                System.out.println("Trainer succesfully register");
+                break;
+            default:
+                System.out.println("Wrong input");
         }
     }
 
