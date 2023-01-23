@@ -12,17 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MovingUApp {
-    static List<User> users = new ArrayList<>(){{
+    static Scanner input = new Scanner(System.in);
+    static Scanner inputNumber = new Scanner(System.in);
+    static List<User> users = new ArrayList<>() {{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
-
-
     }};
+
     public static void main(String[] args) {
         //Lists that contains data related to the WS
 
 
-        List<Vehicle> vehicles= new ArrayList<>(){{
+        List<Vehicle> vehicles = new ArrayList<>() {{
             //add(new Bicycle("B-001","red",true, true, "M"));
             //add(new Bicycle("B-002","blue",false, false, "M"));
             //add(new Bicycle("B-003","red",true, true, "R"));
@@ -36,7 +37,7 @@ public class MovingUApp {
 
         }};
 
-        List<Ticket> tickets = new ArrayList<>(){{
+        List<Ticket> tickets = new ArrayList<>() {{
             //add(new Ticket());
             //add(new Ticket());
             //add(new Ticket());
@@ -44,26 +45,45 @@ public class MovingUApp {
         }};
 
         //TO DO: Implement the necessary logic to make the menu work
-        menu();
+        menu(0);
 
 
     }
 
-    public static void menu(){
-        System.out.println("Moving - U");
-        System.out.println("1. Register user");
-        System.out.println("2. Borrow/Return");
-        System.out.println("3. Pay a ticket");
-        System.out.println("4. Check availability");
-        System.out.println("5. Exit");
+    public static void menu(int option) {
+        while (option != 5) {
+            System.out.println("Moving - U");
+            System.out.println("1. Register user");
+            System.out.println("2. Borrow/Return");
+            System.out.println("3. Pay a ticket");
+            System.out.println("4. Check availability");
+            System.out.println("5. Exit");
+            option = inputNumber.nextInt();
+            switch (option) {
+                case 1:
+                    registerUser();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    System.out.println("You enter an invalid input, try again");
+                    break;
+            }
+        }
     }
 
-    public static void registerUser(){
+    public static void registerUser() {
         Scanner sc = new Scanner(System.in);
         //Ask the commom data: DNI, Name, age.
         System.out.print("User is: Student (S) / Trainer (T)");
         String type = sc.nextLine();
-        switch (type){
+        switch (type) {
             case "S":
                 // Ask the college DNI and he faculty
                 //create the student object
