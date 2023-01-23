@@ -11,7 +11,7 @@ public class Ticket implements ITicket {
     private String ticketID;
     private Date ticketCreation;
     private Date ticketExpiration;
-    private Boolean helmet;
+    private String helmet;
     private String status;
     private Integer amountToPay;
     private String vehicleId;
@@ -22,7 +22,7 @@ public class Ticket implements ITicket {
 
     public Ticket(
             String ticketID,
-            Boolean helmet,
+            String helmet,
             String userId,
             String vehicleId) {
         this.ticketID = ticketID;
@@ -41,4 +41,18 @@ public class Ticket implements ITicket {
     }
 
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "ticketID='" + ticketID + '\'' +
+                ", ticketCreation=" + ticketCreation +
+                ", ticketExpiration=" + ticketExpiration +
+                ", helmet='" + helmet + '\'' +
+                ", status='" + status + '\'' +
+                ", amountToPay=" + amountToPay +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

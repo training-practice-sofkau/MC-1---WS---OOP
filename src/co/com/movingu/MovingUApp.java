@@ -1,6 +1,7 @@
 package co.com.movingu;
 
 import co.com.movingu.ticket.Ticket;
+import co.com.movingu.ticket.TicketList;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
@@ -24,6 +25,7 @@ public class MovingUApp {
         Utilities util = new Utilities();
         UserList userList = new UserList();
         VehicleInventory vehicles = new VehicleInventory();
+        TicketList tickets = new TicketList(vehicles);
 
 
         do{
@@ -34,7 +36,7 @@ public class MovingUApp {
                     userList.registerUser();
                     break;
                 case 2 ://Borrow/return
-                    //
+                    tickets.addTicket();
                     break;
                 case 3 ://Pay a ticket
 
@@ -57,12 +59,6 @@ public class MovingUApp {
                 throw new RuntimeException(e);
             }*/
         }while (option != 5);
-
-
-
-
-
-
 
 
     }
