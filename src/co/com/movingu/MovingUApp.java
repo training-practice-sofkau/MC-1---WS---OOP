@@ -99,10 +99,10 @@ public class MovingUApp {
 
         switch (userType){
             case "S":
-                System.out.println("Studet college DNI");
+                System.out.println("Student college DNI");
                 String userCollegeDni = in.next();
 
-                System.out.println("Studet faculty");
+                System.out.println("Student faculty");
                 String userFaculty = in.next();
 
                 User s = new Student(userDni, userName, userAge, userCollegeDni, userFaculty);
@@ -110,8 +110,18 @@ public class MovingUApp {
 
                 System.out.println("Student "+ userName + " created successfully");
                 break;
+            case "T":
+                System.out.println("Trainer category: ");
+                String userCategory = in.next();
+
+                User t = new Trainer(userDni, userName, userAge, userCategory);
+                users.add(t);
+
+                System.out.println("Trainer "+ userName + " created successfully");
+                break;
             default:
                 System.out.println("Invalid option");
+                break;
         }
     }
 
