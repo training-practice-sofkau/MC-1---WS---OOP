@@ -4,7 +4,6 @@ import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
-import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.ArrayList;
@@ -72,26 +71,55 @@ public class MovingUApp {
                 case 5:
                     break;
                 default:
-                    System.out.println("You enter an invalid input, try again");
+                    System.out.println("********** You enter an invalid input, try again **********");
                     break;
             }
         }
     }
 
     public static void registerUser() {
-        Scanner sc = new Scanner(System.in);
         //Ask the commom data: DNI, Name, age.
-        System.out.print("User is: Student (S) / Trainer (T)");
-        String type = sc.nextLine();
+        System.out.println("Type the dni");
+        String dni = input.nextLine();
+        System.out.println("Type the Name");
+        String name = input.nextLine();
+        System.out.println("Type the age");
+        int age = inputNumber.nextInt();
+        System.out.print("User is: Student (S) / Trainer (T): \n");
+        String type = input.nextLine().toUpperCase();
         switch (type) {
             case "S":
-                // Ask the college DNI and he faculty
+                // Ask the college DNI and his faculty
+                System.out.println("Type the collegeDNI");
+                String cdni = input.nextLine();
+                System.out.println("Type the faculty");
+                String faculty = input.nextLine();
                 //create the student object
-                User s = new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC");
+                User s = new Student(dni, name, age, cdni, faculty);
                 users.add(s);
                 //Display a message: User was registered
+                System.out.println("The student " + name + " with dni: " + dni + " was succesfully created");
+                break;
+            case "T":
+                // Ask the category
+                System.out.println("Type the category");
+                String category = input.nextLine();
+                //create the student object
+                User t = new Trainer(dni, name, age, category);
+                users.add(t);
+                //Display a message: User was registered
+                System.out.println("The trainer " + name + " with dni: " + dni + " was succesfully created");
+                break;
+            default:
+                System.out.println("********** You enter an invalid input, try again **********");
+                pressEnter();
                 break;
         }
+    }
+
+     static public void pressEnter(){
+        System.out.println("Press intro to continue");
+        input.nextLine();
     }
 
 }
