@@ -27,17 +27,17 @@ public class MovingUApp {
         add(new Bicycle("B-003","red",true, Vehicle.Condition.NEAR_MINT, Bicycle.BicycleType.ROAD));
         add(new Bicycle("B-004","green",false, Vehicle.Condition.NEAR_MINT, Bicycle.BicycleType.ROAD));
         add(new Bicycle("B-005","grey",true, Vehicle.Condition.GOOD, Bicycle.BicycleType.MOUNTAIN));
-        //add(new Scooter("S-001","black",false, true, 20));
-        //add(new Scooter("S-002","blue",true, true, 50));
-        //add(new Scooter("S-003","grey",true, true, 80));
-        //add(new Scooter("S-004","grey",true, false, 50));
-        //add(new Scooter("S-005","black",false, false, 50));
+        add(new Scooter("S-001","black",false, Vehicle.Condition.NEW, 20));
+        add(new Scooter("S-002","blue",true, Vehicle.Condition.NEAR_MINT, 50));
+        add(new Scooter("S-003","grey",true, Vehicle.Condition.NEW, 80));
+        add(new Scooter("S-004","grey",true, Vehicle.Condition.GOOD, 50));
+        add(new Scooter("S-005","black",false, Vehicle.Condition.GOOD, 50));
 
     }};
 
     public static List<Ticket> tickets = new ArrayList<>(){{
-        //add(new Ticket());
-        //add(new Ticket());
+        add(new Ticket(users.get(0), vehicles.get(1)));
+        add(new Ticket(users.get(1), vehicles.get(3)));
         //add(new Ticket());
 
     }};
@@ -98,18 +98,45 @@ public class MovingUApp {
 
         switch (action){
             case "B":
-                System.out.println("Available vehicles:");
-                for (Vehicle vehicle: vehicles) {
-                    if (vehicle.isAvailable()) {
-                        if (vehicle.getId().startsWith("B")){
-                            System.out.println("Bicycle: " + vehicle.getColor());
-                        }
-                        if (vehicle.getId().startsWith("S")){
-                            System.out.println("Scooter: " + vehicle.getColor());
-                        }
-                    }
-                }
+                borrow(in);
+                break;
+            case "R":
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
         }
+    }
+
+    public static void borrow(Scanner in) {
+        System.out.println("Available vehicles:");
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i).isAvailable()) {
+                if (vehicles.get(i).getId().startsWith("B")){
+                    System.out.println(i + " Bicycle " + vehicles.get(i).getColor());
+                }
+                if (vehicles.get(i).getId().startsWith("S")){
+                    System.out.println(i + " Scooter " + vehicles.get(i).getColor());
+                }
+            }
+        }
+        System.out.println("Write the number of the vehicle that you want to borrow");
+        Vehicle vehicle = vehicles.get(in.nextInt());
+
+
+        System.out.println("Select the user:");
+        for (int i = 0; i < users.size(); i++){
+            System.out.println(i + users.get(i).getName());
+        }
+        User user = users.get(in.nextInt());
+        genTicket(user, vehicle);
+
+    }
+
+    public static void genTicket(User user, Vehicle vehicle){
+        Ticket ticket = new Ticket(user, vehicle);
+        tickets.add(ticket);
+        System.out.println(ticket.toString());
     }
 
     public static void registerUser(Scanner in){

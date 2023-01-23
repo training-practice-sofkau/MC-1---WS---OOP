@@ -20,6 +20,9 @@ public abstract class User {
         this.blocked = false;
         this.ticketOn = false;
     }
+    public String getName() {
+        return this.name;
+    }
 
     //Abstract method
     public abstract void statusMsg();
