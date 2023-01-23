@@ -20,28 +20,27 @@ public class MovingUApp {
 
     //Lists that contains data related to the WS
     static List<User> users = new ArrayList<>() {{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
+        add(new Student("0976152444", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
     }};
     static List<Bicycle> bicycles = new ArrayList<>() {{
-        //add(new Bicycle("B-001","red",true, true, "M"));
-        //add(new Bicycle("B-002","blue",false, false, "M"));
-        //add(new Bicycle("B-003","red",true, true, "R"));
-        //add(new Bicycle("B-004","green",false, true, "R"));
-        //add(new Bicycle("B-005","grey",true, true, "M"));
+        add(new Bicycle("B-001","red"));
+        add(new Bicycle("B-002","blue"));
+        add(new Bicycle("B-003","red"));
+        add(new Bicycle("B-004","green"));
+        add(new Bicycle("B-005","grey"));
         }};
     static List<Scooter> scooters = new ArrayList<>(){{
-        //add(new Scooter("S-001","black",false, true, 20));
-        //add(new Scooter("S-002","blue",true, true, 50));
-        //add(new Scooter("S-003","grey",true, true, 80));
-        //add(new Scooter("S-004","grey",true, false, 50));
-        //add(new Scooter("S-005","black",false, false, 50));
+        add(new Scooter("S-001","black"));
+        add(new Scooter("S-002","blue"));
+        add(new Scooter("S-003","grey"));
+        add(new Scooter("S-004","grey"));
+        add(new Scooter("S-005","black"));
     }};
     static List<Ticket> tickets = new ArrayList<>() {{
         //add(new Ticket());
         //add(new Ticket());
         //add(new Ticket());
-
     }};
 
     public static void main(String[] args) {
@@ -73,8 +72,12 @@ public class MovingUApp {
                     }
                     break;
                 case 3:
+
                     break;
                 case 4:
+                    System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
+                    String choose = input.nextLine().toUpperCase();
+                    checkVhAvailability(choose);
                     break;
                 case 5:
                     break;
@@ -137,46 +140,48 @@ public class MovingUApp {
                 found = true;
                 if (u.getTicketOn() == 0) {
                     if (!u.isBlocked()) {
-
-                        checkVhAvailability();
+                        System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
+                        String choose = input.nextLine().toUpperCase();
+                        checkVhAvailability(choose);
+                        System.out.println("Write the id of the bicycle to borrow");
+                        changeAvOfBicycleById(input.nextLine().toUpperCase());
                         createTicket();
+                        break;
                     } else {
                         System.out.println("The user has a debt, he/she can't borrow until the situation is resolved");
                         pressIntro();
+                        break;
                     }
                 } else {
                     System.out.println("The user already has loan of a vehicle which Ticket is: " + u.getTicketOn() + "\n" +
                             "he/she can't borrow until the situation is resolved");
                     pressIntro();
+                    break;
                 }
             }
             if (!found) {
                 System.out.println("User dni does not exist, register the user first to proceed");
                 pressIntro();
+                break;
             }
         }
 
     }
 
-    static void checkVhAvailability() {
-        System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
-        String choose = input.nextLine().toUpperCase();
+    static void checkVhAvailability(String choose) {
         int availables;
         switch (choose) {
-
             case "B":
                 availables = 0;
                 for (Bicycle b : bicycles) {
                     if (b.isAvailable()){
                         availables++;
+                        System.out.println(b.toString());
                     }
-                    System.out.println(b.toString());
                 }
                 if(availables == 0){
                     System.out.println("There's no bicycles available");
                 }
-                System.out.println("Write the id of the bicycle to borrow");
-                changeAvOfBicycleById(input.nextLine().toUpperCase());
                 break;
 
             case "S":
@@ -184,8 +189,8 @@ public class MovingUApp {
                 for (Scooter s : scooters) {
                     if (s.isAvailable()){
                         availables++;
+                        System.out.println(s.toString());
                     }
-                    System.out.println(s.toString());
                 }
                 if(availables == 0){
                     System.out.println("There's no scooters available");
@@ -209,6 +214,7 @@ public class MovingUApp {
                 b.updateAvailability(!b.isAvailable());
                 System.out.println("Bicycle availability changed");
                 pressIntro();
+                break;
             }
             System.out.println(b.toString());
         }
@@ -225,6 +231,7 @@ public class MovingUApp {
                 b.updateAvailability(!b.isAvailable());
                 System.out.println("Scooter availability changed");
                 pressIntro();
+                break;
             }
             System.out.println(b.toString());
         }

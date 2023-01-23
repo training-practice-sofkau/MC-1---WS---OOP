@@ -5,4 +5,5 @@ public class Bicycle extends Vehicle{
     public Bicycle(String vId, String color) {
         super(vId, color);
     }
+
 }
