@@ -8,6 +8,7 @@ import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,27 +51,71 @@ public class MovingUApp {
     }
 
     public static void menu(){
-        System.out.println("Moving - U");
-        System.out.println("1. Register user");
-        System.out.println("2. Borrow/Return");
-        System.out.println("3. Pay a ticket");
-        System.out.println("4. Check availability");
-        System.out.println("5. Exit");
+        int option = 0;
+        do {
+            System.out.println("Moving - U");
+            System.out.println("1. Register user");
+            System.out.println("2. Borrow/Return");
+            System.out.println("3. Pay a ticket");
+            System.out.println("4. Check availability");
+            System.out.println("5. Exit");
+            //Ask the commom data: DNI, Name, age.
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Please, select and option: ");
+            int num = sc.nextInt();
+            try{
+                option = num;
+                switch (option){
+                    case 1:{registerUser();}
+                    //case 2:{}
+                }
+            } catch (InputMismatchException e){
+                System.out.println(e);
+                System.out.println("Please, type a number");
+                option = 0;
+            }
+        } while (option != 5);
+
     }
 
     public static void registerUser(){
         Scanner sc = new Scanner(System.in);
         //Ask the commom data: DNI, Name, age.
-        System.out.print("User is: Student (S) / Trainer (T)");
+
+        System.out.print("Please, type your DNI: ");
+        String DNI = sc.nextLine();
+        System.out.print("Please, type your name: ");
+        String name = sc.nextLine();
+        System.out.print("Please, type your age: ");
+        int age = sc.nextInt();
+        System.out.print("Please, choose your User: Student (S) / Trainer (T): ");
         String type = sc.nextLine();
+
         switch (type){
             case "S":
-                // Ask the college DNI and he faculty
+                Scanner sc2 = new Scanner(System.in);
+                // Ask the college DNI and the faculty
+                System.out.print("Please, type your Collage DNI: ");
+                String collDNI = sc2.nextLine();
+                System.out.print("Please, type your faculty: ");
+                String faculty = sc2.nextLine();
                 //create the student object
-                User s = new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC");
+                User s = new Student( DNI, name, age, collDNI, faculty);
                 users.add(s);
                 //Display a message: User was registered
+                System.out.println("User Added");
                 break;
+
+            case "T":
+                Scanner sc3 = new Scanner(System.in);
+                System.out.print("Please, choose: Professor / Lecture: ");
+                String category = sc3.nextLine();
+                User s1 = new Trainer( DNI, name, age, category);
+                users.add(s1);
+                //Display a message: User was registered
+                System.out.println("User Added");
+                break;
+
         }
     }
 
