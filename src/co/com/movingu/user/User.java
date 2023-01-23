@@ -11,14 +11,14 @@ public abstract class User {
 
     protected boolean blocked;
 
-    protected int ticketOn;
+    protected String ticketOn;
 
     public User(String dni, String name, int age) {
         this.dni = dni;
         this.name = name;
         this.age = age;
         this.blocked = false;
-        this.ticketOn = 0;
+        this.ticketOn = "";
     }
 
     //Abstract method
@@ -28,11 +28,15 @@ public abstract class User {
         return dni;
     }
 
-    public int getTicketOn() {
+    public String getTicketOn() {
         return ticketOn;
     }
 
     public boolean isBlocked() {
         return blocked;
+    }
+
+    public void setTicketOn(String ticketOn) {
+        this.ticketOn = ticketOn;
     }
 }

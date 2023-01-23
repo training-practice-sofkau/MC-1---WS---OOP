@@ -138,14 +138,15 @@ public class MovingUApp {
         for (User u : users) {
             if (u.getDni().equals(usrDNI)) {
                 found = true;
-                if (u.getTicketOn() == 0) {
+                if (u.getTicketOn() == "") {
                     if (!u.isBlocked()) {
                         System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
                         String choose = input.nextLine().toUpperCase();
                         checkVhAvailability(choose);
                         System.out.println("Write the id of the bicycle to borrow");
                         changeAvOfBicycleById(input.nextLine().toUpperCase());
-                        createTicket();
+                        int ticketID = createTicket();
+                        u.setTicketOn();
                         break;
                     } else {
                         System.out.println("The user has a debt, he/she can't borrow until the situation is resolved");
@@ -240,8 +241,9 @@ public class MovingUApp {
         }
     }
 
-    static void createTicket() {
-
+    static int createTicket() {
+        Ticket ticket = new Ticket("",Ticket.Status.Active);
+        return 0;
     }
 
     static void pressIntro() {

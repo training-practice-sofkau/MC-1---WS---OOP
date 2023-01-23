@@ -1,5 +1,7 @@
 package co.com.movingu.user;
 
+import java.util.Objects;
+
 //TODO: Complete/Rewrite the class according to the requirements
 public class Trainer extends User {
     private String category;
@@ -11,7 +13,7 @@ public class Trainer extends User {
 
     @Override
     public void statusMsg() {
-        if (blocked && ticketOn != 0) {
+        if (blocked && !Objects.equals(ticketOn, "")) {
             System.out.println("The trainer " + name + "is blocked bc of debt");
         } else {
             System.out.println("The trainer " + name + "is blocked bc he/she already borrow a vehicle");
@@ -27,7 +29,7 @@ public class Trainer extends User {
                 "age=" + age + "'\n " +
                 "category='" + category + "'\n " +
                 "blocked=" + blocked + "'\n " +
-                "ticketOn=" + ticketOn + "\n " +
+                "ticketOn=" + ticketOn + "'\n " +
                 '}' + "\n ";
     }
 }
