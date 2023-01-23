@@ -4,20 +4,17 @@ import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
-import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.*;
 
 public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Student("Carolina Montoya","0976152443",  24, "201547896", "FIEC"));
+        add(new Trainer("Washington Pesantez", "0976152443", 36, "lecturer"));
     }};
 
     public static void main(String[] args) {
-        //Lists that contains data related to the WS
-
 
         List<Vehicle> vehicles= new ArrayList<>(){{
             //add(new Bicycle("B-001","red",true, true, "M"));
@@ -39,8 +36,6 @@ public class MovingUApp {
             //add(new Ticket());
 
         }};
-
-        //TO DO: Implement the necessary logic to make the menu work
 
         menu();
 
@@ -67,7 +62,19 @@ public class MovingUApp {
                         registerUser();
                         break;
                     case 2:
-                        System.out.println("1");
+                        Scanner borrowOrReturn = new Scanner(System.in);
+
+                        System.out.println("Enter Borrow/Return");
+                        String optBorrorOrReturn = borrowOrReturn.nextLine();
+
+                        switch (optBorrorOrReturn){
+                            case "Borrow":
+                                borrowVehicle();
+                                break;
+                            case "Return":
+                                returnVehicle();
+                                break;
+                        }
                         break;
                     case 3:
                         System.out.println("1");
@@ -129,6 +136,24 @@ public class MovingUApp {
             default:
                 System.out.println("Wrong input");
         }
+    }
+
+    public static void borrowVehicle(){
+        Scanner scannerDni = new Scanner(System.in);
+        System.out.println("Enter DNI");
+        String  userDni = scannerDni.nextLine();
+
+        for (User u : users) {
+            System.out.println(u);
+            
+        }
+
+
+
+    }
+
+    public static void returnVehicle(){
+
     }
 
 }
