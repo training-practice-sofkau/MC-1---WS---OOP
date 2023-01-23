@@ -4,6 +4,7 @@ import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
+import co.com.movingu.user.UserList;
 import co.com.movingu.utilities.Utilities;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
@@ -20,7 +21,8 @@ public class MovingUApp {
 
     public static void main(String[] args) {
         Utilities util = new Utilities();
-        //Lists that contains data related to the WS
+        UserList userList = new UserList();
+
 
         List<Ticket> tickets = new ArrayList<>(){{
             //add(new Ticket());
@@ -35,7 +37,7 @@ public class MovingUApp {
             option = util.captureInt();
             switch (option) {
                  case 1 ://register
-
+                    userList.registerUser();
                     break;
                 case 2 ://Borrow/return
                     //
@@ -53,13 +55,13 @@ public class MovingUApp {
                     System.out.println("Invalid option");
                     break;
             }
-            System.out.println("Presione 'enter' para continuar");
-            try {
+            //System.out.println("Presione 'enter' para continuar");
+            /*try {
                 System.in.read();
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
-        }while (option != 0);
+            }*/
+        }while (option != 5);
 
 
 

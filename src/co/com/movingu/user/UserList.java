@@ -3,12 +3,13 @@ package co.com.movingu.user;
 import co.com.movingu.utilities.Utilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserList {
     private List<User> users;
-    private Utilities util;
+    private Utilities util = new Utilities();
 
     /**
      * Constructor of the list of user with
@@ -32,7 +33,7 @@ public class UserList {
         Integer age = util.captureInt();
         System.out.println("Type your Name");
         String name = util.captureString();
-        System.out.print("User is: Student (S) / Trainer (T)?");
+        System.out.println("User is: Student (S) / Trainer (T)?");
         String type = util.captureString();
 
         switch (type) {
@@ -61,6 +62,7 @@ public class UserList {
                 break;
 
         }
+        System.out.println(Arrays.toString(users.toArray()));
 
     }
 
