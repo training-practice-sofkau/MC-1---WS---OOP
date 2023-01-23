@@ -1,8 +1,8 @@
 package co.com.movingu.user;
 
-//TO DO: Complete/Rewrite the class according to the requirements
+//TODO: Complete/Rewrite the class according to the requirements
 public abstract class User {
-    //TO DO: Attributes
+    //TODO: Attributes
     protected String dni;
 
     protected String name;
@@ -24,7 +24,15 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
+    public String getDni() {
+        return dni;
+    }
 
+    public int getTicketOn() {
+        return ticketOn;
+    }
 
-
+    public boolean isBlocked() {
+        return blocked;
+    }
 }

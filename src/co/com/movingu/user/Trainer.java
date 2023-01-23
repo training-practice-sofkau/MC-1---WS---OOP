@@ -1,6 +1,6 @@
 package co.com.movingu.user;
 
-//TO DO: Complete/Rewrite the class according to the requirements
+//TODO: Complete/Rewrite the class according to the requirements
 public class Trainer extends User {
     private String category;
 
@@ -17,5 +17,17 @@ public class Trainer extends User {
             System.out.println("The trainer " + name + "is blocked bc he/she already borrow a vehicle");
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Trainer{" + "'\n " +
+                "dni='" + dni + "'\n " +
+                "name='" + name + "\n " +
+                "age=" + age + "'\n " +
+                "category='" + category + "'\n " +
+                "blocked=" + blocked + "'\n " +
+                "ticketOn=" + ticketOn + "\n " +
+                '}' + "\n ";
     }
 }

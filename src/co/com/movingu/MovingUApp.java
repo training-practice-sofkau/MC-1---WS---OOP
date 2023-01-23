@@ -13,40 +13,37 @@ import java.util.Scanner;
 public class MovingUApp {
     static Scanner input = new Scanner(System.in);
     static Scanner inputNumber = new Scanner(System.in);
+    static boolean found;
+
+    //Lists that contains data related to the WS
     static List<User> users = new ArrayList<>() {{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
     }};
+    static List<Vehicle> vehicles = new ArrayList<>() {{
+        //add(new Bicycle("B-001","red",true, true, "M"));
+        //add(new Bicycle("B-002","blue",false, false, "M"));
+        //add(new Bicycle("B-003","red",true, true, "R"));
+        //add(new Bicycle("B-004","green",false, true, "R"));
+        //add(new Bicycle("B-005","grey",true, true, "M"));
+        //add(new Scooter("S-001","black",false, true, 20));
+        //add(new Scooter("S-002","blue",true, true, 50));
+        //add(new Scooter("S-003","grey",true, true, 80));
+        //add(new Scooter("S-004","grey",true, false, 50));
+        //add(new Scooter("S-005","black",false, false, 50));
+
+    }};
+    static List<Ticket> tickets = new ArrayList<>() {{
+        //add(new Ticket());
+        //add(new Ticket());
+        //add(new Ticket());
+
+    }};
 
     public static void main(String[] args) {
-        //Lists that contains data related to the WS
 
-
-        List<Vehicle> vehicles = new ArrayList<>() {{
-            //add(new Bicycle("B-001","red",true, true, "M"));
-            //add(new Bicycle("B-002","blue",false, false, "M"));
-            //add(new Bicycle("B-003","red",true, true, "R"));
-            //add(new Bicycle("B-004","green",false, true, "R"));
-            //add(new Bicycle("B-005","grey",true, true, "M"));
-            //add(new Scooter("S-001","black",false, true, 20));
-            //add(new Scooter("S-002","blue",true, true, 50));
-            //add(new Scooter("S-003","grey",true, true, 80));
-            //add(new Scooter("S-004","grey",true, false, 50));
-            //add(new Scooter("S-005","black",false, false, 50));
-
-        }};
-
-        List<Ticket> tickets = new ArrayList<>() {{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
-
-        }};
-
-        //TO DO: Implement the necessary logic to make the menu work
+        //TODO: Implement the necessary logic to make the menu work
         menu(0);
-
-
     }
 
     public static void menu(int option) {
@@ -63,6 +60,7 @@ public class MovingUApp {
                     registerUser();
                     break;
                 case 2:
+                    borrowReturn();
                     break;
                 case 3:
                     break;
@@ -78,7 +76,7 @@ public class MovingUApp {
     }
 
     public static void registerUser() {
-        //Ask the commom data: DNI, Name, age.
+        //Ask the common data: DNI, Name, age.
         System.out.println("Type the dni");
         String dni = input.nextLine();
         System.out.println("Type the Name");
@@ -112,12 +110,72 @@ public class MovingUApp {
                 break;
             default:
                 System.out.println("********** You enter an invalid input, try again **********");
-                pressEnter();
+                pressIntro();
                 break;
         }
     }
 
-     static public void pressEnter(){
+    static void borrowReturn() {
+        System.out.println("Please enter the dni");
+        String usrDNI = input.nextLine();
+        found = false;
+
+        for (User u : users) {
+            if (u.getDni().equals(usrDNI)) {
+                found = true;
+                if (u.getTicketOn() == 0) {
+                    if (!u.isBlocked()) {
+
+                        checkVhAvailability();
+                        createTicket();
+                    } else {
+                        System.out.println("The user has a debt, he/she can't borrow until the situation is resolved");
+                        pressIntro();
+                    }
+                } else {
+                    System.out.println("The user already has loan of a vehicle which Ticket is: " + u.getTicketOn() + "\n" +
+                            "he/she can't borrow until the situation is resolved");
+                    pressIntro();
+                }
+            }
+            if (!found) {
+                System.out.println("User dni does not exist, register the user first to proceed");
+                pressIntro();
+            }
+        }
+
+    }
+
+    static void checkVhAvailability() {
+        System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
+        String choose = input.nextLine().toUpperCase();
+        switch (choose) {
+            case "B":
+                for (Vehicle v : vehicles) {
+                    //TODO: only bicycles
+                    System.out.println(v.toString());
+                }
+                System.out.println("X");
+                break;
+            case "S":
+                for (Vehicle v : vehicles) {
+                    //TODO: only scooters
+                    System.out.println(v.toString());
+                }
+                System.out.println("Y");
+                break;
+            default:
+                System.out.println("********** You enter an invalid input, try again **********");
+                pressIntro();
+                break;
+        }
+    }
+
+    static void createTicket() {
+
+    }
+
+    static void pressIntro() {
         System.out.println("Press intro to continue");
         input.nextLine();
     }
