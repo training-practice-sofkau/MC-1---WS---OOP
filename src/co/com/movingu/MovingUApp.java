@@ -8,43 +8,69 @@ import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class MovingUApp {
-    static List<User> users = new ArrayList<>(){{
+
+    //Lists that contains data related to the WS
+    public static List<User> users = new ArrayList<>(){{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+    }};
 
+    public static List<Vehicle> vehicles= new ArrayList<>(){{
+        //add(new Bicycle("B-001","red",true, true, "M"));
+        //add(new Bicycle("B-002","blue",false, false, "M"));
+        //add(new Bicycle("B-003","red",true, true, "R"));
+        //add(new Bicycle("B-004","green",false, true, "R"));
+        //add(new Bicycle("B-005","grey",true, true, "M"));
+        //add(new Scooter("S-001","black",false, true, 20));
+        //add(new Scooter("S-002","blue",true, true, 50));
+        //add(new Scooter("S-003","grey",true, true, 80));
+        //add(new Scooter("S-004","grey",true, false, 50));
+        //add(new Scooter("S-005","black",false, false, 50));
 
     }};
+
+    public static List<Ticket> tickets = new ArrayList<>(){{
+        //add(new Ticket());
+        //add(new Ticket());
+        //add(new Ticket());
+
+    }};
+
     public static void main(String[] args) {
-        //Lists that contains data related to the WS
+
+        int menuOption = 0;
+
+        Scanner in = new Scanner(System.in);
 
 
-        List<Vehicle> vehicles= new ArrayList<>(){{
-            //add(new Bicycle("B-001","red",true, true, "M"));
-            //add(new Bicycle("B-002","blue",false, false, "M"));
-            //add(new Bicycle("B-003","red",true, true, "R"));
-            //add(new Bicycle("B-004","green",false, true, "R"));
-            //add(new Bicycle("B-005","grey",true, true, "M"));
-            //add(new Scooter("S-001","black",false, true, 20));
-            //add(new Scooter("S-002","blue",true, true, 50));
-            //add(new Scooter("S-003","grey",true, true, 80));
-            //add(new Scooter("S-004","grey",true, false, 50));
-            //add(new Scooter("S-005","black",false, false, 50));
 
-        }};
+        try {
+            do {
+                menu();
+                menuOption = in.nextInt();
 
-        List<Ticket> tickets = new ArrayList<>(){{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
+                switch (menuOption) {
+                    case 1: registerUser(in);
+                            break;
+                    case 2:
+                    default:
+                        System.out.println("Opcion invalida");
+                        break;
+                }
+            } while (menuOption != 5);
+        } catch (InputMismatchException e) {
+            System.out.println("Tipo de caracter incorrecto");
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
-        }};
 
-        //TO DO: Implement the necessary logic to make the menu work
-        menu();
+
 
 
     }
@@ -58,11 +84,15 @@ public class MovingUApp {
         System.out.println("5. Exit");
     }
 
-    public static void registerUser(){
-        Scanner sc = new Scanner(System.in);
+    public static void registerUser(Scanner in){
+        System.out.println("Número de identificación");
+        String userName = in.next();
+
+        System.out.println("Nombre del usuario");
+        String userName = in.next();
+
         //Ask the commom data: DNI, Name, age.
         System.out.print("User is: Student (S) / Trainer (T)");
-        String type = sc.nextLine();
         switch (type){
             case "S":
                 // Ask the college DNI and he faculty
