@@ -63,6 +63,7 @@ public class UserList {
 
         }
         System.out.println(Arrays.toString(users.toArray()));
+        System.out.println(users.get(2));
 
     }
 

@@ -20,7 +20,13 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
-
-
-
+    @Override
+    public String toString() {
+        return  "dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", blocked=" + blocked +
+                ", ticketOn=" + ticketOn
+                +"\n";
+    }
 }
