@@ -8,6 +8,7 @@ import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,9 +16,8 @@ public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
-
-
     }};
+
     public static void main(String[] args) {
         //Lists that contains data related to the WS
 
@@ -44,18 +44,54 @@ public class MovingUApp {
         }};
 
         //TO DO: Implement the necessary logic to make the menu work
-        menu();
 
+        menu();
 
     }
 
     public static void menu(){
-        System.out.println("Moving - U");
-        System.out.println("1. Register user");
-        System.out.println("2. Borrow/Return");
-        System.out.println("3. Pay a ticket");
-        System.out.println("4. Check availability");
-        System.out.println("5. Exit");
+        Scanner opt = new Scanner(System.in);
+        boolean exit = false;
+        byte menuOpt;
+
+        while (!exit) {
+            System.out.println("Moving - U " +
+                    "\n1. Register user " +
+                    "\n2. Borrow/Return " +
+                    "\n3. Pay a ticket " +
+                    "\n4. Check availability " +
+                    "\n5. Exit");
+
+            try {
+                menuOpt = opt.nextByte();
+
+                switch (menuOpt){
+                    case 1:
+                        System.out.println("1");
+                        break;
+                    case 2:
+                        System.out.println("1");
+                        break;
+                    case 3:
+                        System.out.println("1");
+                        break;
+                    case 4:
+                        System.out.println("1");
+                        break;
+                    case 5:
+                        System.out.println("Closing app....");
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Only type number between 1-5");
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("Invalid input");
+                opt.nextLine();
+            }
+        }
+        opt.close();
     }
 
     public static void registerUser(){
