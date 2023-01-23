@@ -15,9 +15,22 @@ public class Student extends User{
     @Override
     public void statusMsg() {
         if(blocked && !ticketOn){
-            System.out.println("The student "+name+"is blocked bc of debt");
+            System.out.println("The student " + name + "is blocked due to a debt.");
         }else{
-            System.out.println("The student "+name+"is blocked bc he/she already borrow a vehicle");
+            System.out.println("The student " + name + "is blocked because he/she has already borrowed a vehicle.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "collegeDNI='" + collegeDNI + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", blocked=" + blocked +
+                ", ticketOn=" + ticketOn +
+                '}';
     }
 }
