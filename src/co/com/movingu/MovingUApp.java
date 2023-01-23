@@ -253,6 +253,17 @@ public class MovingUApp {
 
                     myTicket.get().setEndTime(LocalDateTime.now());
 
+                    updatedTickets(myTicket.get());
+
+
+                    System.out.println("-------------Ticket to return-------------");
+                    System.out.println("--------------Ticket--------------");
+                    System.out.println("Ticket number:"+genTicket.getCode());
+                    System.out.println("Vehicle type: Scooter");
+                    System.out.println("Start time: "+genTicket.getStartTime());
+
+
+
                 }else{
                     System.out.println("Ticket doesn't available");
                 }
@@ -278,6 +289,10 @@ public class MovingUApp {
 
     public static void updatedVehicles(Vehicle vh){
         vehicles.set(vehicles.indexOf(vh),vh);
+    }
+
+    public static void updatedTickets(Ticket tk){
+        tickets.set(tickets.indexOf(tk),tk);
     }
 
 }
