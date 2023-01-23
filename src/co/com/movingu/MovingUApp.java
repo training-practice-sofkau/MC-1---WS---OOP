@@ -257,11 +257,9 @@ public class MovingUApp {
 
 
                     System.out.println("-------------Ticket to return-------------");
-                    System.out.println("--------------Ticket--------------");
-                    System.out.println("Ticket number:"+genTicket.getCode());
-                    System.out.println("Vehicle type: Scooter");
-                    System.out.println("Start time: "+genTicket.getStartTime());
-
+                    System.out.println("Ticket number:"+myTicket.get().getCode());
+                    System.out.println("Start time: "+myTicket.get().getStartTime());
+                    System.out.println("End time: "+myTicket.get().getEndTime());
 
 
                 }else{
