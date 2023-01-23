@@ -91,6 +91,10 @@ public class MovingUApp {
     }
 
     private static void returning() {
+
+    }
+
+    private static void payTicket(){
         System.out.println("Type the ticket id: ");
         String ticketId = input.nextLine();
         searchTicket(ticketId);
