@@ -8,15 +8,18 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class MovingUApp {
+
+    static Ticket genTicket=new Ticket();
     static List<User> users = new ArrayList<>(){{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Trainer("0976152442", "Washington Pesantez", 36, "lecturer"));
 
     }};
 
@@ -33,16 +36,15 @@ public class MovingUApp {
         //add(new Scooter("S-005","black",false, false, 50));
 
     }};
+
+    static List<Ticket> tickets = new ArrayList<>() {{
+        //add(new Ticket());
+        //add(new Ticket());
+        //add(new Ticket());
+
+    }};
     public static void main(String[] args) {
         //Lists that contains data related to the WS
-
-
-        List<Ticket> tickets = new ArrayList<>() {{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
-
-        }};
 
 
         int optionMenu;
@@ -145,6 +147,7 @@ public class MovingUApp {
     }
 
 
+
     public static void borrowOrReturn(){
         Scanner sc = new Scanner(System.in);
 
@@ -163,12 +166,24 @@ public class MovingUApp {
                     System.out.println("Enter vehicle's type: Bicycle (B) or Scooter (S): ");
                     op = sc.nextLine();
                     Optional<Vehicle> myVehicle;
-                    Ticket genTicket;
                     switch (op.toLowerCase()){
                         case "b":
                             myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b instanceof Bicycle).findFirst();
                             if(myVehicle.isPresent()){
-                                genTicket=new Ticket(true, myUser.get(), myVehicle.get());
+                                genTicket.setHelmetSupplied(true);
+                                genTicket.setuTicket(myUser.get());
+                                genTicket.setvTicket(myVehicle.get());
+                                genTicket.setCode();
+                                genTicket.setStartTime(LocalDateTime.now());
+                                tickets.add(genTicket);
+                                myVehicle.get().setAvailable(false);
+                                myUser.get().setTicketOn(true);
+                                updatedUsers(myUser.get());
+                                updatedVehicles(myVehicle.get());
+                                System.out.println("--------------Ticket--------------");
+                                System.out.println("Ticket number:"+genTicket.getCode());
+                                System.out.println("Vehicle type: Bicycle");
+                                System.out.println("Start time: "+genTicket.getStartTime());
                             }else {
                                 System.out.println("We don't have bicycles in this moment!");
                             }
@@ -176,11 +191,23 @@ public class MovingUApp {
                         case "s":
                             myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b instanceof Scooter).findFirst();
                             if(myVehicle.isPresent()){
-                                System.out.println("Making ticket scooter");
+                                genTicket.setHelmetSupplied(true);
+                                genTicket.setuTicket(myUser.get());
+                                genTicket.setvTicket(myVehicle.get());
+                                genTicket.setCode();
+                                genTicket.setStartTime(LocalDateTime.now());
+                                tickets.add(genTicket);
+                                myVehicle.get().setAvailable(false);
+                                myUser.get().setTicketOn(true);
+                                updatedUsers(myUser.get());
+                                updatedVehicles(myVehicle.get());
+                                System.out.println("--------------Ticket--------------");
+                                System.out.println("Ticket number:"+genTicket.getCode());
+                                System.out.println("Vehicle type: Scooter");
+                                System.out.println("Start time: "+genTicket.getStartTime());
                             }else{
                                 System.out.println("We don't have scooters in this moment!");
                             }
-
                             break;
                         default:
                             System.out.println("Type a valid option");
@@ -191,7 +218,45 @@ public class MovingUApp {
                 }
                 break;
             case "r":
-                System.out.println("I'm making in this function");
+                System.out.println("Type id ticket");
+                op = sc.nextLine();
+                Optional<Ticket> myTicket=lookForTickets(op);
+
+                boolean statusVehicle;
+                boolean condition;
+                String battery;
+                if(myTicket.isPresent()){
+                    System.out.println("Has helmet? T/F ");
+                    op= sc.nextLine();
+                    if(op.equalsIgnoreCase("t")) {
+                        statusVehicle = true;
+                    }else{
+                        statusVehicle = false;
+                    }
+                    System.out.println("Good condition T/F");
+                    op= sc.nextLine();
+                    if(op.equalsIgnoreCase("t")){
+                        condition=true;
+                    }else{
+                        condition=false;
+                    }
+                    System.out.println("Battery status: ");
+                    battery= sc.nextLine();
+
+                    myTicket.get().getuTicket().setTicketOn(false);
+
+                    myTicket.get().getvTicket().setAvailable(true);
+
+                    updatedVehicles(myTicket.get().getvTicket());
+
+                    updatedUsers(myTicket.get().getuTicket());
+
+                    myTicket.get().setEndTime(LocalDateTime.now());
+
+                }else{
+                    System.out.println("Ticket doesn't available");
+                }
+
                 break;
             default:
                 System.out.println("wrong option");
@@ -201,6 +266,18 @@ public class MovingUApp {
 
     public static Optional<User> lookForUser(String dni){
         return users.stream().filter(us->us.getDni().equalsIgnoreCase(dni)).findFirst();
+    }
+
+    public static Optional<Ticket> lookForTickets(String code){
+        return tickets.stream().filter(tk->tk.getCode().equalsIgnoreCase(code)).findFirst();
+    }
+
+    public static void updatedUsers(User us){
+        users.set(users.indexOf(us),us);
+    }
+
+    public static void updatedVehicles(Vehicle vh){
+        vehicles.set(vehicles.indexOf(vh),vh);
     }
 
 }
