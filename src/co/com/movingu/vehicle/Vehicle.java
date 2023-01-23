@@ -3,9 +3,10 @@ package co.com.movingu.vehicle;
 //TODO: Complete/Rewrite the class according to the requirements
 public abstract class Vehicle implements Loanable{
     private boolean available;
-    private final int vId;
+    private final String vId;
+    private String color;
 
-    public Vehicle(int vId) {
+    public Vehicle(String vId, String color) {
         this.available = true;
         this.vId = vId;
     }
@@ -15,7 +16,11 @@ public abstract class Vehicle implements Loanable{
         this.available = value;
     }
 
-    public int getVId() {
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getVId() {
         return vId;
     }
     //TO DO: Attributes
