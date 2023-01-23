@@ -9,4 +9,15 @@ public class Bicycle extends Vehicle{
         super(code, color, isUsable, isAvailable);
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Bicycle{" +
+                "type='" + type + '\'' +
+                ", code='" + code + '\'' +
+                ", color='" + color + '\'' +
+                ", isUsable=" + isUsable +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 }
