@@ -30,7 +30,85 @@ public class Ticket {
         this.helmetSupplied = helmetSupplied;
         this.uTicket = uTicket;
         this.vTicket = vTicket;
+        this.startTime=LocalDateTime.now();
+    }
+
+    public Ticket() {
     }
 
     //TO DO: Add the necessary getters & setters u other extra function
+
+
+    public int getIdSecuence() {
+        return idSecuence;
+    }
+
+    public void setIdSecuence(int idSecuence) {
+        this.idSecuence = idSecuence;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode() {
+        this.code = "T-"+(idSecuence);
+        this.idSecuence++;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public boolean isHelmetSupplied() {
+        return helmetSupplied;
+    }
+
+    public void setHelmetSupplied(boolean helmetSupplied) {
+        this.helmetSupplied = helmetSupplied;
+    }
+
+    public String getTicketStatus() {
+        return ticketStatus;
+    }
+
+    public void setTicketStatus(String ticketStatus) {
+        this.ticketStatus = ticketStatus;
+    }
+
+    public double getAmountToPay() {
+        return amountToPay;
+    }
+
+    public void setAmountToPay(double amountToPay) {
+        this.amountToPay = amountToPay;
+    }
+
+    public User getuTicket() {
+        return uTicket;
+    }
+
+    public void setuTicket(User uTicket) {
+        this.uTicket = uTicket;
+    }
+
+    public Vehicle getvTicket() {
+        return vTicket;
+    }
+
+    public void setvTicket(Vehicle vTicket) {
+        this.vTicket = vTicket;
+    }
 }
