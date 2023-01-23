@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Utilities {
     private Scanner input;
+
+    public Utilities() {
+        input = new Scanner(System.in);
+    }
+
     public void menu(){
         System.out.println("Moving - U");
         System.out.println("1. Register user");

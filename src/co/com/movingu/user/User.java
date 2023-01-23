@@ -9,7 +9,7 @@ public abstract class User {
     protected boolean blocked;
     protected boolean ticketOn;
 
-    public User(String dni, String name, int age) {
+    public User(String dni, String name, Integer age) {
         this.dni = dni;
         this.name = name;
         this.age = age;
