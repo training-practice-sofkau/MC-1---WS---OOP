@@ -4,24 +4,25 @@ import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
+import co.com.movingu.utilities.Utilities;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
-
-
     }};
+
     public static void main(String[] args) {
+        Utilities utilities = new Utilities();
         //Lists that contains data related to the WS
-
-
         List<Vehicle> vehicles= new ArrayList<>(){{
             //add(new Bicycle("B-001","red",true, true, "M"));
             //add(new Bicycle("B-002","blue",false, false, "M"));
@@ -44,19 +45,16 @@ public class MovingUApp {
         }};
 
         //TO DO: Implement the necessary logic to make the menu work
-        menu();
+        utilities.menu();
+
+
+
+
 
 
     }
 
-    public static void menu(){
-        System.out.println("Moving - U");
-        System.out.println("1. Register user");
-        System.out.println("2. Borrow/Return");
-        System.out.println("3. Pay a ticket");
-        System.out.println("4. Check availability");
-        System.out.println("5. Exit");
-    }
+
 
     public static void registerUser(){
         Scanner sc = new Scanner(System.in);
