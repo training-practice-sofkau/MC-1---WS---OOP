@@ -17,8 +17,23 @@ public class Ticket implements ITicket {
     private Vehicle vehicle;
     private User user;
 
+    private Date date = new Date();
 
-    public Ticket() {
+
+    public Ticket(
+            String ticketID,
+            Boolean helmet,
+            String status,
+            Integer amountToPay,
+            Vehicle vehicle,
+            User user) {
+        this.ticketID = ticketID;
+        this.ticketCreation = new Date(System.currentTimeMillis());
+        this.ticketExpiration = new Date(System.currentTimeMillis()+3600) ;
+        this.helmet = helmet;
+        this.status = "Active";
+        this.vehicle = vehicle;
+        this.user = user;
     }
 
     //TO DO: Add the necessary getters & setters u other extra function

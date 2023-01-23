@@ -19,6 +19,7 @@ public class VehicleInventory {
 
     }};
 
+
     @Override
     public String toString() {
         return "Bicycles: " + vehicles.stream().filter(x -> x.getVtype() == "B" && x.isAvailable()).count()+ "\n"+
