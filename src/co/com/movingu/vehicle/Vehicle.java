@@ -6,17 +6,25 @@ public abstract class Vehicle implements Loanable{
     private String color;
     private String condition;
     private boolean available;
+    private String vtype;
 
 
-    public Vehicle(String id, String color, boolean available, String condition) {
+    public Vehicle(String id, String color, boolean available, String condition, String vtype) {
         this.id = id;
         this.color = color;
         this.condition = condition;
         this.available = available;
+        this.vtype = vtype;
     }
 
 
+    public String getVtype() {
+        return vtype;
+    }
 
+    public boolean isAvailable() {
+        return available;
+    }
 
     @Override
     public void updateAvailability(boolean value) {

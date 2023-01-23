@@ -8,6 +8,7 @@ import co.com.movingu.user.UserList;
 import co.com.movingu.utilities.Utilities;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
+import co.com.movingu.vehicle.VehicleInventory;
 
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class MovingUApp {
     public static void main(String[] args) {
         Utilities util = new Utilities();
         UserList userList = new UserList();
+        VehicleInventory vehicles = new VehicleInventory();
 
 
         List<Ticket> tickets = new ArrayList<>(){{
@@ -46,7 +48,8 @@ public class MovingUApp {
 
                     break;
                 case 4 ://Search available
-                    System.out.println("The app has finished");
+                    System.out.println("Available vehicles:");
+                    System.out.println(vehicles);
                     break;
                 case 5 ://Exit
                     System.out.println("The app has finished");
