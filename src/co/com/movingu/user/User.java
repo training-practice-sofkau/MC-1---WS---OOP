@@ -11,14 +11,14 @@ public abstract class User {
 
     protected boolean blocked;
 
-    protected boolean ticketOn;
+    protected int ticketOn;
 
     public User(String dni, String name, int age) {
         this.dni = dni;
         this.name = name;
         this.age = age;
         this.blocked = false;
-        this.ticketOn = false;
+        this.ticketOn = 0;
     }
 
     //Abstract method

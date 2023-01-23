@@ -14,7 +14,7 @@ public class Student extends User{
 
     @Override
     public void statusMsg() {
-        if(blocked && !ticketOn){
+        if(blocked && ticketOn != 0){
             System.out.println("The student "+name+"is blocked bc of debt");
         }else{
             System.out.println("The student "+name+"is blocked bc he/she already borrow a vehicle");
