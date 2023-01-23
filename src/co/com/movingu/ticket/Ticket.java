@@ -21,6 +21,11 @@ public class Ticket {
     public Status getStatus() {
         return this.status;
     }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     //TODO: Add the necessary getters & setters u other extra function
 
     public enum Status{

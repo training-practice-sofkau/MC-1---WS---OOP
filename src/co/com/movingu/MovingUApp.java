@@ -24,18 +24,18 @@ public class MovingUApp {
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
     }};
     static List<Bicycle> bicycles = new ArrayList<>() {{
-        add(new Bicycle("B-001","red"));
-        add(new Bicycle("B-002","blue"));
-        add(new Bicycle("B-003","red"));
-        add(new Bicycle("B-004","green"));
-        add(new Bicycle("B-005","grey"));
-        }};
-    static List<Scooter> scooters = new ArrayList<>(){{
-        add(new Scooter("S-001","black"));
-        add(new Scooter("S-002","blue"));
-        add(new Scooter("S-003","grey"));
-        add(new Scooter("S-004","grey"));
-        add(new Scooter("S-005","black"));
+        add(new Bicycle("B-001", "red"));
+        add(new Bicycle("B-002", "blue"));
+        add(new Bicycle("B-003", "red"));
+        add(new Bicycle("B-004", "green"));
+        add(new Bicycle("B-005", "grey"));
+    }};
+    static List<Scooter> scooters = new ArrayList<>() {{
+        add(new Scooter("S-001", "black"));
+        add(new Scooter("S-002", "blue"));
+        add(new Scooter("S-003", "grey"));
+        add(new Scooter("S-004", "grey"));
+        add(new Scooter("S-005", "black"));
     }};
     static List<Ticket> tickets = new ArrayList<>() {{
         //add(new Ticket());
@@ -64,15 +64,17 @@ public class MovingUApp {
                     break;
                 case 2:
                     System.out.println("Choose your option: Borrow(B) or Return(R)");
-                    if (input.nextLine().equalsIgnoreCase("B")){
+                    if (input.nextLine().equalsIgnoreCase("B")) {
                         borrow();
                     }
-                    if (input.nextLine().equalsIgnoreCase("R")){
+                    if (input.nextLine().equalsIgnoreCase("R")) {
                         returning();
                     }
                     break;
                 case 3:
-
+                    System.out.println("Type the ticket id: ");
+                    String ticketId = input.nextLine();
+                    searchTicket(ticketId);
                     break;
                 case 4:
                     System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
@@ -95,8 +97,18 @@ public class MovingUApp {
         pressIntro();
     }
 
-    public static void searchTicket(String ticketId){
-
+    public static void searchTicket(String ticketId) {
+        found = false;
+        for (Ticket t : tickets) {
+            if (t.getTicketId().equals(ticketId)) {
+                t.setStatus(Ticket.Status.Ok);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("No ticket wit id: " + ticketId + " was found");
+        }
     }
 
     public static void registerUser() {
@@ -183,12 +195,12 @@ public class MovingUApp {
             case "B":
                 availables = 0;
                 for (Bicycle b : bicycles) {
-                    if (b.isAvailable()){
+                    if (b.isAvailable()) {
                         availables++;
                         System.out.println(b.toString());
                     }
                 }
-                if(availables == 0){
+                if (availables == 0) {
                     System.out.println("There's no bicycles available");
                 }
                 break;
@@ -196,12 +208,12 @@ public class MovingUApp {
             case "S":
                 availables = 0;
                 for (Scooter s : scooters) {
-                    if (s.isAvailable()){
+                    if (s.isAvailable()) {
                         availables++;
                         System.out.println(s.toString());
                     }
                 }
-                if(availables == 0){
+                if (availables == 0) {
                     System.out.println("There's no scooters available");
                 }
                 System.out.println("Write the id of the bicycle to borrow");
@@ -215,10 +227,10 @@ public class MovingUApp {
         }
     }
 
-    static void changeAvOfBicycleById(String id){
+    static void changeAvOfBicycleById(String id) {
         found = false;
         for (Vehicle b : bicycles) {
-            if (Objects.equals(b.getVId(), id)){
+            if (Objects.equals(b.getVId(), id)) {
                 found = true;
                 b.updateAvailability(!b.isAvailable());
                 System.out.println("Bicycle availability changed");
@@ -227,15 +239,15 @@ public class MovingUApp {
             }
             System.out.println(b.toString());
         }
-        if (!found){
+        if (!found) {
             System.out.println("The bicycle with id: " + id + " does not exist");
         }
     }
 
-    static void changeAvOfScooterById(String id){
+    static void changeAvOfScooterById(String id) {
         found = false;
         for (Vehicle b : scooters) {
-            if (Objects.equals(b.getVId(), id)){
+            if (Objects.equals(b.getVId(), id)) {
                 found = true;
                 b.updateAvailability(!b.isAvailable());
                 System.out.println("Scooter availability changed");
@@ -244,13 +256,13 @@ public class MovingUApp {
             }
             System.out.println(b.toString());
         }
-        if (!found){
+        if (!found) {
             System.out.println("The scooter with id: " + id + " does not exist");
         }
     }
 
     static String createTicket() {
-        Ticket ticket = new Ticket(String.valueOf(tickets.size()),Ticket.Status.Active);
+        Ticket ticket = new Ticket(String.valueOf(tickets.size()), Ticket.Status.Active);
         tickets.add(ticket);
         return ticket.getTicketId();
     }
