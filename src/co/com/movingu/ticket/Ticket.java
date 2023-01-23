@@ -26,9 +26,11 @@ public class Ticket {
 
     private final int typeOfVehicle;
 
+    private final String vehicleID;
+
     private final String[] STATUS_CASES = new String[]{"OK", "Pending", "Active"};
 
-    public Ticket(List<Ticket> listOfTickets, String userDni, int typeOfVehicle) {
+    public Ticket(List<Ticket> listOfTickets, String userDni, int typeOfVehicle, String vehicleID) {
         this.ticketId = generateTicket(listOfTickets);
         this.userDni = userDni;
         this.borrowingDate = new Date();
@@ -36,6 +38,7 @@ public class Ticket {
         this.status = this.STATUS_CASES[2];
         this.totalDebt = 0;
         this.typeOfVehicle = typeOfVehicle;
+        this.vehicleID = vehicleID;
     }
 
     private String generateTicket(List<Ticket> listOfTickets) {
