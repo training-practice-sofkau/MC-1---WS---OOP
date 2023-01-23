@@ -55,12 +55,10 @@ public class MovingUApp {
                 menuOption = in.nextInt();
 
                 switch (menuOption) {
-                    case 1: registerUser(in);
-                            break;
-                    case 2:
-                    default:
-                        System.out.println("Invalid menu option");
-                        break;
+                    case 1 -> registerUser(in);
+                    //case 4 ->
+                    default -> System.out.println("Invalid menu option");
+
                 }
             } while (menuOption != 5);
         } catch (InputMismatchException e) {
@@ -97,31 +95,24 @@ public class MovingUApp {
         System.out.print("User is: Student (S) / Trainer (T)");
         String userType = in.next().toUpperCase();
 
-        switch (userType){
-            case "S":
+        switch (userType) {
+            case "S" -> {
                 System.out.println("Student college DNI");
                 String userCollegeDni = in.next();
-
                 System.out.println("Student faculty");
                 String userFaculty = in.next();
-
                 User s = new Student(userDni, userName, userAge, userCollegeDni, userFaculty);
                 users.add(s);
-
-                System.out.println("Student "+ userName + " created successfully");
-                break;
-            case "T":
+                System.out.println("Student " + userName + " created successfully");
+            }
+            case "T" -> {
                 System.out.println("Trainer category: ");
                 String userCategory = in.next();
-
                 User t = new Trainer(userDni, userName, userAge, userCategory);
                 users.add(t);
-
-                System.out.println("Trainer "+ userName + " created successfully");
-                break;
-            default:
-                System.out.println("Invalid option");
-                break;
+                System.out.println("Trainer " + userName + " created successfully");
+            }
+            default -> System.out.println("Invalid option");
         }
     }
 
