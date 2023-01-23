@@ -27,4 +27,40 @@ public abstract class User {
     public String getDni() {
         return dni;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isTicketOn() {
+        return ticketOn;
+    }
+
+    public void setTicketOn(boolean ticketOn) {
+        this.ticketOn = ticketOn;
+    }
 }
