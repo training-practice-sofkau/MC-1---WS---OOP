@@ -11,7 +11,7 @@ public class Ticket {
 
     public Ticket(String ticketId, Status status){
         this.status = status;
-        this.ticketId = "";
+        this.ticketId = "T-0"+ticketId;
     }
 
     public String getTicketId() {
