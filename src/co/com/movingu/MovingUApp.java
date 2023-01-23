@@ -8,6 +8,7 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class MovingUApp {
     static Scanner input = new Scanner(System.in);
     static List<User> users = new ArrayList<>() {{
         add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Trainer("1256987533", "Washington Pesantez", 36, "lecturer"));
     }};
 
     static List<Vehicle> vehicles = new ArrayList<>() {{
@@ -149,17 +150,52 @@ public class MovingUApp {
         int type = userInput.nextInt();
         switch (type) {
             case 1:
-                // All the student information
                 System.out.println("Please, enter your DNI: ");
                 String StudentDNI = userInput.next();
+
+                for ( int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getDni() == StudentDNI) {
+                        if (users.get(i).isBlocked() == true);
+                            break;
+                    }
+                }
+
+                System.out.println("Please, press 1 for Scooter or press 2 for Bicycle: ");
+                String typeofVehicle = userInput.next();
+
+
             case 2:
                 System.out.println("Please, enter your Ticket Id: ");
                 String ticketId = userInput.next();
+                for ( int i = 0; i < tickets.size(); i++) {
+                    if(tickets.get(i).getId() == ticketId){
+                        tickets.get(i).setReturnDate(LocalDate.now());
+                    }
+                }
         }
     }
 
     private static void payATicket () {
 
+        Scanner userInput = new Scanner(System.in);
+
+        System.out.println("Please, enter your Ticket Id: ");
+        String ticketId = userInput.next();
+
+        for ( int i = 0; i < tickets.size(); i++) {
+            if(tickets.get(i).getId() == ticketId){
+                tickets.get(i).setStatus("OK");
+                String userDNI = tickets.get(i).getUser().getDni();
+
+                for ( int j = 0; j < users.size(); j++) {
+                    if(users.get(j).getDni() == userDNI){
+                        users.get(j).setTicketOn(false);
+                        users.get(j).setBlocked(false);
+                    }
+                }
+            }
+        }
+        System.out.println("Your Ticket was successfully paid");
     }
     private static void checkAvailability () {
 
