@@ -26,14 +26,6 @@ public class MovingUApp {
         VehicleInventory vehicles = new VehicleInventory();
 
 
-        List<Ticket> tickets = new ArrayList<>(){{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
-
-        }};
-
-
         do{
             util.menu();
             option = util.captureInt();

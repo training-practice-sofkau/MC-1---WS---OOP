@@ -19,6 +19,17 @@ public class VehicleInventory {
 
     }};
 
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public Boolean checkAvailable (String vehicleType){
+        boolean available = false;
+        if ((vehicles.stream().filter(x -> x.getVtype() == vehicleType && x.isAvailable()).count()) != 0){
+            available = true;
+        }
+        return available;
+    }
 
     @Override
     public String toString() {

@@ -26,6 +26,10 @@ public abstract class Vehicle implements Loanable{
         return available;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public void updateAvailability(boolean value) {
         this.available = value;
