@@ -22,21 +22,20 @@ public class MovingUApp {
     }};
 
     static List<Vehicle> vehicles = new ArrayList<>() {{
-            add(new Bicycle("B-001", "red", true, true, "M"));
-            add(new Bicycle("B-002", "blue", false, false, "M"));
-            add(new Bicycle("B-003", "red", true, true, "R"));
-            add(new Bicycle("B-004", "green", false, true, "R"));
-            add(new Bicycle("B-005", "grey", true, true, "M"));
-            add(new Scooter("S-001", "black", false, true, 20));
-            add(new Scooter("S-002", "blue", true, true, 50));
-            add(new Scooter("S-003", "grey", true, true, 80));
-            add(new Scooter("S-004", "grey", true, false, 50));
-            add(new Scooter("S-005", "black", false, false, 50));
+        add(new Bicycle("B-001", "red", true, true, "M"));
+        add(new Bicycle("B-002", "blue", false, false, "M"));
+        add(new Bicycle("B-003", "red", true, true, "R"));
+        add(new Bicycle("B-004", "green", false, true, "R"));
+        add(new Bicycle("B-005", "grey", true, true, "M"));
+        add(new Scooter("S-001", "black", false, true, 20));
+        add(new Scooter("S-002", "blue", true, true, 50));
+        add(new Scooter("S-003", "grey", true, true, 80));
+        add(new Scooter("S-004", "grey", true, false, 50));
+        add(new Scooter("S-005", "black", false, false, 50));
         }};
     static List<Ticket> tickets = new ArrayList<>() {{
-            add(new Ticket());
-            add(new Ticket());
-            add(new Ticket());
+        add(new Ticket(users.get(0), vehicles.get(0)));
+        add(new Ticket(users.get(1), vehicles.get(1)));
         }};
 
 
@@ -66,7 +65,16 @@ public class MovingUApp {
                     registerUser();
                     break;
                 case 2:
-                    borrowReturn();
+                    Scanner userInput = new Scanner(System.in);
+                    System.out.print("Please, press 1 for Borrow or press 2 for Return: ");
+                    int process = userInput.nextInt();
+
+                    if(process == 1) {
+                        borrowVehicle();
+                    }
+                    if(process == 2) {
+                        returnVehicle();
+                    }
                     break;
                 case 3:
                     payATicket();
@@ -75,9 +83,6 @@ public class MovingUApp {
                     checkAvailability();
                     break;
                 case 5:
-                    break;
-                default:
-                    System.out.println("Please put a valid option");
                     break;
             }
         } while (option != 5);
@@ -93,19 +98,19 @@ public class MovingUApp {
         switch (type) {
             case 1:
                 // All the student information
-                System.out.println("Please, enter your DNI: ");
+                System.out.print("Please, enter your DNI: ");
                 String StudentDNI = userInput.next();
 
-                System.out.println("Please, enter your name: ");
+                System.out.print("Please, enter your name: ");
                 String StudentName = userInput.next();
 
-                System.out.println("Please, enter your age: ");
+                System.out.print("Please, enter your age: ");
                 int StudentAge = userInput.nextInt();
 
-                System.out.println("Please, enter your College DNI: ");
+                System.out.print("Please, enter your College DNI: ");
                 String collegeDNI = userInput.next();
 
-                System.out.println("Please, enter the Faculty acronym: ");
+                System.out.print("Please, enter the Faculty acronym: ");
                 String facultyAcronym = userInput.next();
 
                 //create the student object
@@ -113,8 +118,7 @@ public class MovingUApp {
                 users.add(student);
 
                 //Display a message: User was registered
-                System.out.println("The student was registered successfully!");
-                System.out.println(student);
+                System.out.println("The student " + student.getName() + " was registered successfully!");
                 break;
 
             case 2:
@@ -136,15 +140,42 @@ public class MovingUApp {
                 users.add(trainer);
 
                 //Display a message: User was registered
-                System.out.println("The Trainer was registered successfully!");
-                System.out.println(trainer);
+                System.out.println("The Trainer " + trainer.getName() + " was registered successfully!");
                 break;
         }
     }
 
-    public static void borrowReturn() {
+    public static void borrowVehicle() {
 
         Scanner userInput = new Scanner(System.in);
+
+        System.out.println("Please, enter your DNI: ");
+        String StudentDNI = userInput.next();
+
+        for ( int i = 0; i < users.size(); i++) {
+            if (users.get(i).getDni() == StudentDNI) {
+                if (users.get(i).isBlocked() == true);
+                    break;
+            }
+        }
+
+        System.out.println("Please, press 1 for Scooter or press 2 for Bicycle: ");
+        String typeofVehicle = userInput.next();
+
+    }
+
+    public static void returnVehicle() {
+    Scanner userInput = new Scanner(System.in);
+
+    System.out.println("Please, enter your Ticket Id: ");
+    String ticketId = userInput.next();
+
+    for ( int i = 0; i < tickets.size(); i++) {
+        if(tickets.get(i).getId() == ticketId){
+            tickets.get(i).setReturnDate(LocalDate.now());
+        }
+    }
+
 
         System.out.print("Please, press 1 for Borrow or press 2 for Return: ");
         int type = userInput.nextInt();
@@ -156,7 +187,7 @@ public class MovingUApp {
                 for ( int i = 0; i < users.size(); i++) {
                     if (users.get(i).getDni() == StudentDNI) {
                         if (users.get(i).isBlocked() == true);
-                            break;
+                        break;
                     }
                 }
 
@@ -166,7 +197,6 @@ public class MovingUApp {
 
             case 2:
                 System.out.println("Please, enter your Ticket Id: ");
-                String ticketId = userInput.next();
                 for ( int i = 0; i < tickets.size(); i++) {
                     if(tickets.get(i).getId() == ticketId){
                         tickets.get(i).setReturnDate(LocalDate.now());
@@ -204,10 +234,14 @@ public class MovingUApp {
 
         for ( int i = 0; i < vehicles.size(); i++) {
             if(vehicles.get(i).getClass() == Scooter.class){
-                numOfScooters++;
+                if(vehicles.get(i).isAvailable() == true){
+                    numOfScooters++;
+                }
             }
             if(vehicles.get(i).getClass() == Bicycle.class){
-                numOfBicycles++;
+                if(vehicles.get(i).isAvailable() == true){
+                    numOfBicycles++;
+                }
             }
         }
         System.out.println("There are: " + numOfScooters + " scooters available");
