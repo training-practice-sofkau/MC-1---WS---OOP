@@ -50,7 +50,6 @@ public class MovingUApp {
                         String ticketId = util.captureString();
                         tickets.returnVehicle(tickets.getTicket(ticketId));
                     }
-
                     break;
                 case 3 ://Pay a ticket
                     System.out.println("Type ticket ID:");
@@ -67,14 +66,10 @@ public class MovingUApp {
                 case 6 ://Shows tickets
                     System.out.println(tickets);
                     break;
-                case 7:
-                    System.out.println(tickets.getTicket("0")
-                            .calculateDebt("B",vehicles.getVehicleById("B-001") ));
                 default:
                     System.out.println("Invalid option");
                     break;
             }
-            //System.out.println("Presione 'enter' para continuar");
 
         }while (option != 5);
 

@@ -84,15 +84,19 @@ public class TicketList implements ITicket{
         returnedVehicle.setCondition(vehicleCondition);
         returnedVehicle.updateAvailability(true);
         ticket.setReturnDate();
+        ticket.setStatus("Pending");
         System.out.println("You have to pay:");
         System.out.println(ticket.calculateDebt(returnedVehicle.getVtype(), returnedVehicle)+"$");
     }
     @Override
     public void payTicket(Ticket ticket) {
         Vehicle ticketVehicle = vehicles.getVehicleById(ticket.getVehicleId());
-        System.out.println("Your have paid: "+ ticketVehicle+ "$");
-        System.out.println(ticket.calculateDebt(ticketVehicle.getVtype(), ticketVehicle));
+        System.out.println("Your have paid: "+ ticket.calculateDebt(ticketVehicle.getVtype(), ticketVehicle)+ "$");
         ticket.setAmountPaid();
+        ticket.setStatus("Ok");
+        User ticketUser= userList.getUser(ticket.getUserId());
+        ticketUser.setTicketOn(false);
+        ticketUser.setBlocked(false);
     }
 
     @Override

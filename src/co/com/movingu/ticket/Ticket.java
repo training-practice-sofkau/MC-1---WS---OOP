@@ -44,6 +44,10 @@ public class Ticket {
         return vehicleId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public void setAmountPaid() {
         this.amountToPay = 0L;
     }
@@ -58,6 +62,9 @@ public class Ticket {
 
     public void setHelmet(Boolean helmet) {
         this.helmet = helmet;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     //TO DO: Add the necessary getters & setters u other extra function
