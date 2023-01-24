@@ -1,7 +1,9 @@
 package co.com.movingu.user;
 
+import co.com.movingu.ticket.Ticket;
+
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Student extends User{
+public class Student extends User implements financiable{
     private String collegeDNI;
     private String faculty;
 
@@ -19,5 +21,10 @@ public class Student extends User{
         }else{
             System.out.println("The student "+name+"is blocked bc he/she already borrow a vehicle");
         }
+    }
+    @Override
+    public void financeDebt(Ticket ticket){
+        ticket.cancelFee();
+        System.out.println("The student has been financed by University");
     }
 }
