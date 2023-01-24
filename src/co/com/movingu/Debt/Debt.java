@@ -2,37 +2,32 @@ package co.com.movingu.Debt;
 
 public class Debt {
 
-    private boolean isHelmet;
-    private boolean noTime;
-    private boolean damage;
 
-    public Debt(boolean isHelmet, boolean noTime, boolean damage) {
-        this.isHelmet = isHelmet;
-        this.noTime = noTime;
-        this.damage = damage;
+    private double valueDebt;
+
+    public Debt() {
     }
 
-    public boolean isHelmet() {
-        return isHelmet;
+    public void penaltyForNoTime(int pTime){
+        this.valueDebt=this.valueDebt+pTime*3;
     }
 
-    public void setHelmet(boolean helmet) {
-        isHelmet = helmet;
+    public void withoutHelmet(boolean isHelmet){
+        if(!isHelmet) this.valueDebt=this.valueDebt+10;
     }
 
-    public boolean isNoTime() {
-        return noTime;
+    public void penaltyForDamage(boolean helmetDamaged,boolean vehicleDamage,char typeVH){
+        if(helmetDamaged) this.valueDebt=this.valueDebt+5;
+        switch (typeVH){
+            case 'b':
+                this.valueDebt=this.valueDebt+20;
+                break;
+            case 's':
+                this.valueDebt=this.valueDebt+30;
+                break;
+        }
+
     }
 
-    public void setNoTime(boolean noTime) {
-        this.noTime = noTime;
-    }
 
-    public boolean isDamage() {
-        return damage;
-    }
-
-    public void setDamage(boolean damage) {
-        this.damage = damage;
-    }
 }
