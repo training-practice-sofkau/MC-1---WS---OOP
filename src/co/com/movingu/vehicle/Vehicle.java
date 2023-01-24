@@ -22,6 +22,7 @@ public abstract class Vehicle implements Loanable{
     public void updateAvailability(boolean value) {
         this.available = value;
     }
-    //TO DO: Attributes
+    public abstract void incrementNum();
 
+    public abstract void  decrementNum();
 }

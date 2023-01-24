@@ -40,7 +40,6 @@ public class MovingUApp {
         }};
 
         menu();
-
     }
 
     public static void menu(){
@@ -89,19 +88,16 @@ public class MovingUApp {
     }
 
     public static void availavility() {
-        int numBicycle = 0;
-        int numScooters = 0;
         for (Vehicle v : vehicles){
             System.out.println(v.getClass().getSimpleName());
             if (v.getClass().getSimpleName().equals("Bicycle") && v.isAvailable()){
-                numBicycle ++;
+                v.incrementNum();
             } else if (v.getClass().getSimpleName().equals("Scooter") && v.isAvailable()) {
-
-                numScooters ++;
+                v.incrementNum();
             }
         }
-        System.out.println(numBicycle);
-        System.out.println(numScooters);
+        System.out.println(Bicycle.numAvailable);
+        System.out.println(Scooter.numAvailable);
 
     }
 
