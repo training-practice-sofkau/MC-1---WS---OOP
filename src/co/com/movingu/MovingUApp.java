@@ -1,77 +1,81 @@
 package co.com.movingu;
 
 import co.com.movingu.ticket.Ticket;
+import co.com.movingu.ticket.TicketList;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
 import co.com.movingu.user.User;
+import co.com.movingu.user.UserList;
+import co.com.movingu.utilities.Utilities;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
+import co.com.movingu.vehicle.VehicleInventory;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class MovingUApp {
-    static List<User> users = new ArrayList<>(){{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+    private static int option;
 
-
-    }};
     public static void main(String[] args) {
-        //Lists that contains data related to the WS
+        Utilities util = new Utilities();
+        UserList userList = new UserList();
+        VehicleInventory vehicles = new VehicleInventory();
+        TicketList tickets = new TicketList(vehicles, userList);
 
 
-        List<Vehicle> vehicles= new ArrayList<>(){{
-            //add(new Bicycle("B-001","red",true, true, "M"));
-            //add(new Bicycle("B-002","blue",false, false, "M"));
-            //add(new Bicycle("B-003","red",true, true, "R"));
-            //add(new Bicycle("B-004","green",false, true, "R"));
-            //add(new Bicycle("B-005","grey",true, true, "M"));
-            //add(new Scooter("S-001","black",false, true, 20));
-            //add(new Scooter("S-002","blue",true, true, 50));
-            //add(new Scooter("S-003","grey",true, true, 80));
-            //add(new Scooter("S-004","grey",true, false, 50));
-            //add(new Scooter("S-005","black",false, false, 50));
+        do{
+            util.menu();
+            option = util.captureInt();
+            switch (option) {
+                 case 1 ://register
+                    userList.registerUser();
+                    break;
+                case 2 ://Borrow/return
+                    Integer option;
+                    System.out.println("Type 1 to borrow a vehicle or 2 to return one");
+                    option=util.captureInt();
+                    if (option==1){
+                    try {
+                        tickets.addTicket();
+                    } catch (Exception e) {
+                        System.out.println("Please verify the input data and try again");;
+                    }}
+                    if (option==2){
+                        System.out.println("Type ticket ID");
+                        String ticketId = util.captureString();
+                        tickets.returnVehicle(tickets.getTicket(ticketId));
+                    }
+                    break;
+                case 3 ://Pay a ticket
+                    System.out.println("Type ticket ID:");
+                    String ticketIdToPay = util.captureString();
+                    tickets.payTicket(tickets.getTicket(ticketIdToPay));
+                    break;
+                case 4 ://Search available
+                    System.out.println("Available vehicles:");
+                    System.out.println(vehicles);
+                    break;
+                case 5 ://Exit
+                    System.out.println("The app has finished");
+                    break;
+                case 6 ://Shows tickets
+                    System.out.println(tickets);
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
 
-        }};
-
-        List<Ticket> tickets = new ArrayList<>(){{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
-
-        }};
-
-        //TO DO: Implement the necessary logic to make the menu work
-        menu();
+        }while (option != 5);
 
 
     }
 
-    public static void menu(){
-        System.out.println("Moving - U");
-        System.out.println("1. Register user");
-        System.out.println("2. Borrow/Return");
-        System.out.println("3. Pay a ticket");
-        System.out.println("4. Check availability");
-        System.out.println("5. Exit");
+
     }
 
-    public static void registerUser(){
-        Scanner sc = new Scanner(System.in);
-        //Ask the commom data: DNI, Name, age.
-        System.out.print("User is: Student (S) / Trainer (T)");
-        String type = sc.nextLine();
-        switch (type){
-            case "S":
-                // Ask the college DNI and he faculty
-                //create the student object
-                User s = new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC");
-                users.add(s);
-                //Display a message: User was registered
-                break;
-        }
-    }
-
-}
