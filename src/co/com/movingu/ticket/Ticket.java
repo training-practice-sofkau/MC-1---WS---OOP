@@ -2,10 +2,7 @@ package co.com.movingu.ticket;
 
 import co.com.movingu.Context;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 //TO DO: Complete/Rewrite the class according to the requirements
 public class Ticket {
@@ -68,10 +65,6 @@ public class Ticket {
         return this.ticketId;
     }
 
-    public Date getBorrowingDate() {
-        return this.borrowingDate;
-    }
-
     public Boolean verifySolved() {
         return this.isSolved;
     }
@@ -112,6 +105,16 @@ public class Ticket {
             this.status = this.STATUS_CASES[1];
             System.out.println("The vehicle has been returned successfully \n the ticket remains pending");
             return false;
+        }
+    }
+    public boolean verifyReturnTime (Date returnTime){
+        int relativeTime = returnTime.getSeconds()-this.borrowingDate.getSeconds();
+        System.out.println(relativeTime);
+        if(relativeTime>30){
+            increseDebt(0);
+            return false;
+        }else{
+            return true;
         }
     }
 }
