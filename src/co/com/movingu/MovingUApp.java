@@ -9,6 +9,7 @@ import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class MovingUApp {
         }};
 
         List<Ticket> tickets = new ArrayList<>();
-        tickets.add(new Ticket(tickets, "111", 0, "000"));
+        tickets.add(new Ticket(tickets, "111", 0, "123"));
 
         boolean app = true;
         do {
@@ -45,17 +46,16 @@ public class MovingUApp {
                 case 2:
                     System.out.println("Enter your personal DNI");
                     String personalDNI = sc.nextLine();
-                    List<Ticket> userTickets = tickets.stream().filter(ticket -> ticket.getUserDni().equals(personalDNI) && ticket.verifySolved()).collect(Collectors.toList());
                     if (users.stream().anyMatch(user -> user.getDni().equals(personalDNI))) {
-                        if (userTickets.size() == 0) {
+                        if (tickets.stream().anyMatch(ticket -> ticket.getUserDni().equals(personalDNI) && ticket.verifySolved())) {
                             System.out.println("No tickets found");
-                            System.out.println("Would you like to borrow a vehicle (enter 1) or to return a vehicle  (enter 0)");
-                            answer = Integer.parseInt(sc.nextLine());
-                            if (answer == 1) {
-                                borrowVehicle(sc, vehicles, personalDNI, tickets);
-                            }
+                            borrowVehicle(sc, vehicles, personalDNI, tickets);
                         } else {
-                            System.out.println("Found tickets");
+                            Ticket tempTicket = tickets.stream().filter(ticket -> ticket.getUserDni().equals(personalDNI) && !ticket.verifySolved()).collect(Collectors.toList()).get(0);
+                            System.out.println("To borrow a vehicle you first need to solve the ticket with ID " + tempTicket.getTicketId());
+                            System.out.println("To solve it now enter (1)");
+                            answer = Integer.parseInt(sc.nextLine());
+                            if (answer == 1) solveTicket(sc, vehicles, personalDNI, tempTicket);
                         }
                     } else {
                         System.out.println("The user DNI was not found in the data base \n Register a new user to continue");
@@ -65,6 +65,7 @@ public class MovingUApp {
         } while (app);
         sc.close();
     }
+
 
     static void menu() {
         System.out.println("Moving - U");
@@ -136,6 +137,49 @@ public class MovingUApp {
                     System.out.println("No vehicles available");
                 }
                 break;
+        }
+    }
+
+    static void solveTicket(Scanner sc, List<Vehicle> vehicles, String personalDNI, Ticket tempTicket) {
+        if (tempTicket.getStatus().equals(tempTicket.STATUS_CASES[2])) {
+            System.out.println("The borrowed vehicle will be returned");
+            returnVehicle(sc, vehicles, personalDNI, tempTicket);
+        } else if (tempTicket.getStatus().equals(tempTicket.STATUS_CASES[1])) {
+            System.out.println("You have a debt from a previous service, would you like to cancel it?\nEnter (1) if you do");
+            int answer = Integer.parseInt(sc.nextLine());
+            if (answer == 1) {
+                tempTicket.cancelFee();
+                vehicles.stream().filter(v -> v.getUID().equals(tempTicket.getVehicleID())).collect(Collectors.toList()).get(0).updateAvailability(true);
+            }
+        }
+    }
+
+    static void returnVehicle(Scanner sc, List<Vehicle> vehicles, String personalDNI, Ticket tempTicket) {
+        if (tempTicket.verifyReturnTime(new Date())) {
+            System.out.println("The vehicle has been returned on time, no delay return fee will be applied");
+        } else {
+            System.out.println("The vehicle has been returned over the time, a delayed return fee will be applied");
+        }
+        System.out.println("Are you returning the helmet lent to you?\nEnter (1) if you do, otherwise enter(0)");
+        int answer = Integer.parseInt(sc.nextLine());
+        if (answer == 1) {
+            System.out.println("Is the helmet damaged?\nEnter (1) if you do, otherwise enter(0)");
+            answer = Integer.parseInt(sc.nextLine());
+            if (answer == 1) {
+                System.out.println("A damaged accessories fee will be applied");
+                tempTicket.increseDebt(2);
+            }else {
+                System.out.println("No accessories related fee will be applied");
+            }
+        }else{
+            System.out.println("A missing accessory fee will be applied");
+            tempTicket.increseDebt(1);
+        }
+        System.out.println("Are you returning the vehicle lent to you in good conditions?\nEnter (1) if you do, otherwise enter(0)");
+        answer = Integer.parseInt(sc.nextLine());
+        if (answer == 1) {
+            System.out.println("A damaged vehicle fee will be applied");
+            tempTicket.increseDebt(3);
         }
     }
 
