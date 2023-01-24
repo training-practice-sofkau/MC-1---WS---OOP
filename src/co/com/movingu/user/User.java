@@ -4,13 +4,9 @@ package co.com.movingu.user;
 public abstract class User {
     //TO DO: Attributes
     protected String dni;
-
     protected String name;
-
     protected int age;
-
     protected boolean blocked;
-
     protected boolean ticketOn;
 
     public User(String dni, String name, int age) {
