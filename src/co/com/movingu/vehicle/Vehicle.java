@@ -34,10 +34,14 @@ public abstract class Vehicle implements Loanable{
         return condition;
     }
 
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
     @Override
     public void updateAvailability(boolean value) {
         this.available = value;
     }
-    //TO DO: Attributes
+
 
 }

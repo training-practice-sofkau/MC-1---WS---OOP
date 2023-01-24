@@ -9,7 +9,7 @@ import co.com.movingu.vehicle.VehicleInventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketList {
+public class TicketList implements ITicket{
     private  List<Ticket> tickets = new ArrayList<>();
     private VehicleInventory vehicles;
     private UserList userList;
@@ -70,10 +70,37 @@ public class TicketList {
                 .get();
     }
 
+    public void returnVehicle(Ticket ticket){
+        Vehicle returnedVehicle= vehicles.getVehicleById(ticket.getVehicleId());
+        System.out.println("Are you returning the helmet? type: yes(y)/no (n)");
+        Boolean returnedHelmet=((util.captureString().equals("n")?false:true));
+        System.out.println("Type the helmet condition: Good/Bad");
+        Boolean helmetStatus=((util.captureString().equals("Bad")?false:true));
+        System.out.println("Type the vehicle condition: Good/Bad");
+        String vehicleCondition=util.captureString();
+
+        ticket.setHelmetStatus(helmetStatus);
+        ticket.setHelmet(returnedHelmet);
+        returnedVehicle.setCondition(vehicleCondition);
+        returnedVehicle.updateAvailability(true);
+        ticket.setReturnDate();
+        System.out.println("You have to pay:");
+        System.out.println(ticket.calculateDebt(returnedVehicle.getVtype(), returnedVehicle)+"$");
+    }
+    @Override
+    public void payTicket(Ticket ticket) {
+        Vehicle ticketVehicle = vehicles.getVehicleById(ticket.getVehicleId());
+        System.out.println("Your have paid: "+ ticketVehicle+ "$");
+        System.out.println(ticket.calculateDebt(ticketVehicle.getVtype(), ticketVehicle));
+        ticket.setAmountPaid();
+    }
+
     @Override
     public String toString() {
         return "TicketList{" +
                 "tickets=" + tickets +
                 '}';
     }
+
+
 }

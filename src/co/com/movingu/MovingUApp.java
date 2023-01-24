@@ -36,15 +36,26 @@ public class MovingUApp {
                     userList.registerUser();
                     break;
                 case 2 ://Borrow/return
+                    Integer option;
+                    System.out.println("Type 1 to borrow a vehicle or 2 to return one");
+                    option=util.captureInt();
+                    if (option==1){
                     try {
                         tickets.addTicket();
                     } catch (Exception e) {
                         System.out.println("Please verify the input data and try again");;
+                    }}
+                    if (option==2){
+                        System.out.println("Type ticket ID");
+                        String ticketId = util.captureString();
+                        tickets.returnVehicle(tickets.getTicket(ticketId));
                     }
 
                     break;
                 case 3 ://Pay a ticket
-
+                    System.out.println("Type ticket ID:");
+                    String ticketIdToPay = util.captureString();
+                    tickets.payTicket(tickets.getTicket(ticketIdToPay));
                     break;
                 case 4 ://Search available
                     System.out.println("Available vehicles:");

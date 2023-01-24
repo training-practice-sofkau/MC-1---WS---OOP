@@ -6,7 +6,7 @@ import co.com.movingu.vehicle.Vehicle;
 import java.util.Date;
 
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Ticket implements ITicket {
+public class Ticket {
 
     private String ticketID;
     private Date ticketCreation;
@@ -15,7 +15,7 @@ public class Ticket implements ITicket {
     private Boolean helmet;
     private Boolean helmetStatus;
     private String status;
-    private Integer amountToPay;
+    private Long amountToPay;
     private String vehicleId;
     private String userId;
 
@@ -32,13 +32,32 @@ public class Ticket implements ITicket {
         this.status = "Active";
         this.userId = userId;
         this.vehicleId=vehicleId;
-        this.amountToPay=0;
+        this.amountToPay=0L;
         this.helmet=true;
         this.helmetStatus=true;
     }
 
     public String getTicketID() {
         return ticketID;
+    }
+    public String getVehicleId(){
+        return vehicleId;
+    }
+
+    public void setAmountPaid() {
+        this.amountToPay = 0L;
+    }
+
+    public void setReturnDate() {
+        this.returnDate = new Date(System.currentTimeMillis());
+    }
+
+    public void setHelmetStatus(Boolean helmetStatus) {
+        this.helmetStatus = helmetStatus;
+    }
+
+    public void setHelmet(Boolean helmet) {
+        this.helmet = helmet;
     }
 
     //TO DO: Add the necessary getters & setters u other extra function
@@ -65,13 +84,11 @@ public class Ticket implements ITicket {
         if(vehicleType.equals("S")&& vehicle.getCondition().equals("Bad")){
             damageDebt=30;
         }
-        return delayDebt+helmetDebt+damageDebt+helmetDamageDebt;
+        amountToPay =delayDebt+helmetDebt+damageDebt+helmetDamageDebt;
+        return amountToPay;
     }
 
-    @Override
-    public Integer payTicket() {
-        return null;
-    }
+
 
 
 
