@@ -6,7 +6,7 @@ import co.com.movingu.vehicle.Vehicle;
 import java.time.LocalDateTime;
 
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Ticket {
+public class Ticket implements Upgradeable {
 
     private int idSecuence=1;
 
@@ -20,17 +20,24 @@ public class Ticket {
 
     private String ticketStatus;
 
+    private int rentHours;
+
+    private char vehicleType;
+
     private double amountToPay;
 
     private User uTicket;
 
     private Vehicle vTicket;
 
-    public Ticket(String code, LocalDateTime startTime, User uTicket, Vehicle vTicket) {
+    public Ticket(String code,char vehicleType, LocalDateTime startTime, User uTicket, Vehicle vTicket,int hours) {
         this.code = code;
+        this.vehicleType=vehicleType;
         this.startTime = startTime;
+        this.ticketStatus = "Active";
         this.uTicket = uTicket;
         this.vTicket = vTicket;
+        this.rentHours=hours;
     }
 
     public Ticket() {
@@ -84,10 +91,6 @@ public class Ticket {
         return ticketStatus;
     }
 
-    public void setTicketStatus(String ticketStatus) {
-        this.ticketStatus = ticketStatus;
-    }
-
     public double getAmountToPay() {
         return amountToPay;
     }
@@ -110,5 +113,26 @@ public class Ticket {
 
     public void setvTicket(Vehicle vTicket) {
         this.vTicket = vTicket;
+    }
+
+    public char getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(char vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public int getRentHours() {
+        return rentHours;
+    }
+
+    public void setRentHours(int rentHours) {
+        this.rentHours = rentHours;
+    }
+
+    @Override
+    public void updateState(String state) {
+        this.ticketStatus = state;
     }
 }

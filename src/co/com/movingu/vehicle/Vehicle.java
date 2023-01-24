@@ -10,10 +10,10 @@ public abstract class Vehicle implements Loanable{
     private boolean condition;
     private boolean available;
 
-    public Vehicle(String codeVH, String color, boolean condition) {
+    public Vehicle(String codeVH, String color, boolean available) {
         this.codeVH=codeVH;
         this.color=color;
-        this.condition=condition;
+        this.condition=available;
         this.available = true;
     }
 

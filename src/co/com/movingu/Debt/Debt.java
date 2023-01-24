@@ -18,16 +18,23 @@ public class Debt {
 
     public void penaltyForDamage(boolean helmetDamaged,boolean vehicleDamage,char typeVH){
         if(helmetDamaged) this.valueDebt=this.valueDebt+5;
-        switch (typeVH){
-            case 'b':
-                this.valueDebt=this.valueDebt+20;
-                break;
-            case 's':
-                this.valueDebt=this.valueDebt+30;
-                break;
+        if(!vehicleDamage){
+            switch (typeVH){
+                case 'b':
+                    this.valueDebt=this.valueDebt+20;
+                    break;
+                case 's':
+                    this.valueDebt=this.valueDebt+30;
+                    break;
+            }
         }
-
     }
 
+    public double getValueDebt() {
+        return valueDebt;
+    }
 
+    public void setValueDebt(double valueDebt) {
+        this.valueDebt = valueDebt;
+    }
 }
