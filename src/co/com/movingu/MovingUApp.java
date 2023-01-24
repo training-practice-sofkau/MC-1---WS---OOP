@@ -268,9 +268,10 @@ public class MovingUApp {
 
                     Debt myDebt = new Debt();
 
-                    int differenceHours= (int) (ChronoUnit.SECONDS.between(myTicket.get().getStartTime(),myTicket.get().getEndTime()) - myTicket.get().getRentHours());
-                    System.out.println(differenceHours);
-                    if (differenceHours-myTicket.get().getRentHours()>0) myDebt.penaltyForNoTime(differenceHours/30);
+                    //For WK, second are taken as minutes to work
+                    int differenceHours= (int) (ChronoUnit.SECONDS.between(myTicket.get().getStartTime(),myTicket.get().getEndTime()) - myTicket.get().getRentHours()*60);
+
+                    if (differenceHours>0) myDebt.penaltyForNoTime(differenceHours/30);
                     myDebt.withoutHelmet(isHelmet);
                     myDebt.penaltyForDamage(isHelmetDamaged,condition,myTicket.get().getVehicleType());
 
@@ -331,7 +332,7 @@ public class MovingUApp {
                 System.out.println("Time rented: "+myTicket.get().getRentHours()+" hours");
                 System.out.println("Status: "+myTicket.get().getTicketStatus());
             }else{
-                System.out.println("This ticket has already been paid");
+                System.out.println("This ticket has already been paid or it doesn't have debts yet");
             }
         }else{
             System.out.println("Ticket not exist!");
@@ -339,8 +340,8 @@ public class MovingUApp {
     }
 
     public static void checkAvailability(){
-        Long scooters=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Scooter).count();
-        Long bicycles=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Bicycle).count();
+        long scooters=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Scooter).count();
+        long bicycles=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Bicycle).count();
 
         System.out.println("Available Vehicles");
         System.out.println("Scooters: "+scooters);
