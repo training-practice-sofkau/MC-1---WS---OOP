@@ -26,11 +26,11 @@ public class Ticket {
 
     private Vehicle vTicket;
 
-    public Ticket(boolean helmetSupplied, User uTicket, Vehicle vTicket) {
-        this.helmetSupplied = helmetSupplied;
+    public Ticket(String code, LocalDateTime startTime, User uTicket, Vehicle vTicket) {
+        this.code = code;
+        this.startTime = startTime;
         this.uTicket = uTicket;
         this.vTicket = vTicket;
-        this.startTime=LocalDateTime.now();
     }
 
     public Ticket() {
