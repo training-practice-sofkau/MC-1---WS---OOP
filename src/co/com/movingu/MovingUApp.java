@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class MovingUApp {
     static List<User> users = new ArrayList<>() {{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Student("000", "Carolina Montoya", 24, "201547896", "FIEC"));
+        add(new Trainer("111", "Washington Pesantez", 36, "lecturer"));
     }};
     static Scanner sc = new Scanner(System.in);
 
@@ -24,40 +24,45 @@ public class MovingUApp {
 
     public static void main(String[] args) {
         List<Vehicle> vehicles = new ArrayList<>() {{
-            add(new Bicycle("123",true, "red", "Ready to use"));
+            add(new Bicycle("123", true, "red", "Ready to use"));
 
-            add(new Scooter("465",true, "black", "Ready to use"));
+            add(new Scooter("465", true, "black", "Ready to use"));
 
         }};
 
         List<Ticket> tickets = new ArrayList<>();
         tickets.add(new Ticket(tickets, "111", 0, "000"));
-        ;
 
-        //TO DO: Implement the necessary logic to make the menu work
-        menu();
-        int answer = Integer.parseInt(sc.nextLine());
-        switch (answer) {
-            case 1:
-                registerUser(sc);
-                break;
-            case 2:
-                System.out.println("Enter your personal DNI");
-                String personalDNI = sc.nextLine();
-                List<Ticket> userTickets = tickets.stream().filter(ticket -> ticket.getUserDni().equals(personalDNI) && ticket.verifySolved()).collect(Collectors.toList());
-                if (userTickets.size() == 0) {
-                    System.out.println("No tickets found");
-                    System.out.println("Would you like to borrow a vehicle (enter 1) or to return a vehicle  (enter 0)");
-                    answer = Integer.parseInt(sc.nextLine());
-                    if (answer == 1) {
-                        borrowVehicle(sc, vehicles, personalDNI, tickets);
+        boolean app = true;
+        do {
+            //TO DO: Implement the necessary logic to make the menu work
+            menu();
+            int answer = Integer.parseInt(sc.nextLine());
+            switch (answer) {
+                case 1:
+                    registerUser(sc);
+                    break;
+                case 2:
+                    System.out.println("Enter your personal DNI");
+                    String personalDNI = sc.nextLine();
+                    List<Ticket> userTickets = tickets.stream().filter(ticket -> ticket.getUserDni().equals(personalDNI) && ticket.verifySolved()).collect(Collectors.toList());
+                    if (users.stream().anyMatch(user -> user.getDni().equals(personalDNI))) {
+                        if (userTickets.size() == 0) {
+                            System.out.println("No tickets found");
+                            System.out.println("Would you like to borrow a vehicle (enter 1) or to return a vehicle  (enter 0)");
+                            answer = Integer.parseInt(sc.nextLine());
+                            if (answer == 1) {
+                                borrowVehicle(sc, vehicles, personalDNI, tickets);
+                            }
+                        } else {
+                            System.out.println("Found tickets");
+                        }
+                    } else {
+                        System.out.println("The user DNI was not found in the data base \n Register a new user to continue");
                     }
-                } else {
-                    System.out.println("Found tickets");
-                }
-                break;
-        }
-
+                    break;
+            }
+        } while (app);
         sc.close();
     }
 
@@ -110,19 +115,43 @@ public class MovingUApp {
         System.out.println("Would you like to borrow a bicycle (enter 1) or a scooter (enter 2)?");
         switch (sc.nextLine()) {
             case "1":
-                System.out.println(vehicles.get(0) instanceof Bicycle);
-                Vehicle borrowingBicycle = vehicles.stream().filter(vehicle -> vehicle instanceof Bicycle).findFirst().get();
-                borrowingBicycle.updateAvailability(false);
-                tickets.add(new Ticket(tickets, DNI, 1, borrowingBicycle.getUID()));
-                System.out.println("Vehicle borrowed successfully");
+                Vehicle borrowingBicycle = checkAvailability(vehicles, "Bicycle");
+                if (borrowingBicycle != null) {
+                    borrowingBicycle.updateAvailability(false);
+                    tickets.add(new Ticket(tickets, DNI, 1, borrowingBicycle.getUID()));
+                    System.out.println("Vehicle borrowed successfully");
+                    break;
+                } else {
+                    System.out.println("No vehicles available");
+                }
                 break;
             case "2":
-                System.out.println(vehicles.get(0) instanceof Bicycle);
-                Vehicle borrowingScooter = vehicles.stream().filter(vehicle -> vehicle instanceof Scooter).findFirst().get();
-                borrowingScooter.updateAvailability(false);
-                tickets.add(new Ticket(tickets, DNI, 1, borrowingScooter.getUID()));
-                System.out.println("Vehicle borrowed successfully");
+                Vehicle borrowingScooter = checkAvailability(vehicles, "Scooter");
+                if (borrowingScooter != null) {
+                    borrowingScooter.updateAvailability(false);
+                    tickets.add(new Ticket(tickets, DNI, 1, borrowingScooter.getUID()));
+                    System.out.println("Vehicle borrowed successfully");
+                    break;
+                } else {
+                    System.out.println("No vehicles available");
+                }
                 break;
+        }
+    }
+
+    static Vehicle checkAvailability(List<Vehicle> vehicles, String className) {
+        if (className.equals("Bicycle")) {
+            if (vehicles.stream().anyMatch(vehicle -> vehicle instanceof Bicycle && vehicle.isAvailable())) {
+                return vehicles.stream().filter(vehicle -> vehicle instanceof Bicycle).findFirst().get();
+            } else {
+                return null;
+            }
+        } else {
+            if (vehicles.stream().anyMatch(vehicle -> vehicle instanceof Scooter && vehicle.isAvailable())) {
+                return vehicles.stream().filter(vehicle -> vehicle instanceof Scooter).findFirst().get();
+            } else {
+                return null;
+            }
         }
     }
 

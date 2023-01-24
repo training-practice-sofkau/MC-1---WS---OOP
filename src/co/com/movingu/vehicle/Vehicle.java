@@ -2,9 +2,9 @@ package co.com.movingu.vehicle;
 
 //TO DO: Complete/Rewrite the class according to the requirements
 public abstract class Vehicle implements Loanable{
-    private String UID;
+    private final String UID;
     private boolean available;
-    private String color;
+    public final String color;
     private String state;
 
     public Vehicle(String UID, boolean available, String color, String state) {
@@ -19,8 +19,18 @@ public abstract class Vehicle implements Loanable{
         this.available = value;
     }
 
+    public void updateState(boolean isReady) {
+        this.state = isReady? "Ready to use" : "On maintenance";
+        if (isReady) available=true;
+    }
+
+
     public String getUID() {
         return UID;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
 }
