@@ -21,4 +21,40 @@ public abstract class Vehicle implements Loanable{
         this.isAvailable = value;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isUsable() {
+        return this.isUsable;
+    }
+
+    public void setUsable(int isUsable) {
+        if (isUsable == 1){
+            this.isUsable = true;
+        }
+        if (isUsable == 2){
+            this.isUsable = false;
+        }
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 }

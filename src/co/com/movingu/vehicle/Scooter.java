@@ -20,4 +20,12 @@ public class Scooter extends Vehicle{
                 ", isAvailable=" + isAvailable +
                 '}';
     }
+
+    public int getBatteryPercentage() {
+        return batteryPercentage;
+    }
+
+    public void setBatteryPercentage(int batteryPercentage) {
+        this.batteryPercentage = batteryPercentage;
+    }
 }

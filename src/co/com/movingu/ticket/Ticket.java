@@ -5,52 +5,70 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
+
 import java.time.*;
 
 
-public class Ticket {
+public class Ticket implements payable {
 
-    static String id = "T_";
+    private String id;
     static int counter = 0;
-    private LocalDate pickDate;
-    private LocalDate returnDate;
-    private boolean isThereAHelmet = true;
-
-    private boolean isDamaged = false;
-
-    private boolean isNoTime = false;
-    private double overTime = 0;
-    private String status = "Active";
-    private int amountToPay = 0;
+    private LocalDateTime pickDate;
+    private LocalDateTime returnDate;
+    private boolean isThereAHelmet;
+    private boolean isDamaged;
+    private double overTime;
+    private String status;
+    private int amountToPay;
     private User user;
     private Vehicle vehicle;
 
-    public Ticket (){
-        counter++;
-        id += counter;
-        pickDate = LocalDate.now();
-
+    public Ticket (User user, Vehicle vehicle){
+        setId();
+        pickDate = LocalDateTime.now();
+        returnDate = null;
+        isThereAHelmet = true;
+        isDamaged = false;
+        overTime = 0;
+        status = "Active";
+        amountToPay = 0;
+        this.user = user;
+        this.vehicle = vehicle;
     }
 
-    public int getDebt(){
-        if(!isThereAHelmet && vehicle.getClass() == Scooter.class){
-            amountToPay += 35;
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", pickDate=" + pickDate +
+                ", returnDate=" + returnDate +
+                ", isThereAHelmet=" + isThereAHelmet +
+                ", isDamaged=" + isDamaged +
+                ", overTime=" + overTime +
+                ", status='" + status + '\'' +
+                ", amountToPay=" + amountToPay +
+                ", user=" + user +
+                ", vehicle=" + vehicle +
+                '}';
+    }
+
+    public  String getId() {
+        return this.id;
+    }
+    public void setId(){
+        counter++;
+
+        if(counter < 10){
+            this.id = "T_00" + counter;
         }
-        if(!isThereAHelmet && vehicle.getClass() == Bicycle.class){
-            amountToPay += 25;
+        if(counter >= 10 ){
+            this.id = "T_0" + counter;
         }
-        return amountToPay;
     }
 
     public void setReturnDate(){
-        this.returnDate = LocalDate.now();
+        this.returnDate = LocalDateTime.now();
     }
-
-    public static String getId() {
-        return id;
-    }
-
-
     public static int getCounter() {
         return counter;
     }
@@ -59,44 +77,46 @@ public class Ticket {
         Ticket.counter = counter;
     }
 
-    public LocalDate getPickDate() {
+    public LocalDateTime getPickDate() {
         return pickDate;
     }
 
-    public void setPickDate(LocalDate pickDate) {
+    public void setPickDate(LocalDateTime pickDate) {
         this.pickDate = pickDate;
     }
 
-    public LocalDate getReturnDate() {
+    public LocalDateTime getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 
-    public boolean isThereAHelmet() {
-        return isThereAHelmet;
+    public boolean getIsThereAHelmet() {
+        return this.isThereAHelmet;
     }
 
-    public void setThereAHelmet(boolean thereAHelmet) {
-        isThereAHelmet = thereAHelmet;
+    public void setIsThereAHelmet(int isThereAHelmet) {
+        if (isThereAHelmet == 1){
+            this.isThereAHelmet = true;
+        }
+        if (isThereAHelmet == 2){
+            this.isThereAHelmet = false;
+        }
     }
 
     public boolean isDamaged() {
         return isDamaged;
     }
 
-    public void setDamaged(boolean damaged) {
-        isDamaged = damaged;
-    }
-
-    public boolean isNoTime() {
-        return isNoTime;
-    }
-
-    public void setNoTime(boolean noTime) {
-        isNoTime = noTime;
+    public void setDamaged(int isDamaged) {
+        if (isDamaged == 1){
+            this.isDamaged = false;
+        }
+        if (isDamaged == 2){
+            this.isDamaged = true;
+        }
     }
 
     public double getOverTime() {
@@ -111,16 +131,25 @@ public class Ticket {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public int getAmountToPay() {
         return amountToPay;
     }
 
-    public void setAmountToPay(int amountToPay) {
-        this.amountToPay = amountToPay;
+    public void setAmountToPay() {
+
+        if(!isThereAHelmet && vehicle.getClass() == Scooter.class){
+            this.amountToPay += 5;
+        }
+        if(isDamaged && vehicle.getClass() == Scooter.class){
+            this.amountToPay += 30;
+        }
+        if(!isThereAHelmet && vehicle.getClass() == Bicycle.class){
+            this.amountToPay += 5;
+        }
+        if(isDamaged && vehicle.getClass() == Bicycle.class){
+            this.amountToPay += 20;
+        }
+
     }
 
     public User getUser() {
@@ -137,5 +166,10 @@ public class Ticket {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    @Override
+    public void updateTicketStatus(String status) {
+        this.status = status;
     }
 }
