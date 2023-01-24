@@ -8,10 +8,7 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class MovingUApp {
     static Scanner input = new Scanner(System.in);
@@ -58,6 +55,7 @@ public class MovingUApp {
             System.out.println("4. Check availability");
             System.out.println("5. Exit");
             option = inputNumber.nextInt();
+
             switch (option) {
                 case 1:
                     registerUser();
@@ -164,11 +162,26 @@ public class MovingUApp {
                 found = true;
                 if (Objects.equals(u.getTicketOn(), "")) {
                     if (!u.isBlocked()) {
+
                         System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
                         String choose = input.nextLine().toUpperCase();
                         checkVhAvailability(choose);
-                        System.out.println("Write the id of the bicycle to borrow");
-                        changeAvOfBicycleById(input.nextLine().toUpperCase());
+
+                        if(choose.equals("B")){
+                            int randInt;
+                            do{
+                                randInt = (int) (Math.random() * (bicycles.size()));
+                            }while(!bicycles.get(randInt).isAvailable());
+                            changeAvOfBicycleById(randInt);
+
+                        } else if (choose.equals("S")) {
+                            int randInt;
+                            do{
+                                randInt = (int) (Math.random() * (scooters.size()));
+                            }while(!scooters.get(randInt).isAvailable());
+                            changeAvOfBicycleById(randInt);
+                        }
+
                         String ticketID = createTicket();
                         u.setTicketOn(ticketID);
                         break;
@@ -201,11 +214,12 @@ public class MovingUApp {
                 for (Bicycle b : bicycles) {
                     if (b.isAvailable()) {
                         availables++;
-                        System.out.println(b.toString());
                     }
                 }
                 if (availables == 0) {
-                    System.out.println("There's no bicycles available");
+                    System.out.println("There are no bicycles available");
+                }else{
+                    System.out.println("There are " + availables + " bicycles available");
                 }
                 break;
 
@@ -214,14 +228,14 @@ public class MovingUApp {
                 for (Scooter s : scooters) {
                     if (s.isAvailable()) {
                         availables++;
-                        System.out.println(s.toString());
                     }
                 }
                 if (availables == 0) {
-                    System.out.println("There's no scooters available");
+                    System.out.println("There ars no scooters available");
                 }
-                System.out.println("Write the id of the bicycle to borrow");
-                changeAvOfScooterById(input.nextLine().toUpperCase());
+                else{
+                    System.out.println("There are " + availables + " scooters available");
+                }
                 break;
 
             default:
@@ -231,37 +245,19 @@ public class MovingUApp {
         }
     }
 
-    static void changeAvOfBicycleById(String id) {
-        found = false;
-        for (Vehicle b : bicycles) {
-            if (Objects.equals(b.getVId(), id)) {
-                found = true;
-                b.updateAvailability(!b.isAvailable());
-                System.out.println("Bicycle availability changed");
-                pressIntro();
-                break;
-            }
-            System.out.println(b.toString());
-        }
-        if (!found) {
-            System.out.println("The bicycle with id: " + id + " does not exist");
+    static void changeAvOfBicycleById(int index) {
+        Bicycle bike = bicycles.get(index);
+        if(bike.isAvailable()){
+            bike.updateAvailability(!bike.isAvailable());
+            String ticketId = createTicket();
         }
     }
 
-    static void changeAvOfScooterById(String id) {
-        found = false;
-        for (Vehicle b : scooters) {
-            if (Objects.equals(b.getVId(), id)) {
-                found = true;
-                b.updateAvailability(!b.isAvailable());
-                System.out.println("Scooter availability changed");
-                pressIntro();
-                break;
-            }
-            System.out.println(b.toString());
-        }
-        if (!found) {
-            System.out.println("The scooter with id: " + id + " does not exist");
+    static void changeAvOfScooterById(int index) {
+        Scooter sco = scooters.get(index);
+        if(sco.isAvailable()){
+            sco.updateAvailability(!sco.isAvailable());
+            String ticketId = createTicket();
         }
     }
 
