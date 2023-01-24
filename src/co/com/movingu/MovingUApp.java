@@ -151,7 +151,7 @@ public class MovingUApp {
     public static void borrowOrReturn(){
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Can you borrow (B) or return a vehicle (R)?");
+        System.out.print("What do you want to do? borrow (B) or return a vehicle (R)");
         String op = sc.nextLine();
 
         switch (op.toLowerCase()){
@@ -168,14 +168,14 @@ public class MovingUApp {
                     Optional<Vehicle> myVehicle;
                     switch (op.toLowerCase()){
                         case "b":
-                            myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b instanceof Bicycle).findFirst();
+                            myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Bicycle).findFirst();
                             if(myVehicle.isPresent()){
                                 genTicket.setHelmetSupplied(true);
                                 genTicket.setuTicket(myUser.get());
                                 genTicket.setvTicket(myVehicle.get());
                                 genTicket.setCode();
                                 genTicket.setStartTime(LocalDateTime.now());
-                                tickets.add(genTicket);
+                                tickets.add(new Ticket(genTicket.getCode(),genTicket.getStartTime(),genTicket.getuTicket(),genTicket.getvTicket()));
                                 myVehicle.get().setAvailable(false);
                                 myUser.get().setTicketOn(true);
                                 updatedUsers(myUser.get());
@@ -185,18 +185,18 @@ public class MovingUApp {
                                 System.out.println("Vehicle type: Bicycle");
                                 System.out.println("Start time: "+genTicket.getStartTime());
                             }else {
-                                System.out.println("We don't have bicycles in this moment!");
+                                System.out.println("We don't have available bicycles in this moment!");
                             }
                             break;
                         case "s":
-                            myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b instanceof Scooter).findFirst();
+                            myVehicle=vehicles.stream().filter(b -> b.isAvailable() && b.isCondition() && b instanceof Scooter).findFirst();
                             if(myVehicle.isPresent()){
                                 genTicket.setHelmetSupplied(true);
                                 genTicket.setuTicket(myUser.get());
                                 genTicket.setvTicket(myVehicle.get());
                                 genTicket.setCode();
                                 genTicket.setStartTime(LocalDateTime.now());
-                                tickets.add(genTicket);
+                                tickets.add(new Ticket(genTicket.getCode(),genTicket.getStartTime(),genTicket.getuTicket(),genTicket.getvTicket()));
                                 myVehicle.get().setAvailable(false);
                                 myUser.get().setTicketOn(true);
                                 updatedUsers(myUser.get());
@@ -206,7 +206,7 @@ public class MovingUApp {
                                 System.out.println("Vehicle type: Scooter");
                                 System.out.println("Start time: "+genTicket.getStartTime());
                             }else{
-                                System.out.println("We don't have scooters in this moment!");
+                                System.out.println("We don't have available scooters in this moment!");
                             }
                             break;
                         default:
@@ -218,6 +218,9 @@ public class MovingUApp {
                 }
                 break;
             case "r":
+                for(Ticket t:tickets){
+                    System.out.println(t);
+                }
                 System.out.println("Type id ticket");
                 op = sc.nextLine();
                 Optional<Ticket> myTicket=lookForTickets(op);
