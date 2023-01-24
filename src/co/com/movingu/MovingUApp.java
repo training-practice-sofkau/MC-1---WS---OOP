@@ -30,15 +30,10 @@ public class MovingUApp {
 
     }};
 
+    static List<Ticket> tickets = new ArrayList<>(){{
+    }};
+
     public static void main(String[] args) {
-
-        List<Ticket> tickets = new ArrayList<>(){{
-            //add(new Ticket());
-            //add(new Ticket());
-            //add(new Ticket());
-
-        }};
-
         menu();
     }
 
@@ -88,13 +83,6 @@ public class MovingUApp {
     }
 
     public static void availavility() {
-        for (Vehicle v : vehicles){
-            if (v.getClass().getSimpleName().equals("Bicycle") && v.isAvailable()){
-                v.incrementNum();
-            } else if (v.getClass().getSimpleName().equals("Scooter") && v.isAvailable()) {
-                v.incrementNum();
-            }
-        }
         System.out.println("Bicycle available: " + Bicycle.availableBicyle);
         System.out.println("Scooter available: " + Scooter.availableScooter);
 

@@ -12,6 +12,7 @@ public abstract class Vehicle implements Loanable{
         this.color = color;
         this.available = available;
         this.condition = condition;
+
     }
 
     public boolean isAvailable() {

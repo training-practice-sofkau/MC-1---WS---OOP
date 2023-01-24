@@ -5,9 +5,13 @@ public class Scooter extends Vehicle{
     private int battery;
     public static int availableScooter;
 
-    public Scooter(String code, String color, boolean availalable, boolean condition, int battery) {
-        super(code, color, availalable, condition);
+    public Scooter(String code, String color, boolean available, boolean condition, int battery) {
+        super(code, color, available, condition);
         this.battery = battery;
+
+        if (available) {
+            incrementNum();
+        }
     }
 
     public static void incrementNum(){
