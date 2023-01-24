@@ -17,8 +17,8 @@ public class MovingUApp {
 
     //Lists that contains data related to the WS
     static List<User> users = new ArrayList<>() {{
-        add(new Student("0976152444", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Student("123", "Carolina Montoya", 24, "201547896", "FIEC"));
+        add(new Trainer("124", "Washington Pesantez", 36, "lecturer"));
     }};
     static List<Bicycle> bicycles = new ArrayList<>() {{
         add(new Bicycle("B-001", "red", true, true, "M"));
@@ -62,11 +62,18 @@ public class MovingUApp {
                     break;
                 case 2:
                     System.out.println("Choose your option: Borrow(B) or Return(R)");
-                    if (input.nextLine().equalsIgnoreCase("B")) {
-                        borrow();
-                    }
-                    if (input.nextLine().equalsIgnoreCase("R")) {
-                        returning();
+                    String op = input.nextLine();
+                    switch (op.toUpperCase()){
+                        case "B":
+                            borrow();
+                            break;
+                        case "R":
+                            returning();
+                            break;
+                        default:
+                            System.out.println("********** You enter an invalid input, try again **********");
+                            pressIntro();
+                            break;
                     }
                     break;
                 case 3:
@@ -83,6 +90,7 @@ public class MovingUApp {
                     break;
                 default:
                     System.out.println("********** You enter an invalid input, try again **********");
+                    pressIntro();
                     break;
             }
         }
@@ -177,13 +185,14 @@ public class MovingUApp {
                                     randInt = (int) (Math.random() * (bicycles.size()));
                                 } while (!bicycles.get(randInt).isAvailable());
                                 changeAvOfBicycleById(randInt);
-
+                                System.out.println("You got the " + bicycles.get(randInt).getColor() + " bicycle");
                                 break;
                             case "S":
                                 do {
                                     randInt = (int) (Math.random() * (scooters.size()));
                                 } while (!scooters.get(randInt).isAvailable());
                                 changeAvOfScooterById(randInt);
+                                System.out.println("You got the " + bicycles.get(randInt).getColor() + " scooter");
                                 break;
                             default:
                                 System.out.println("********** You enter an invalid input, try again **********");
@@ -210,13 +219,12 @@ public class MovingUApp {
 
                 }
             }
-            if (!found) {
+        }
+        if (!found) {
 
-                System.out.println("User dni does not exist, register the user first to proceed");
-                pressIntro();
-                break;
+            System.out.println("User dni does not exist, register the user first to proceed");
+            pressIntro();
 
-            }
         }
 
     }
@@ -276,6 +284,7 @@ public class MovingUApp {
     static String createTicket(String usrID, String vehicleId) {
         Ticket ticket = new Ticket(String.valueOf(tickets.size()), Ticket.Status.Active, usrID, vehicleId);
         tickets.add(ticket);
+        System.out.println("Ticket created successfully, ticket id: "+ ticket.getTicketId());
         return ticket.getTicketId();
     }
 

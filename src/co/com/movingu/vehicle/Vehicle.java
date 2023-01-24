@@ -27,6 +27,10 @@ public abstract class Vehicle implements Loanable {
         return vId;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     @Override
     public String toString() {
         return "{" + '\n' +

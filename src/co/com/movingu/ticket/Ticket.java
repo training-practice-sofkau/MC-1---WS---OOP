@@ -40,8 +40,6 @@ public class Ticket implements IPayable {
         //TODO
     }
 
-    //TODO: Add the necessary getters & setters u other extra function
-
     public enum Status {
         Ok,
         Pending,
