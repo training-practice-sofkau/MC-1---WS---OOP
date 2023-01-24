@@ -25,6 +25,18 @@ public abstract class User {
     public abstract void statusMsg();
 
 
+    public String getDni() {
+        return this.dni;
+    }
+    public boolean getBlocked() {
+        return this.blocked;
+    }
 
+    public boolean getTicketOn() {
+        return this.ticketOn;
+    }
 
+    public String getName() {
+        return name;
+    }
 }
