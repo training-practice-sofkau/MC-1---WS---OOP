@@ -21,18 +21,18 @@ public class MovingUApp {
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
     }};
     static List<Bicycle> bicycles = new ArrayList<>() {{
-        add(new Bicycle("B-001","red",true, true, "M"));
-        add(new Bicycle("B-002","blue",false, false, "M"));
-        add(new Bicycle("B-003","red",true, true, "R"));
-        add(new Bicycle("B-004","green",false, true, "R"));
-        add(new Bicycle("B-005","grey",true, true, "M"));
+        add(new Bicycle("B-001", "red", true, true, "M"));
+        add(new Bicycle("B-002", "blue", false, false, "M"));
+        add(new Bicycle("B-003", "red", true, true, "R"));
+        add(new Bicycle("B-004", "green", false, true, "R"));
+        add(new Bicycle("B-005", "grey", true, true, "M"));
     }};
     static List<Scooter> scooters = new ArrayList<>() {{
-        add(new Scooter("S-001","black",false, true, 20));
-        add(new Scooter("S-002","blue",true, true, 50));
-        add(new Scooter("S-003","grey",true, true, 80));
-        add(new Scooter("S-004","grey",true, false, 50));
-        add(new Scooter("S-005","black",false, false, 50));
+        add(new Scooter("S-001", "black", false, true, 20));
+        add(new Scooter("S-002", "blue", true, true, 50));
+        add(new Scooter("S-003", "grey", true, true, 80));
+        add(new Scooter("S-004", "grey", true, false, 50));
+        add(new Scooter("S-005", "black", false, false, 50));
     }};
     static List<Ticket> tickets = new ArrayList<>() {{
         //add(new Ticket());
@@ -92,7 +92,7 @@ public class MovingUApp {
 
     }
 
-    private static void payTicket(){
+    private static void payTicket() {
         System.out.println("Type the ticket id: ");
         String ticketId = input.nextLine();
         searchTicket(ticketId);
@@ -151,6 +151,9 @@ public class MovingUApp {
                 pressIntro();
                 break;
         }
+        for(User u: users){
+            System.out.println(u.toString());
+        }
     }
 
     static void borrow() {
@@ -166,41 +169,53 @@ public class MovingUApp {
                         System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
                         String choose = input.nextLine().toUpperCase();
                         checkVhAvailability(choose);
+                        int randInt = -1;
 
-                        if(choose.equals("B")){
-                            int randInt;
-                            do{
-                                randInt = (int) (Math.random() * (bicycles.size()));
-                            }while(!bicycles.get(randInt).isAvailable());
-                            changeAvOfBicycleById(randInt);
+                        switch (choose) {
+                            case "B":
+                                do {
+                                    randInt = (int) (Math.random() * (bicycles.size()));
+                                } while (!bicycles.get(randInt).isAvailable());
+                                changeAvOfBicycleById(randInt);
 
-                        } else if (choose.equals("S")) {
-                            int randInt;
-                            do{
-                                randInt = (int) (Math.random() * (scooters.size()));
-                            }while(!scooters.get(randInt).isAvailable());
-                            changeAvOfBicycleById(randInt);
+                                break;
+                            case "S":
+                                do {
+                                    randInt = (int) (Math.random() * (scooters.size()));
+                                } while (!scooters.get(randInt).isAvailable());
+                                changeAvOfScooterById(randInt);
+                                break;
+                            default:
+                                System.out.println("********** You enter an invalid input, try again **********");
+                                pressIntro();
+                                break;
                         }
-
-                        String ticketID = createTicket();
+                        String ticketID = createTicket(u.getDni(), scooters.get(randInt).getVId());
                         u.setTicketOn(ticketID);
                         break;
+
                     } else {
+
                         System.out.println("The user has a debt, he/she can't borrow until the situation is resolved");
                         pressIntro();
                         break;
+
                     }
                 } else {
+
                     System.out.println("The user already has loan of a vehicle which Ticket is: " + u.getTicketOn() + "\n" +
                             "he/she can't borrow until the situation is resolved");
                     pressIntro();
                     break;
+
                 }
             }
             if (!found) {
+
                 System.out.println("User dni does not exist, register the user first to proceed");
                 pressIntro();
                 break;
+
             }
         }
 
@@ -218,7 +233,7 @@ public class MovingUApp {
                 }
                 if (availables == 0) {
                     System.out.println("There are no bicycles available");
-                }else{
+                } else {
                     System.out.println("There are " + availables + " bicycles available");
                 }
                 break;
@@ -232,8 +247,7 @@ public class MovingUApp {
                 }
                 if (availables == 0) {
                     System.out.println("There ars no scooters available");
-                }
-                else{
+                } else {
                     System.out.println("There are " + availables + " scooters available");
                 }
                 break;
@@ -247,22 +261,20 @@ public class MovingUApp {
 
     static void changeAvOfBicycleById(int index) {
         Bicycle bike = bicycles.get(index);
-        if(bike.isAvailable()){
+        if (bike.isAvailable()) {
             bike.updateAvailability(!bike.isAvailable());
-            String ticketId = createTicket();
         }
     }
 
     static void changeAvOfScooterById(int index) {
         Scooter sco = scooters.get(index);
-        if(sco.isAvailable()){
+        if (sco.isAvailable()) {
             sco.updateAvailability(!sco.isAvailable());
-            String ticketId = createTicket();
         }
     }
 
-    static String createTicket() {
-        Ticket ticket = new Ticket(String.valueOf(tickets.size()), Ticket.Status.Active);
+    static String createTicket(String usrID, String vehicleId) {
+        Ticket ticket = new Ticket(String.valueOf(tickets.size()), Ticket.Status.Active, usrID, vehicleId);
         tickets.add(ticket);
         return ticket.getTicketId();
     }

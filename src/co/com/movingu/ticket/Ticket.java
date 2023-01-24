@@ -3,16 +3,20 @@ package co.com.movingu.ticket;
 import java.time.LocalDate;
 
 //TODO: Complete/Rewrite the class according to the requirements
-public class Ticket {
+public class Ticket implements IPayable {
 
     private String ticketId;
     private Status status;
+    private String usrID;
+    private String vehicleId;
     private LocalDate dateOfBorrow;
 
-    public Ticket(String ticketId, Status status){
+    public Ticket(String ticketId, Status status, String usrID, String vehicleId) {
         this.status = status;
-        this.ticketId = "T-0"+ticketId;
+        this.ticketId = "T-0" + ticketId;
         this.dateOfBorrow = LocalDate.now();
+        this.usrID = usrID;
+        this.vehicleId = vehicleId;
     }
 
     public String getTicketId() {
@@ -31,9 +35,14 @@ public class Ticket {
         this.status = status;
     }
 
+    @Override
+    public void updateDebt() {
+        //TODO
+    }
+
     //TODO: Add the necessary getters & setters u other extra function
 
-    public enum Status{
+    public enum Status {
         Ok,
         Pending,
         Active
