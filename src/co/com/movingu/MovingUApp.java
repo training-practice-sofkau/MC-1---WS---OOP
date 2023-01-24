@@ -165,6 +165,10 @@ public class MovingUApp {
                             if (Bicycle.getAvailableBicyle() > 0){
                                 System.out.println("available bicycles");
                                 Bicycle.decrementNum();
+
+                                Ticket t = new Ticket();
+                                t.displayTicket();
+                                tickets.add(t);
                             }else {
                                 System.out.println("No available bicycles");
                             }
