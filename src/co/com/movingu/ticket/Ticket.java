@@ -59,6 +59,36 @@ public class Ticket {
     public String getId() {
         return this.id;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Timestamp getStartTime() {
+        return this.startTime;
+    }
+    public Timestamp getEndTime() {
+        return this.endTime;
+    }
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+    public Vehicle getVehicle() {
+        return this.vehicle;
+    }
+
+    public void setDebt(boolean debt) {
+        this.debt = debt;
+    }
+
+    public int getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
+
     public String toString() {
         return "Ticket " + id + "\n" +
                 "Start time: " + startTime + "\n" +

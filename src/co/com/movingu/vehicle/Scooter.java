@@ -8,4 +8,8 @@ public class Scooter extends Vehicle{
         super(id, color, isAvailable, condition);
         this.batterySatus = batterySatus;
     }
+
+    public void setBatteryStatus(int batteryStatus) {
+        this.batterySatus = batteryStatus;
+    }
 }
