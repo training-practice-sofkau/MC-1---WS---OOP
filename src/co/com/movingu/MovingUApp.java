@@ -1,5 +1,6 @@
 package co.com.movingu;
 
+import co.com.movingu.ticket.DebtInterface;
 import co.com.movingu.ticket.Ticket;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
@@ -8,12 +9,13 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+        add(new Student("01", "Carolina Montoya", 24, "201547896", "FIEC"));
+        add(new Trainer("02", "Washington Pesantez", 36, "lecturer"));
 
     }};
 
@@ -75,8 +77,12 @@ public class MovingUApp {
                             borrowVehicle ();
                             break;
                         case 2:
-                            //returnVehicle ();
+                            returnVehicle ();
                     }
+                    break;
+                }
+                case 3:{
+                    payDebt();
                     break;
                 }
             }
@@ -162,6 +168,7 @@ public class MovingUApp {
                         System.out.println("No Vehicles of kind " + vehicle +
                                         "are available, try later");
                     }
+                    break;
                 case "Scooter":
                     for (Vehicle v: vehicles) {
                         if (v.getId().startsWith("S") && v.isAvailable()){
@@ -172,39 +179,99 @@ public class MovingUApp {
                         System.out.println("No Vehicles of kind " + vehicle +
                                 "are available, try later");
                     }
+                    break;
 
-                    Random random = new Random();
-                    randomVehi = vehicles1.get(random.nextInt(vehicles1.size()));
-                    System.out.print(randomVehi);
-                    System.out.print("how many hours will you use this vehicle?: ");
-                    duration = sc.nextInt();
-                    if (tickets.isEmpty()){
-                        id = "T-001";
-                    }
-                    if ( tickets.size()>0 && tickets.size()<10){
-                        id = "T-00" + (tickets.size()+1);
-                    } else if (tickets.size()>=10 && tickets.size()<100) {
-                        id = "T-0" + (tickets.size()+1);
-                    }
-                    else if (tickets.size()>=100 && tickets.size()<1000) {
-                        id = "T-" + (tickets.size()+1);
-                    }
-
-                    Ticket ticket = new Ticket(id,  java.time.LocalDateTime.now(),
-                            java.time.LocalDateTime.now().plusHours(duration), true, "Active",
-                            0,randomVehi, user1);
-                    user1.setTicketOn(true);
-                    tickets.add(ticket);
-
-                    System.out.println("Your ticket number is: " + ticket.getId());
-                    System.out.println(tickets);
-                    System.out.println(users);
-                    System.out.println(tickets.get(0).getBorrowedVehi().getId());
             }
+            Random random = new Random();
+            randomVehi = vehicles1.get(random.nextInt(vehicles1.size()));
+            System.out.print(randomVehi);
+            System.out.print("how many hours will you use this vehicle?: ");
+            duration = sc.nextInt();
+            if (tickets.isEmpty()){
+                id = "T-001";
+            }
+            if ( tickets.size()>0 && tickets.size()<10){
+                id = "T-00" + (tickets.size()+1);
+            } else if (tickets.size()>=10 && tickets.size()<100) {
+                id = "T-0" + (tickets.size()+1);
+            }
+            else if (tickets.size()>=100 && tickets.size()<1000) {
+                id = "T-" + (tickets.size()+1);
+            }
+
+            Ticket ticket = new Ticket(id,  java.time.LocalDateTime.now(),
+                    java.time.LocalDateTime.now().plusHours(duration), true, "Active",
+                    0,randomVehi, user1);
+            user1.setTicketOn(true);
+            tickets.add(ticket);
+
+            System.out.println("Your ticket number is: " + ticket.getId());
+            System.out.println(tickets);
+            System.out.println(users);
+            System.out.println(tickets.get(0).getBorrowedVehi().getId());
 
                 } else {
             System.out.println("You can have another ticker for now");
         }
 
         }
+    public static void returnVehicle () {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("please, type your Ticket Number: ");
+        LocalDateTime returnedTime = java.time.LocalDateTime.now();
+        String ticNumber = sc.nextLine();
+        System.out.print("do you return a helmet? True/False: ");
+        boolean helmet = sc.nextBoolean();
+
+        Scanner sc1 = new Scanner(System.in);
+        System.out.print("does the helmet have any damage? True/False: ");
+        boolean damaHelmet = sc1.nextBoolean();
+        Scanner sc2 = new Scanner(System.in);
+        System.out.print("does the vehicle have any damage? True/False: ");
+        boolean damaVehi = sc2.nextBoolean();
+        String type = null;
+        Ticket ticket = null;
+        for (Ticket ti: tickets
+             ) {
+            if (ti.getId().equals(ticNumber)){
+                ticket = tickets.get(tickets.indexOf(ti));
+            }
+        }
+        if (ticket.getBorrowedVehi().getId().startsWith("B")){
+            type = "Bicycle";
+        } else if (ticket.getBorrowedVehi().getId().startsWith("S")){
+            type = "Scooter";
+        }
+        ticket.updateDebt(returnedTime, helmet, damaHelmet,
+                damaVehi, type);
+        System.out.println("Your debt is: $" + ticket.getDebt());
+    }
+
+    public static void payDebt(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("please, type your Ticket Number: ");
+        String ticNumber = sc.nextLine();
+        boolean payedDebt = true;
+        Ticket ticket = null;
+        Boolean helmetDamage = false;
+        for (Ticket ti: tickets
+        ) {
+            if (ti.getId().equals(ticNumber)){
+                ticket = tickets.get(tickets.indexOf(ti));
+            }
+        }
+        if (ticket.getDebt()==0){
+            System.out.println("You don't have to pay");
+        }
+
+        Vehicle v1 = ticket.getBorrowedVehi();
+        v1.setCondition(true);
+        ticket.getBorrowedVehi().setCondition(false);
+        ticket.updateStatus(
+                v1.getCondition(),
+                helmetDamage,
+                payedDebt
+                );
+        System.out.println(ticket);
+    }
     }

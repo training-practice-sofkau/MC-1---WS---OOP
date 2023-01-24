@@ -1,14 +1,16 @@
 package co.com.movingu.ticket;
 
 import co.com.movingu.user.User;
+import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 //TO DO: Complete/Rewrite the class according to the requirements
+//public class Ticket {
 //public class Ticket implements DebtInterface, StatusInterface{
-public class Ticket {
+public class Ticket implements DebtInterface, StatusInterface{
     //TO DO: Add the necessary getters & setters u other extra function
     private String id;
     private LocalDateTime  startedDate;
@@ -31,7 +33,7 @@ public class Ticket {
         this.startedDate = startedDate;
         this.endDate = endDate;
         this.helmet = helmet;
-        this.status = status;
+        this.status = "Active";
         this.debt = debt;
         this.borrowedVehi = borrowedVehi;
         this.user = user;
@@ -103,45 +105,93 @@ public class Ticket {
                 '}';
     }
 
-    /*@Override
-    public void updateDebt(LocalDateTime  date, boolean helmet, boolean helmetDamage,
-                           boolean vehicleDamage, String typeVehicule) {
-        if (date.after(this.getEndDate())){
-            int timeSave = (date.getMinutes() - this.getEndDate().getMinutes())/30;
+    @Override
+    public void updateDebt(LocalDateTime  date,
+                           boolean helmet,
+                           boolean helmetDamage,
+                           boolean vehicleDamage,
+                           String typeVehicule) {
+        if (date.isAfter(this.getEndDate())){
+            int timeSave = (date.getMinute() - this.getEndDate().getMinute())/30;
             this.setDebt(this.getDebt() + (timeSave * 3));
 
         }
 
-        if (!helmet) {
+
+
+        if(helmetDamage){
+            this.setDebt(this.getDebt()+5);
+            System.out.println("Your debt is: " + this.getDebt());
+        }
+
+       /*if (helmet) {
+            this.getDebt();
+            System.out.println("Your debt is2: " + this.getDebt());
+        }
+        else {
             this.setDebt(this.getDebt()+10);
+            System.out.println("Your debt is3: " + this.getDebt());
+        }*/
+        if (helmet==false){
+            this.setDebt(this.getDebt()+10);
+            System.out.println("Your debt is3: " + this.getDebt());
         }
 
-        if (helmetDamage || vehicleDamage) {
+        if (vehicleDamage) {
             switch (typeVehicule){
-                case "bicycle":{
+                case "Bicycle":{
                     this.setDebt(this.getDebt()+20);
+                    System.out.println("Your debt is Bicy: " + this.getDebt());
+                    break;
                 }
-                case  "scooter":{
-                    this.setDebt(this.getDebt()+20);
-            }
-
+                case  "Scooter":{
+                    this.setDebt(this.getDebt()+30);
+                    System.out.println("Your debt is Scooter: " + this.getDebt());
+                    break;
+                }
             }
         }
 
-    }
-    @Override
-    public void updateStatus(Date date, boolean vehicleDamage, boolean payedDebt,
-                             boolean available) {
-        if ((date.before(this.getEndDate()) && !vehicleDamage) &&  payedDebt){
+        this.setEndDate(date);
+        this.getBorrowedVehi().setAvailable(true);
+        this.setHelmet(helmet);
+        this.getBorrowedVehi().setCondition(vehicleDamage);
+        if (typeVehicule.equals("Scooter")){
+            Scooter borVehi = (Scooter) this.getBorrowedVehi();
+            borVehi.setBatteryStatus(borVehi.getBatteryStatus()-30);
+        }
+
+        if (this.getDebt() != 0){
+            this.getUser().setBlocked(true);
+            this.updateStatus(vehicleDamage,helmetDamage, false);
+        }else {
+            this.getUser().setTicketOn(false);
             this.setStatus("OK");
         }
 
-        if (date.after(this.getEndDate()) && vehicleDamage){
+
+        }
+
+
+    @Override
+    public void updateStatus(
+                             boolean vehicleDamage,
+                             boolean helmetDamage,
+                             boolean payedDebt) {
+        if ( (!vehicleDamage || !helmetDamage)
+                && payedDebt) {
+            this.setStatus("OK");
+            this.setDebt(0);
+            this.getUser().setTicketOn(false);
+        }
+
+        if ((vehicleDamage||helmetDamage)
+        && payedDebt==false) {
             this.setStatus("Pending");
         }
 
-        if (available){
-            setStatus("Active");
-        }
-    }*/
+    }
 }
+
+
+

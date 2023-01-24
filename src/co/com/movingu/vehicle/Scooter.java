@@ -6,6 +6,21 @@ public class Scooter extends Vehicle{
 
     public Scooter(String id, String color, boolean available, boolean condition, int batteryStatus) {
         super(id, color, available, condition);
+        this.batteryStatus = 100;
+    }
+
+    public int getBatteryStatus() {
+        return batteryStatus;
+    }
+
+    public void setBatteryStatus(int batteryStatus) {
         this.batteryStatus = batteryStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Scooter{" +
+                "batteryStatus=" + batteryStatus +
+                '}';
     }
 }
