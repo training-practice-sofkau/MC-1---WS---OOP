@@ -45,10 +45,7 @@ public class MovingUApp {
                         payTicket(in);
                         break;
                     case 4:
-                        System.out.println("Vehicles - is available?");
-                        for (int i = 0; i < vehicles.size(); i++) {
-                            System.out.println(vehicles.get(i).getId() + " - " + vehicles.get(i).isAvailable());
-                        }
+                        countVehicles();
                         break;
                     case 5 :
                         System.out.println("Bye!");
@@ -72,6 +69,23 @@ public class MovingUApp {
         System.out.println("3. Pay a ticket");
         System.out.println("4. Check availability");
         System.out.println("5. Exit");
+    }
+
+    public static void countVehicles(){
+        int countBicycles = 0;
+        int countScooters = 0;
+
+        for(Vehicle vehicle: vehicles){
+            if (vehicle.getId().startsWith("B") && vehicle.isAvailable()){
+                countBicycles++;
+            }
+            if (vehicle.getId().startsWith("S") && vehicle.isAvailable()){
+                countScooters++;
+            }
+        }
+        System.out.println("Vehicles available:" + "\n" +
+                "Bicycles: " + countBicycles + "\n" +
+                "Scooters: " + countScooters + "\n");
     }
 
     public static void payTicket(Scanner in){
