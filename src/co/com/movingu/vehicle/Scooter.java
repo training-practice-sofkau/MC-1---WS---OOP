@@ -9,4 +9,12 @@ public class Scooter extends Vehicle{
         super(vId, color, available, goodCondition);
         this.battery = battery;
     }
+
+    public int getBattery() {
+        return battery;
+    }
+
+    public void setBattery(int battery) {
+        this.battery = battery;
+    }
 }

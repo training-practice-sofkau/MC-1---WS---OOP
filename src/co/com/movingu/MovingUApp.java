@@ -96,7 +96,14 @@ public class MovingUApp {
                             if (toReturn != null && usr != null) {
                                 toReturn.setGoodCondition(true);
                                 toReturn.updateAvailability(true);
-
+                                if(toReturn instanceof Scooter){
+                                    ((Scooter) toReturn).setBattery(100);
+                                }
+                                t.setStatus(Ticket.Status.Ok);
+                                usr.setBlocked(false);
+                                usr.setTicketOn("");
+                                System.out.println("Debt was payed, user free to borrow again, vehicle repaired and available to be borrowed");
+                                pressIntro();
                             }
                         }
                     }else {
@@ -119,13 +126,6 @@ public class MovingUApp {
     }
 
     public static void returning() {
-        /*
-        Return
-        Ticket id must be entered to make the respective updates on the ticket itself but also to the vehicle:
-        Availability, Has helmet, Good Condition, Status, Battery and Amount. End time must be updated automatically
-        when the ticket id is entered. Calculations for the respective amount to be paid must be done internally.
-        Also, the user must be blocked from borrowing other vehicles until he pays the amount generated.
-         */
         System.out.println("Please enter the ticket id to continue");
         String ticketId = input.nextLine();
         Ticket ticket = searchTicket(ticketId);
@@ -150,7 +150,7 @@ public class MovingUApp {
                     double value = ticket.getDebt() + 10;
                     ticket.updateDebt(value);
                 } else{
-                    System.out.println("Helmet has damage?(T/N): ");
+                    System.out.println("Helmet has damage?(Y/N): ");
                     if(input.nextLine().toUpperCase().equals("Y")){
                         double value = ticket.getDebt() + 5;
                         ticket.updateDebt(value);
@@ -164,6 +164,7 @@ public class MovingUApp {
                     } else if (toReturn instanceof Scooter) {
                         double value = ticket.getDebt() + 30;
                         ticket.updateDebt(value);
+                        ((Scooter) toReturn).setBattery(((Scooter) toReturn).getBattery() - 20);
                     }
 
                 }
