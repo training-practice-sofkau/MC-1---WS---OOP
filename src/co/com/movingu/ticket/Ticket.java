@@ -59,7 +59,7 @@ public class Ticket implements IPayable {
 
     @Override
     public void updateDebt(double value) {
-        //TODO
+        this.debt = value;
     }
 
     public enum Status {
