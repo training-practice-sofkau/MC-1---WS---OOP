@@ -21,7 +21,8 @@ public abstract class Vehicle implements Loanable{
 
     public void updateState(boolean isReady) {
         this.state = isReady? "Ready to use" : "On maintenance";
-        if (isReady) available=true;
+        if (isReady) updateAvailability(true);
+        System.out.println("---------> The vehicle is now: "+this.state);
     }
 
 
