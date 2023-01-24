@@ -16,6 +16,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static co.com.movingu.vehicle.VehicleList.vehicles;
+
 public class MovingUApp {
 
     public static void main(String[] args) {
@@ -40,8 +42,8 @@ public class MovingUApp {
                         break;
                     case 4:
                         System.out.println("Vehicles - is available?");
-                        for (int i = 0; i < VehicleList.vehicles.size(); i++) {
-                            System.out.println(VehicleList.vehicles.get(i).getId() + " - " + VehicleList.vehicles.get(i).isAvailable());
+                        for (int i = 0; i < vehicles.size(); i++) {
+                            System.out.println(vehicles.get(i).getId() + " - " + vehicles.get(i).isAvailable());
                         }
                         break;
                     case 5 :
@@ -117,19 +119,29 @@ public class MovingUApp {
 
         switch (vehicleType){
             case "B":
-                int count = 0;
+                int i = 0;
                 do {
-                    if(VehicleList.vehicles.get(count).isAvailable()){
-                        assingnedVehicle = VehicleList.vehicles.get(count);
+                    if(vehicles.get(i).isAvailable() && vehicles.get(i).getId().startsWith("B")){
+                        assingnedVehicle = VehicleList.vehicles.get(i);
                     }
-                    count++;
+                    i++;
                 }while (assingnedVehicle == null);
                 genTicket(currentUser, assingnedVehicle);
                 break;
+            case "S":
+                int j = 0;
+                do {
+                    if(vehicles.get(j).isAvailable() && vehicles.get(j).getId().startsWith("S")){
+                        assingnedVehicle = VehicleList.vehicles.get(j);
+                    }
+                    j++;
+                }while (assingnedVehicle == null);
+                genTicket(currentUser, assingnedVehicle);
+                break;
+            default:
+                System.out.println("Invalid option\n");
+                break;
         }
-
-
-
     }
 
     public static void genTicket(User user, Vehicle vehicle){
