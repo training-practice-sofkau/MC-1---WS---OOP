@@ -4,16 +4,8 @@ package co.com.movingu.vehicle;
 public class Scooter extends Vehicle{
     private int batteryStatus;
 
-    public Scooter(int id, String color, boolean available, String condition, int batteryStatus) {
+    public Scooter(String id, String color, boolean available, boolean condition, int batteryStatus) {
         super(id, color, available, condition);
-        this.batteryStatus = batteryStatus;
-    }
-
-    public int getBatteryStatus() {
-        return batteryStatus;
-    }
-
-    public void setBatteryStatus(int batteryStatus) {
         this.batteryStatus = batteryStatus;
     }
 }

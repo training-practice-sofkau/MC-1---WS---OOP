@@ -3,23 +3,27 @@ package co.com.movingu.ticket;
 import co.com.movingu.user.User;
 import co.com.movingu.vehicle.Vehicle;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Ticket implements DebtInterface, StatusInterface{
+//public class Ticket implements DebtInterface, StatusInterface{
+public class Ticket {
     //TO DO: Add the necessary getters & setters u other extra function
     private String id;
-    private Date startedDate;
-    private Date endDate;
+    private LocalDateTime  startedDate;
+    private LocalDateTime endDate;
     private boolean helmet;
     private String status; // ticket Status
     private int debt;
     private Vehicle borrowedVehi;
     private User user;
 
-    public Ticket(String id, Date startedDate,
-                  Date endDate,
-                  boolean helmet, String status,
+    public Ticket(String id,
+                  LocalDateTime  startedDate,
+                  LocalDateTime  endDate,
+                  boolean helmet,
+                  String status,
                   int debt,
                   Vehicle borrowedVehi,
                   User user) {
@@ -31,6 +35,18 @@ public class Ticket implements DebtInterface, StatusInterface{
         this.debt = debt;
         this.borrowedVehi = borrowedVehi;
         this.user = user;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Vehicle getBorrowedVehi() {
+        return borrowedVehi;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public boolean isHelmet() {
@@ -57,24 +73,38 @@ public class Ticket implements DebtInterface, StatusInterface{
         this.debt = debt;
     }
 
-    public Date getStartedDate() {
+    public LocalDateTime  getStartedDate() {
         return startedDate;
     }
 
-    public void setStartedDate(Date startedDate) {
+    public void setStartedDate(LocalDateTime  startedDate) {
         this.startedDate = startedDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime  getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime  endDate) {
         this.endDate = endDate;
     }
 
     @Override
-    public void updateDebt(Date date, boolean helmet, boolean helmetDamage,
+    public String toString() {
+        return "Ticket{" +
+                "id='" + id + '\'' +
+                ", startedDate=" + startedDate +
+                ", endDate=" + endDate +
+                ", helmet=" + helmet +
+                ", status='" + status + '\'' +
+                ", debt=" + debt +
+                ", borrowedVehi=" + borrowedVehi +
+                ", user=" + user +
+                '}';
+    }
+
+    /*@Override
+    public void updateDebt(LocalDateTime  date, boolean helmet, boolean helmetDamage,
                            boolean vehicleDamage, String typeVehicule) {
         if (date.after(this.getEndDate())){
             int timeSave = (date.getMinutes() - this.getEndDate().getMinutes())/30;
@@ -113,5 +143,5 @@ public class Ticket implements DebtInterface, StatusInterface{
         if (available){
             setStatus("Active");
         }
-    }
+    }*/
 }

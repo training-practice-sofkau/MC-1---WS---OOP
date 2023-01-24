@@ -20,4 +20,17 @@ public class Student extends User{
             System.out.println("The student "+name+"is blocked bc he/she already borrow a vehicle");
         }
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "collegeDNI='" + collegeDNI + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", blocked=" + blocked +
+                ", ticketOn=" + ticketOn +
+                '}';
+    }
 }

@@ -2,20 +2,24 @@ package co.com.movingu.vehicle;
 
 //TO DO: Complete/Rewrite the class according to the requirements
 public abstract class Vehicle {
-    private int id;
+    private String id;
     private String color;
     private boolean available;
-    private String condition;
+    private boolean condition;
 
-    public Vehicle(int id, String color, boolean available, String condition) {
+    public Vehicle(String id, String color, boolean available, boolean condition) {
         this.id = id;
         this.color = color;
         this.available = available;
         this.condition = condition;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getColor() {
@@ -34,11 +38,21 @@ public abstract class Vehicle {
         this.available = available;
     }
 
-    public String getCondition() {
+    public boolean getCondition() {
         return condition;
     }
 
-    public void setCondition(String condition) {
+    public void setCondition(boolean condition) {
         this.condition = condition;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id='" + id + '\'' +
+                ", color='" + color + '\'' +
+                ", available=" + available +
+                ", condition=" + condition +
+                '}';
     }
 }
