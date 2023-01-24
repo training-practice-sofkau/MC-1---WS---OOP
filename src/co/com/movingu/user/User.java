@@ -39,4 +39,8 @@ public abstract class User {
     public void setTicketOn(String ticketOn) {
         this.ticketOn = ticketOn;
     }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 }

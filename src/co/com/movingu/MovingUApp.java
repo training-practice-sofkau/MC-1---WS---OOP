@@ -8,6 +8,8 @@ import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MovingUApp {
@@ -63,7 +65,7 @@ public class MovingUApp {
                 case 2:
                     System.out.println("Choose your option: Borrow(B) or Return(R)");
                     String op = input.nextLine();
-                    switch (op.toUpperCase()){
+                    switch (op.toUpperCase()) {
                         case "B":
                             borrow();
                             break;
@@ -77,9 +79,29 @@ public class MovingUApp {
                     }
                     break;
                 case 3:
-                    System.out.println("Type the ticket id: ");
+                    for(Ticket t : tickets){
+                        System.out.println("Ticket id: "+t.getTicketId());
+                    }
+                    System.out.println("Type the ticket id you want to pay: ");
                     String ticketId = input.nextLine();
-                    searchTicket(ticketId);
+                    Ticket t = searchTicket(ticketId);
+
+                    if(t != null){
+                        System.out.println("Pay $" + t.getDebt()+ "?(Y/N): ");
+
+                        if (input.nextLine().toUpperCase().equals("Y")){
+                            Vehicle toReturn = searchVehicle(t.getVehicleId());
+                            User usr = searchUser(t.getUsrID());
+
+                            if (toReturn != null && usr != null) {
+                                toReturn.setGoodCondition(true);
+                                toReturn.updateAvailability(true);
+
+                            }
+                        }
+                    }else {
+                        System.out.println("That ticket id does not exist");
+                    }
                     break;
                 case 4:
                     System.out.println("Choose a vehicle Bicycle(B) or Scooter(S)");
@@ -96,8 +118,88 @@ public class MovingUApp {
         }
     }
 
-    private static void returning() {
+    public static void returning() {
+        /*
+        Return
+        Ticket id must be entered to make the respective updates on the ticket itself but also to the vehicle:
+        Availability, Has helmet, Good Condition, Status, Battery and Amount. End time must be updated automatically
+        when the ticket id is entered. Calculations for the respective amount to be paid must be done internally.
+        Also, the user must be blocked from borrowing other vehicles until he pays the amount generated.
+         */
+        System.out.println("Please enter the ticket id to continue");
+        String ticketId = input.nextLine();
+        Ticket ticket = searchTicket(ticketId);
 
+        if (ticket != null) {
+            Vehicle toReturn = searchVehicle(ticket.getVehicleId());
+            User usr = searchUser(ticket.getUsrID());
+
+            if (toReturn != null && usr != null) {
+                ticket.setStatus(Ticket.Status.Pending);
+                //Calculate debt
+                double hoursDiff = ticket.getDateOfBorrow().getHour() - LocalDateTime.now().getHour();
+
+                if (hoursDiff > 0) {
+                    System.out.println("Date 1 occurs after Date 2");
+                    double value = ticket.getDebt() + 3 * (int)(hoursDiff / 30);
+                    ticket.updateDebt(value);
+                }
+
+                System.out.println("Has helmet?(Y/N): ");
+                if(input.nextLine().toUpperCase().equals("N")){
+                    double value = ticket.getDebt() + 10;
+                    ticket.updateDebt(value);
+                } else{
+                    System.out.println("Helmet has damage?(T/N): ");
+                    if(input.nextLine().toUpperCase().equals("Y")){
+                        double value = ticket.getDebt() + 5;
+                        ticket.updateDebt(value);
+                    }
+                }
+                System.out.println("is the vehicle damaged?(Y/N): ");
+                if(input.nextLine().toUpperCase().equals("Y")){
+                    if(toReturn instanceof Bicycle){
+                        double value = ticket.getDebt() + 20;
+                        ticket.updateDebt(value);
+                    } else if (toReturn instanceof Scooter) {
+                        double value = ticket.getDebt() + 30;
+                        ticket.updateDebt(value);
+                    }
+
+                }
+
+                usr.setBlocked(true);
+
+            }
+
+        }
+    }
+
+    public static User searchUser(String userId) {
+        User usr = null;
+        for (User u : users) {
+            if (Objects.equals(u.getDni(), userId)) {
+                usr = u;
+            }
+        }
+        return usr;
+    }
+
+    public static Vehicle searchVehicle(String vehicleId) {
+        Vehicle vehicle = null;
+        for (Vehicle v : bicycles) {
+            if (v.getVId().equals(vehicleId)) {
+                vehicle = v;
+                break;
+            }
+        }
+        for (Vehicle v : scooters) {
+            if (v.getVId().equals(vehicleId)) {
+                vehicle = v;
+                break;
+            }
+        }
+        return vehicle;
     }
 
     private static void payTicket() {
@@ -107,18 +209,21 @@ public class MovingUApp {
         pressIntro();
     }
 
-    public static void searchTicket(String ticketId) {
+    public static Ticket searchTicket(String ticketId) {
         found = false;
+        Ticket ticket = null;
         for (Ticket t : tickets) {
             if (t.getTicketId().equals(ticketId)) {
                 t.setStatus(Ticket.Status.Ok);
                 found = true;
+                ticket = t;
                 break;
             }
         }
         if (!found) {
             System.out.println("No ticket wit id: " + ticketId + " was found");
         }
+        return ticket;
     }
 
     public static void registerUser() {
@@ -159,7 +264,7 @@ public class MovingUApp {
                 pressIntro();
                 break;
         }
-        for(User u: users){
+        for (User u : users) {
             System.out.println(u.toString());
         }
     }
@@ -284,7 +389,7 @@ public class MovingUApp {
     static String createTicket(String usrID, String vehicleId) {
         Ticket ticket = new Ticket(String.valueOf(tickets.size()), Ticket.Status.Active, usrID, vehicleId);
         tickets.add(ticket);
-        System.out.println("Ticket created successfully, ticket id: "+ ticket.getTicketId());
+        System.out.println("Ticket created successfully, ticket id: " + ticket.getTicketId());
         return ticket.getTicketId();
     }
 

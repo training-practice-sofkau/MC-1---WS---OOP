@@ -31,6 +31,14 @@ public abstract class Vehicle implements Loanable {
         return color;
     }
 
+    public boolean isGoodCondition() {
+        return goodCondition;
+    }
+
+    public void setGoodCondition(boolean goodCondition) {
+        this.goodCondition = goodCondition;
+    }
+
     @Override
     public String toString() {
         return "{" + '\n' +
