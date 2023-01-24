@@ -9,6 +9,7 @@ import co.com.movingu.vehicle.Scooter;
 import co.com.movingu.vehicle.Vehicle;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,8 +18,8 @@ public class MovingUApp {
 
     static Scanner input = new Scanner(System.in);
     static List<User> users = new ArrayList<>() {{
-        add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-        add(new Trainer("1256987533", "Washington Pesantez", 36, "lecturer"));
+        add(new Student("1234", "Carolina Montoya", 25, "201547896", "FIEC"));
+        add(new Trainer("1235", "Oscar Tabares", 36, "lecturer"));
     }};
 
     static List<Vehicle> vehicles = new ArrayList<>() {{
@@ -34,11 +35,9 @@ public class MovingUApp {
         add(new Scooter("S-005", "black", false, false, 50));
         }};
     static List<Ticket> tickets = new ArrayList<>() {{
-        add(new Ticket(users.get(0), vehicles.get(0)));
-        add(new Ticket(users.get(1), vehicles.get(1)));
+        //add(new Ticket(users.get(0), vehicles.get(0)));
+        //add(new Ticket(users.get(1), vehicles.get(1)));
         }};
-
-
 
     public static void main(String[] args) {
         menu();
@@ -147,104 +146,183 @@ public class MovingUApp {
 
     public static void borrowVehicle() {
 
+        User userFound = null;
+        Vehicle borrowedVehicle;
+        boolean vehicleFounded = false;
         Scanner userInput = new Scanner(System.in);
 
-        System.out.println("Please, enter your DNI: ");
-        String StudentDNI = userInput.next();
+        System.out.print("Please, enter your DNI: ");
+        String userDNI = userInput.next();
 
-        for ( int i = 0; i < users.size(); i++) {
-            if (users.get(i).getDni() == StudentDNI) {
-                if (users.get(i).isBlocked() == true);
-                    break;
+        for(User user : users){
+            if(user.getDni().equalsIgnoreCase(userDNI)){
+                userFound = user;
             }
         }
 
-        System.out.println("Please, press 1 for Scooter or press 2 for Bicycle: ");
-        String typeofVehicle = userInput.next();
+        if(userFound.isTicketOn() || userFound.isBlocked()){
+            userFound.statusMsg();
+        } else {
+            System.out.println("Please, press 1 for Scooter or press 2 for Bicycle: ");
+            int typeofVehicle = userInput.nextInt();
 
-    }
-
-    public static void returnVehicle() {
-    Scanner userInput = new Scanner(System.in);
-
-    System.out.println("Please, enter your Ticket Id: ");
-    String ticketId = userInput.next();
-
-    for ( int i = 0; i < tickets.size(); i++) {
-        if(tickets.get(i).getId() == ticketId){
-            tickets.get(i).setReturnDate(LocalDate.now());
-        }
-    }
-
-
-        System.out.print("Please, press 1 for Borrow or press 2 for Return: ");
-        int type = userInput.nextInt();
-        switch (type) {
-            case 1:
-                System.out.println("Please, enter your DNI: ");
-                String StudentDNI = userInput.next();
-
-                for ( int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getDni() == StudentDNI) {
-                        if (users.get(i).isBlocked() == true);
+            if (typeofVehicle == 1){
+                for(Vehicle vehicle: vehicles){
+                    if(vehicle.getClass() == Scooter.class && vehicle.isAvailable()){
+                        vehicleFounded = true;
+                        borrowedVehicle = vehicle;
+                        borrowedVehicle.setAvailable(false);
+                        userFound.setBlocked(true);
+                        userFound.setTicketOn(true);
+                        Ticket ticket = new Ticket(userFound, borrowedVehicle);
+                        tickets.add(ticket);
+                        ticket.updateTicketStatus("Active");
+                        System.out.println("The transaction was made successfully, Here is your ticket: ");
+                        System.out.println(ticket);
+                        System.out.println();
                         break;
                     }
                 }
+            }
 
-                System.out.println("Please, press 1 for Scooter or press 2 for Bicycle: ");
-                String typeofVehicle = userInput.next();
-
-
-            case 2:
-                System.out.println("Please, enter your Ticket Id: ");
-                for ( int i = 0; i < tickets.size(); i++) {
-                    if(tickets.get(i).getId() == ticketId){
-                        tickets.get(i).setReturnDate(LocalDate.now());
+            if (typeofVehicle == 2){
+                for(Vehicle vehicle: vehicles){
+                    if(vehicle.getClass() == Bicycle.class && vehicle.isAvailable()){
+                        vehicleFounded = true;
+                        borrowedVehicle = vehicle;
+                        borrowedVehicle.setAvailable(false);
+                        userFound.setBlocked(true);
+                        userFound.setTicketOn(true);
+                        Ticket ticket = new Ticket(userFound, borrowedVehicle);
+                        tickets.add(ticket);
+                        ticket.updateTicketStatus("Active");
+                        System.out.println("The transaction was made successfully, Here is your ticket: ");
+                        System.out.println(ticket);
+                        System.out.println();
+                        break;
                     }
                 }
+            }
+            if (!vehicleFounded) {
+                System.out.println("Unfortunately, all the vehicles of the selected type are borrowed");
+                System.out.println();
+            }
         }
     }
 
-    private static void payATicket () {
+    public static void returnVehicle() {
 
+        Vehicle returnedVehicle = null;
+        Ticket returnedTicket = null;
         Scanner userInput = new Scanner(System.in);
 
         System.out.println("Please, enter your Ticket Id: ");
         String ticketId = userInput.next();
 
-        for ( int i = 0; i < tickets.size(); i++) {
-            if(tickets.get(i).getId() == ticketId){
-                tickets.get(i).setStatus("OK");
-                String userDNI = tickets.get(i).getUser().getDni();
-
-                for ( int j = 0; j < users.size(); j++) {
-                    if(users.get(j).getDni() == userDNI){
-                        users.get(j).setTicketOn(false);
-                        users.get(j).setBlocked(false);
-                    }
-                }
+        for (Ticket ticket: tickets) {
+            if(ticket.getId().equalsIgnoreCase(ticketId)) {
+                returnedTicket = ticket;
+                returnedVehicle = ticket.getVehicle();
             }
         }
+
+    if(returnedTicket != null) {
+
+        if(returnedVehicle.getClass() == Scooter.class) {
+            returnedTicket.setReturnDate(LocalDateTime.now());
+
+            System.out.println("Please, press 1 if you return the helmet or 2 if not");
+            int checkHelmet = userInput.nextInt();
+            returnedTicket.setIsThereAHelmet(checkHelmet);
+
+            System.out.println("Please, press 1 if you returned the vehicle in a good condition or 2 if not");
+            int checkDamage = userInput.nextInt();
+            returnedTicket.setDamaged(checkDamage);
+            returnedVehicle.setUsable(checkHelmet);
+
+            System.out.println("Please, enter the percentage of the battery");
+            int batteryPercentage = userInput.nextInt();
+            ((Scooter) returnedVehicle).setBatteryPercentage(batteryPercentage);
+
+            if(returnedTicket.isDamaged() || returnedTicket.getIsThereAHelmet()) {
+                returnedTicket.updateTicketStatus("Pending");
+            } else {
+                returnedTicket.updateTicketStatus("OK");
+            }
+
+            returnedVehicle.setAvailable(true);
+            returnedTicket.setAmountToPay();
+            System.out.println("Here is: " + returnedTicket);
+            }
+
+        if(returnedVehicle.getClass() == Bicycle.class) {
+            returnedTicket.setReturnDate(LocalDateTime.now());
+
+            System.out.println("Please, press 1 if you return the helmet or 2 if not");
+            int checkHelmet = userInput.nextInt();
+            returnedTicket.setIsThereAHelmet(checkHelmet);
+
+            System.out.println("Please, press 1 if you returned the vehicle in a good condition or 2 if not");
+            int checkDamage = userInput.nextInt();
+            returnedTicket.setDamaged(checkDamage);
+            returnedVehicle.setUsable(checkHelmet);
+
+            if(returnedTicket.isDamaged() || returnedTicket.getIsThereAHelmet()) {
+                returnedTicket.updateTicketStatus("Pending");
+            } else {
+                returnedTicket.updateTicketStatus("OK");
+            }
+            returnedVehicle.setAvailable(true);
+            returnedTicket.setAmountToPay();
+            System.out.println("Here is: " + returnedTicket);
+
+        }
+
+    } else {
+        System.out.println("Please, enter a valid ticket id");
+    }
+    }
+
+    private static void payATicket () {
+
+        User releasedUser = null ;
+        Ticket releasedTicket = null;
+        Scanner userInput = new Scanner(System.in);
+
+        System.out.print("Please, enter your Ticket Id: ");
+        String ticketId = userInput.next();
+
+        for (Ticket ticket : tickets) {
+            if(ticket.getId().equalsIgnoreCase(ticketId)){
+                releasedTicket = ticket;
+                releasedUser = ticket.getUser();
+            }
+        }
+        releasedTicket.updateTicketStatus("OK");
+        releasedUser.setTicketOn(false);
+        releasedUser.setBlocked(false);
         System.out.println("Your Ticket was successfully paid");
     }
+
     private static void checkAvailability () {
 
         int numOfScooters = 0;
         int numOfBicycles = 0;
 
-        for ( int i = 0; i < vehicles.size(); i++) {
-            if(vehicles.get(i).getClass() == Scooter.class){
-                if(vehicles.get(i).isAvailable() == true){
+        for ( Vehicle vehicle : vehicles) {
+            if(vehicle.getClass() == Scooter.class){
+                if(vehicle.isAvailable()){
                     numOfScooters++;
                 }
             }
-            if(vehicles.get(i).getClass() == Bicycle.class){
-                if(vehicles.get(i).isAvailable() == true){
+            if(vehicle.getClass() == Bicycle.class){
+                if(vehicle.isAvailable()){
                     numOfBicycles++;
                 }
             }
         }
         System.out.println("There are: " + numOfScooters + " scooters available");
         System.out.println("There are: " + numOfBicycles + " Bicycles available");
+        System.out.println();
     }
 }
