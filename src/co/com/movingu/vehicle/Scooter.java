@@ -1,8 +1,20 @@
 package co.com.movingu.vehicle;
 
-//TO DO: Complete/Rewrite the class according to the requirements
+//TODO: Complete/Rewrite the class according to the requirements
 public class Scooter extends Vehicle{
-    public Scooter(boolean available) {
-        super(available);
+
+    private int battery;
+
+    public Scooter(String vId, String color, boolean available, boolean goodCondition, int battery) {
+        super(vId, color, available, goodCondition);
+        this.battery = battery;
+    }
+
+    public int getBattery() {
+        return battery;
+    }
+
+    public void setBattery(int battery) {
+        this.battery = battery;
     }
 }

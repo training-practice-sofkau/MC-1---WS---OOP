@@ -1,7 +1,9 @@
 package co.com.movingu.user;
 
+import java.util.Objects;
+
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Student extends User{
+public class Student extends User {
     private String collegeDNI;
     private String faculty;
 
@@ -14,10 +16,23 @@ public class Student extends User{
 
     @Override
     public void statusMsg() {
-        if(blocked && !ticketOn){
-            System.out.println("The student "+name+"is blocked bc of debt");
-        }else{
-            System.out.println("The student "+name+"is blocked bc he/she already borrow a vehicle");
+        if (blocked && !Objects.equals(ticketOn, "")) {
+            System.out.println("The student " + name + "is blocked bc of debt");
+        } else {
+            System.out.println("The student " + name + "is blocked bc he/she already borrow a vehicle");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" + "'\n " +
+                "dni='" + dni + "'\n " +
+                "name='" + name + "'\n " +
+                "age=" + age + "\n " +
+                "collegeDNI='" + collegeDNI + "'\n " +
+                "faculty='" + faculty + "'\n " +
+                "blocked=" + blocked + "'\n " +
+                "ticketOn=" + ticketOn + "'\n " +
+                '}' + "'\n ";
     }
 }

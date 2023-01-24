@@ -1,17 +1,50 @@
 package co.com.movingu.vehicle;
 
-//TO DO: Complete/Rewrite the class according to the requirements
-public abstract class Vehicle implements Loanable{
+//TODO: Complete/Rewrite the class according to the requirements
+public abstract class Vehicle implements Loanable {
     private boolean available;
+    private boolean goodCondition;
+    private final String vId;
+    private String color;
 
-    public Vehicle(boolean available) {
+    public Vehicle(String vId, String color, boolean available, boolean goodCondition) {
         this.available = available;
+        this.vId = vId;
+        this.color = color;
+        this.goodCondition = goodCondition;
     }
 
     @Override
     public void updateAvailability(boolean value) {
         this.available = value;
     }
-    //TO DO: Attributes
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getVId() {
+        return vId;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public boolean isGoodCondition() {
+        return goodCondition;
+    }
+
+    public void setGoodCondition(boolean goodCondition) {
+        this.goodCondition = goodCondition;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + '\n' +
+                "available=" + available + '\n' +
+                "vehicle id='" + vId + "'\n" +
+                "color='" + color + "'\n" +
+                '}' + '\n';
+    }
 }
