@@ -25,7 +25,7 @@ public class MovingUApp {
         Utilities util = new Utilities();
         UserList userList = new UserList();
         VehicleInventory vehicles = new VehicleInventory();
-        TicketList tickets = new TicketList(vehicles);
+        TicketList tickets = new TicketList(vehicles, userList);
 
 
         do{
@@ -36,7 +36,12 @@ public class MovingUApp {
                     userList.registerUser();
                     break;
                 case 2 ://Borrow/return
-                    tickets.addTicket();
+                    try {
+                        tickets.addTicket();
+                    } catch (Exception e) {
+                        System.out.println("Please verify the input data and try again");;
+                    }
+
                     break;
                 case 3 ://Pay a ticket
 

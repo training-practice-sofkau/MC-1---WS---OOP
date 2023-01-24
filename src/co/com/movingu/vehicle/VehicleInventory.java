@@ -25,10 +25,22 @@ public class VehicleInventory {
 
     public Boolean checkAvailable (String vehicleType){
         boolean available = false;
+        try{
         if ((vehicles.stream().filter(x -> x.getVtype() == vehicleType && x.isAvailable()).count()) != 0){
             available = true;
+        }}catch (Exception e){
+            System.out.println("No available vehicles at the moment, please try again later");
         }
         return available;
+    }
+
+    public Vehicle getAvailableVehicle (String vehicleTypes){
+        Vehicle availableVehicle = vehicles
+                .stream()
+                .filter(x -> x.getVtype() == vehicleTypes && x.isAvailable())
+                .findFirst()
+                .get();
+        return availableVehicle;
     }
 
     @Override

@@ -17,8 +17,8 @@ public class UserList {
      */
     public UserList() {
         this.users = new ArrayList<>() {{
-            add(new Student("0976152443", "Carolina Montoya", 24, "201547896", "FIEC"));
-            add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
+            add(new Student("100", "Carolina Montoya", 24, "201547896", "FIEC"));
+            add(new Trainer("101", "Washington Pesantez", 36, "lecturer"));
         }};
     }
 
@@ -64,6 +64,14 @@ public class UserList {
         }
         System.out.println(Arrays.toString(users.toArray()));
         System.out.println(users.get(2));
+
+    }
+
+    public User getUser(String dni){
+            User foundUser = users.stream().filter(x -> x.getDni().equals(dni))
+                .findFirst()
+                .get();
+            return foundUser;
 
     }
 

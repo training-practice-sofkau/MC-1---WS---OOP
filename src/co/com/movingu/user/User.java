@@ -20,6 +20,18 @@ public abstract class User {
     //Abstract method
     public abstract void statusMsg();
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public void setTicketOn(boolean ticketOn) {
+        this.ticketOn = ticketOn;
+    }
+
     @Override
     public String toString() {
         return  "dni='" + dni + '\'' +
