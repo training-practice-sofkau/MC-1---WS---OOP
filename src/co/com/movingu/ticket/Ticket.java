@@ -7,7 +7,7 @@ import co.com.movingu.vehicle.VehicleList;
 import java.sql.Timestamp;
 
 //TO DO: Complete/Rewrite the class according to the requirements
-public class Ticket {
+public class Ticket implements ITIcket{
 
     private String id;
     private Timestamp startTime;
