@@ -24,10 +24,19 @@ public abstract class User {
         return this.name;
     }
 
+    public String getDni() {
+        return this.dni;
+    }
+
+    public boolean isBlocked() {
+        return this.blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
     //Abstract method
     public abstract void statusMsg();
-
-
-
 
 }

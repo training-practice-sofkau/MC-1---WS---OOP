@@ -30,6 +30,10 @@ public abstract class Vehicle implements Loanable{
         return this.isAvailable;
     }
 
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
     public enum Condition {
         NEW,
         NEAR_MINT,
