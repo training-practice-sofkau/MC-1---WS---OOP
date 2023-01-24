@@ -17,7 +17,18 @@ public abstract class User {
         this.ticketOn = false;
     }
 
-    //Abstract method
+    public String getDni() {
+        return dni;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public boolean isTicketOn() {
+        return ticketOn;
+    }
+
     public abstract void statusMsg();
 
 
