@@ -53,16 +53,17 @@ public class MovingUApp {
                 case 5 ://Exit
                     System.out.println("The app has finished");
                     break;
+                case 6 ://Shows tickets
+                    System.out.println(tickets);
+                    break;
+                case 7:
+                    System.out.println(tickets.getTicket("0").calculateDebt());
                 default:
                     System.out.println("Invalid option");
                     break;
             }
             //System.out.println("Presione 'enter' para continuar");
-            /*try {
-                System.in.read();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
+
         }while (option != 5);
 
 

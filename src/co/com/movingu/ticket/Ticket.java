@@ -11,6 +11,7 @@ public class Ticket implements ITicket {
     private String ticketID;
     private Date ticketCreation;
     private Date ticketExpiration;
+    private Date returnDate;
     private String helmet;
     private String status;
     private Integer amountToPay;
@@ -26,17 +27,34 @@ public class Ticket implements ITicket {
             String vehicleId) {
         this.ticketID = ticketID;
         this.ticketCreation = new Date(System.currentTimeMillis());
-        this.ticketExpiration = new Date(System.currentTimeMillis()+36000) ;
+        this.ticketExpiration = new Date(System.currentTimeMillis()+3600000) ;
         this.status = "Active";
         this.userId = userId;
         this.vehicleId=vehicleId;
+        this.amountToPay=0;
+    }
+
+    public String getTicketID() {
+        return ticketID;
     }
 
     //TO DO: Add the necessary getters & setters u other extra function
+    public Long calculateDebt(){
+        Long delayDebt;
+        this.returnDate=new Date(System.currentTimeMillis());
+        //Miliseconds/1000 = seconds. Seconds/60=minutes. Minutes/30=fee
+        delayDebt = Math.abs(returnDate.getTime()-ticketExpiration.getTime())/1000/60/30;
+        if (returnDate.compareTo(ticketExpiration)<=0){
+            delayDebt=0L;
+        }
+        return delayDebt;
+    }
+
     @Override
     public Integer payTicket() {
         return null;
     }
+
 
 
     @Override

@@ -23,6 +23,8 @@ public class TicketList {
 
     public void addTicket () throws Exception {
 
+        System.out.println("Type your DNI");
+        String userId = util.captureString();
         System.out.println("Type 1 to borrow a bicycle, 2 to borrow a scooter");
         Integer vehicleTypesOption= util.captureInt();
         String vehicleTypes="";
@@ -32,11 +34,6 @@ public class TicketList {
         if (vehicleTypesOption == 2){
             vehicleTypes="S";
         }
-
-        System.out.println("Type your DNI");
-        String userId = util.captureString();
-
-        System.out.println(userList.getUser(userId).toString());
 
         /*if (userList.getUser(userId) == null){
             throw new Exception("User not registered");
@@ -67,4 +64,16 @@ public class TicketList {
 
     }
 
+    public Ticket getTicket (String ticketId){
+        return tickets.stream().filter(x -> x.getTicketID().equals(ticketId))
+                .findFirst()
+                .get();
+    }
+
+    @Override
+    public String toString() {
+        return "TicketList{" +
+                "tickets=" + tickets +
+                '}';
+    }
 }
