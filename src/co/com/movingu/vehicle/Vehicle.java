@@ -3,13 +3,15 @@ package co.com.movingu.vehicle;
 //TODO: Complete/Rewrite the class according to the requirements
 public abstract class Vehicle implements Loanable {
     private boolean available;
+    private boolean goodCondition;
     private final String vId;
     private String color;
 
-    public Vehicle(String vId, String color) {
-        this.available = true;
+    public Vehicle(String vId, String color, boolean available, boolean goodCondition) {
+        this.available = available;
         this.vId = vId;
         this.color = color;
+        this.goodCondition = goodCondition;
     }
 
     @Override

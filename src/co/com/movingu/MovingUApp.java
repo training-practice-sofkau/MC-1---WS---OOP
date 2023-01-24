@@ -24,18 +24,18 @@ public class MovingUApp {
         add(new Trainer("0976152443", "Washington Pesantez", 36, "lecturer"));
     }};
     static List<Bicycle> bicycles = new ArrayList<>() {{
-        add(new Bicycle("B-001", "red"));
-        add(new Bicycle("B-002", "blue"));
-        add(new Bicycle("B-003", "red"));
-        add(new Bicycle("B-004", "green"));
-        add(new Bicycle("B-005", "grey"));
+        add(new Bicycle("B-001","red",true, true, "M"));
+        add(new Bicycle("B-002","blue",false, false, "M"));
+        add(new Bicycle("B-003","red",true, true, "R"));
+        add(new Bicycle("B-004","green",false, true, "R"));
+        add(new Bicycle("B-005","grey",true, true, "M"));
     }};
     static List<Scooter> scooters = new ArrayList<>() {{
-        add(new Scooter("S-001", "black"));
-        add(new Scooter("S-002", "blue"));
-        add(new Scooter("S-003", "grey"));
-        add(new Scooter("S-004", "grey"));
-        add(new Scooter("S-005", "black"));
+        add(new Scooter("S-001","black",false, true, 20));
+        add(new Scooter("S-002","blue",true, true, 50));
+        add(new Scooter("S-003","grey",true, true, 80));
+        add(new Scooter("S-004","grey",true, false, 50));
+        add(new Scooter("S-005","black",false, false, 50));
     }};
     static List<Ticket> tickets = new ArrayList<>() {{
         //add(new Ticket());

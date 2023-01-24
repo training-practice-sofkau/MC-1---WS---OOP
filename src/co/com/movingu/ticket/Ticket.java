@@ -12,6 +12,7 @@ public class Ticket {
     public Ticket(String ticketId, Status status){
         this.status = status;
         this.ticketId = "T-0"+ticketId;
+        this.dateOfBorrow = LocalDate.now();
     }
 
     public String getTicketId() {
@@ -20,6 +21,10 @@ public class Ticket {
 
     public Status getStatus() {
         return this.status;
+    }
+
+    public LocalDate getDateOfBorrow() {
+        return dateOfBorrow;
     }
 
     public void setStatus(Status status) {
