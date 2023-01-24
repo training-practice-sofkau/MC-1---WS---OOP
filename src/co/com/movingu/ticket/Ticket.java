@@ -22,13 +22,11 @@ public class Ticket implements ITicket {
 
     public Ticket(
             String ticketID,
-            String helmet,
             String userId,
             String vehicleId) {
         this.ticketID = ticketID;
         this.ticketCreation = new Date(System.currentTimeMillis());
         this.ticketExpiration = new Date(System.currentTimeMillis()+3600) ;
-        this.helmet = helmet;
         this.status = "Active";
         this.userId = userId;
         this.vehicleId=vehicleId;
