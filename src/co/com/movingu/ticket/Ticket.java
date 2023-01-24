@@ -73,6 +73,10 @@ public class Ticket {
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
+
+    public void setSatus(Status status){
+        this.status = status;
+    }
     public Vehicle getVehicle() {
         return this.vehicle;
     }

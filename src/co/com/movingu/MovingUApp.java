@@ -41,6 +41,9 @@ public class MovingUApp {
                     case 2 :
                         borrowReturn(in);
                         break;
+                    case 3:
+                        payTicket(in);
+                        break;
                     case 4:
                         System.out.println("Vehicles - is available?");
                         for (int i = 0; i < vehicles.size(); i++) {
@@ -60,11 +63,6 @@ public class MovingUApp {
         }catch (Exception e) {
             System.out.println(e);
         }
-
-
-
-
-
     }
 
     public static void menu(){
@@ -74,6 +72,37 @@ public class MovingUApp {
         System.out.println("3. Pay a ticket");
         System.out.println("4. Check availability");
         System.out.println("5. Exit");
+    }
+
+    public static void payTicket(Scanner in){
+        System.out.println("Type the ticker ID");
+        String ticketId = in.next();
+        Ticket currentTicket = null;
+        for (Ticket ticket: TiketList.tickets) {
+            if (ticket.getId().equals(ticketId)){
+                currentTicket = ticket;
+                break;
+            }
+        }
+        try {
+            System.out.println(currentTicket.toString());
+            System.out.println("Would you like to pay the ticket?: Yes (Y) / No (N)");
+            String payment = in.next().toUpperCase();
+            if(payment.equals("Y")) {
+                currentTicket.setPayment(0);
+                currentTicket.setSatus(Ticket.Status.OK);
+                try {
+                    User returnerUser = currentTicket.getUser();
+                    returnerUser.setBlocked(false);
+                } catch (NullPointerException e) {
+                    System.out.println("Vehicle at ticket not found");
+                }
+                System.out.println(currentTicket.toString());
+            }
+        }catch (NullPointerException e) {
+            System.out.println("Ticket not found");
+        }
+
     }
 
     public static void borrowReturn(Scanner in){
@@ -94,7 +123,7 @@ public class MovingUApp {
     }
 
     public static void returnVehicle(Scanner in){
-        System.out.println("Type the ticker ID");
+        System.out.println("Type the ticket ID");
         String ticketId = in.next();
         Ticket currentTicket = null;
         for (Ticket ticket: TiketList.tickets) {
@@ -152,11 +181,14 @@ public class MovingUApp {
             timePayment = (long) Math.ceil(timePayment/1800000 + 1);
             currentTicket.setPayment((int) (currentTicket.getPayment() + timePayment * 3));
 
+            currentTicket.setSatus(Ticket.Status.PENDING);
+
         } catch (NullPointerException e) {
             System.out.println("Vehicle at ticket not found");
         }
 
         System.out.println(currentTicket.toString());
+        in.nextLine();
     }
 
     public static void borrowVehicle(Scanner in) {
