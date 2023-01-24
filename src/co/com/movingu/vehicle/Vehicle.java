@@ -14,6 +14,10 @@ public abstract class Vehicle implements Loanable{
         this.condition = condition;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
     @Override
     public void updateAvailability(boolean value) {
         this.available = value;
