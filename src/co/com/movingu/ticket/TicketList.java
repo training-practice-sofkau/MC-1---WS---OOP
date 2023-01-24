@@ -49,7 +49,7 @@ public class TicketList implements ITicket{
             User currentUser = userList.getUser(userId);
             String vehicleId = vehicle.getId();
             Integer ticketsSize = tickets.size();
-            String ticketID = ticketsSize.toString();
+            String ticketID = "T"+ticketsSize.toString();
             tickets.add(new Ticket(ticketID,userId, vehicleId));
             System.out.println("A vehicle with ID: '" +vehicleId+
                             "' has been assigned to you with the ticket #"+
