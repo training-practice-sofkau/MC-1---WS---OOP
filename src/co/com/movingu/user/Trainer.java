@@ -4,7 +4,7 @@ package co.com.movingu.user;
 public class Trainer extends User{
     private String category;
 
-    public Trainer(String dni, String name, int age, String category) {
+    public Trainer(String name, String dni, int age, String category) {
         super(dni, name, age);
         this.category = category;
     }

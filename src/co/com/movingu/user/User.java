@@ -4,13 +4,9 @@ package co.com.movingu.user;
 public abstract class User {
     //TO DO: Attributes
     protected String dni;
-
     protected String name;
-
     protected int age;
-
     protected boolean blocked;
-
     protected boolean ticketOn;
 
     public User(String dni, String name, int age) {
@@ -21,7 +17,22 @@ public abstract class User {
         this.ticketOn = false;
     }
 
-    //Abstract method
+    public String getDni() {
+        return dni;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setTicketOn(boolean ticketOn) {
+        this.ticketOn = ticketOn;
+    }
+
+    public boolean isTicketOn() {
+        return ticketOn;
+    }
+
     public abstract void statusMsg();
 
 
