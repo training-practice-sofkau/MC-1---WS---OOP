@@ -23,7 +23,9 @@ public abstract class Vehicle implements Loanable{
         this.available = value;
     }
 
-    public abstract void incrementNum();
+    public static void incrementNum() {
+    }
 
-    public abstract void  decrementNum();
+    public static void decrementNum() {
+    }
 }

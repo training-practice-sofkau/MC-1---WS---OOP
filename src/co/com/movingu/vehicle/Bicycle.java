@@ -10,11 +10,15 @@ public class Bicycle extends  Vehicle{
         this.type = type;
     }
 
-    public void incrementNum(){
+    public static void incrementNum(){
         availableBicyle ++;
     }
 
-    public  void  decrementNum(){
+    public static void  decrementNum(){
         availableBicyle --;
+    }
+
+    public static int getAvailableBicyle() {
+        return availableBicyle;
     }
 }

@@ -10,11 +10,16 @@ public class Scooter extends Vehicle{
         this.battery = battery;
     }
 
-    public void incrementNum(){
+    public static void incrementNum(){
         availableScooter ++;
     }
 
-    public  void  decrementNum(){
+    public static void  decrementNum(){
         availableScooter --;
     }
+
+    public static int getAvailableScooter() {
+        return availableScooter;
+    }
+
 }

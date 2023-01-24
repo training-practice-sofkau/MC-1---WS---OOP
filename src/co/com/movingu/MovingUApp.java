@@ -153,6 +153,8 @@ public class MovingUApp {
             case "R":
                 returnVehicle();
                 break;
+            default:
+                System.out.println("Wrong input");
         }
     }
 
@@ -161,17 +163,43 @@ public class MovingUApp {
         System.out.println("Enter DNI");
         String  userDni = borrowScanner.nextLine();
         boolean found = false;
+
         for (User u: users) {
-            System.out.println(u.getDni().equals(userDni));
             if (u.getDni().equals(userDni)){
                 found = true;
+                availavility();
                 if (!u.isBlocked() && !u.isTicketOn()){
                     System.out.println("Plese select Bicycle (B)/ Scooter (S)");
                     String vehicleSelection = borrowScanner.nextLine();
 
+                    switch (vehicleSelection){
+                        case "B":
+                            if (Bicycle.getAvailableBicyle() > 0){
+                                System.out.println("available bicycles");
+                                Bicycle.decrementNum();
+                            }else {
+                                System.out.println("No available bicycles");
+                            }
+                            break;
+                        case "S":
+                            if (Scooter.getAvailableScooter() > 0){
+                                System.out.println("available Scooter");
+                                Scooter.decrementNum();
+                            }else {
+                                System.out.println("No available Scooter");
+                            }
+                            break;
+                        default:
+                            System.out.println("Wrong input");
+                            break;
+                    }
+
                 }
             }
+        }
 
+        if (!found){
+            System.out.println("User not found");
         }
 
 
