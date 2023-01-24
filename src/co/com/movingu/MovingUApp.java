@@ -57,7 +57,8 @@ public class MovingUApp {
                     System.out.println(tickets);
                     break;
                 case 7:
-                    System.out.println(tickets.getTicket("0").calculateDebt());
+                    System.out.println(tickets.getTicket("0")
+                            .calculateDebt("B",vehicles.getVehicleById("B-001") ));
                 default:
                     System.out.println("Invalid option");
                     break;

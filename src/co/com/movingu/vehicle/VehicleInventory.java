@@ -43,6 +43,15 @@ public class VehicleInventory {
         return availableVehicle;
     }
 
+    public Vehicle getVehicleById (String vehicleId){
+        Vehicle searchedVehicle = vehicles
+                .stream()
+                .filter(x -> x.getId().equals(vehicleId))
+                .findFirst()
+                .get();
+        return searchedVehicle;
+    }
+
     @Override
     public String toString() {
         return "Bicycles: " + vehicles.stream().filter(x -> x.getVtype() == "B" && x.isAvailable()).count()+ "\n"+

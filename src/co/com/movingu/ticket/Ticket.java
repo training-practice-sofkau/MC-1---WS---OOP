@@ -12,7 +12,8 @@ public class Ticket implements ITicket {
     private Date ticketCreation;
     private Date ticketExpiration;
     private Date returnDate;
-    private String helmet;
+    private Boolean helmet;
+    private Boolean helmetStatus;
     private String status;
     private Integer amountToPay;
     private String vehicleId;
@@ -32,6 +33,8 @@ public class Ticket implements ITicket {
         this.userId = userId;
         this.vehicleId=vehicleId;
         this.amountToPay=0;
+        this.helmet=true;
+        this.helmetStatus=true;
     }
 
     public String getTicketID() {
@@ -39,15 +42,30 @@ public class Ticket implements ITicket {
     }
 
     //TO DO: Add the necessary getters & setters u other extra function
-    public Long calculateDebt(){
+    public Long calculateDebt(String vehicleType, Vehicle vehicle){
         Long delayDebt;
+        Integer helmetDebt=0;
+        Integer damageDebt=0;
+        Integer helmetDamageDebt=0;
         this.returnDate=new Date(System.currentTimeMillis());
         //Miliseconds/1000 = seconds. Seconds/60=minutes. Minutes/30=fee
         delayDebt = Math.abs(returnDate.getTime()-ticketExpiration.getTime())/1000/60/30;
         if (returnDate.compareTo(ticketExpiration)<=0){
             delayDebt=0L;
         }
-        return delayDebt;
+        if (!helmet){
+            helmetDebt=10;
+        }
+        if(!helmetStatus){
+            helmetDamageDebt=5;
+        }
+        if(vehicleType.equals("B")&& vehicle.getCondition().equals("Bad")){
+            damageDebt=20;
+        }
+        if(vehicleType.equals("S")&& vehicle.getCondition().equals("Bad")){
+            damageDebt=30;
+        }
+        return delayDebt+helmetDebt+damageDebt+helmetDamageDebt;
     }
 
     @Override

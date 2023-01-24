@@ -30,6 +30,10 @@ public abstract class Vehicle implements Loanable{
         return id;
     }
 
+    public String getCondition() {
+        return condition;
+    }
+
     @Override
     public void updateAvailability(boolean value) {
         this.available = value;
