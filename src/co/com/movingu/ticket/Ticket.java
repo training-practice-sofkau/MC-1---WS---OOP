@@ -69,6 +69,10 @@ public class Ticket {
         return this.isSolved;
     }
 
+    public String getStatus() {
+        return this.status;
+    }
+
     public Boolean increseDebt(int penalty) {
         if (penalty >= 0 && penalty < 4) {
             switch (penalty) {
@@ -108,9 +112,7 @@ public class Ticket {
         }
     }
     public boolean verifyReturnTime (Date returnTime){
-        int relativeTime = returnTime.getSeconds()-this.borrowingDate.getSeconds();
-        System.out.println(relativeTime);
-        if(relativeTime>30){
+        if(returnTime.getSeconds()-this.borrowingDate.getSeconds()>30){
             increseDebt(0);
             return false;
         }else{
