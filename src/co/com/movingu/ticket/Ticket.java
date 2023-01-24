@@ -10,9 +10,11 @@ public class Ticket implements Payable{
     protected LocalDateTime endTime;
     protected boolean payed;
     protected boolean helmet = true;
+    protected int totalPayment;
 
     public Ticket() {
-        startTime = LocalDateTime.now();
+        this.startTime = LocalDateTime.now();
+        this.payed = false;
         code ++;
     }
 
@@ -21,6 +23,22 @@ public class Ticket implements Payable{
         System.out.println("Creationt Date: " + startTime);
         System.out.println("Paymet status: " + payed);
         System.out.println("Helmet status: " + helmet);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public int getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(int totalPayment) {
+        this.totalPayment += totalPayment;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     @Override

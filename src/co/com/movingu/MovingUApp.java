@@ -8,6 +8,7 @@ import co.com.movingu.vehicle.Vehicle;
 import co.com.movingu.vehicle.Bicycle;
 import co.com.movingu.vehicle.Scooter;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MovingUApp {
@@ -61,7 +62,7 @@ public class MovingUApp {
                         borrowOrReturn();
                         break;
                     case 3:
-                        System.out.println("1");
+                        pay();
                         break;
                     case 4:
                         availavility();
@@ -80,6 +81,25 @@ public class MovingUApp {
             }
         }
         opt.close();
+    }
+
+    private static void pay() {
+        Scanner payScanner = new Scanner(System.in);
+        System.out.println("Enter ticket id: ");
+        int ticketId = payScanner.nextInt();
+        boolean found = false;
+
+        for (Ticket t : tickets) {
+            if (t.getCode() == ticketId){
+                found = true;
+                t.updateStatusPayment(true);
+            }
+
+        }
+
+        if (!found){
+            System.out.println("Ticket not found ");
+        }
     }
 
     public static void availavility() {
@@ -166,6 +186,8 @@ public class MovingUApp {
                                 System.out.println("available bicycles");
                                 Bicycle.decrementNum();
 
+                                u.setTicketOn(true);
+
                                 Ticket t = new Ticket();
                                 t.displayTicket();
                                 tickets.add(t);
@@ -186,6 +208,8 @@ public class MovingUApp {
                             break;
                     }
 
+                }else{
+                    System.out.println("User is not available to borrow");
                 }
             }
         }
@@ -198,6 +222,35 @@ public class MovingUApp {
     }
 
     public static void returnVehicle(){
+        Scanner returnScanner = new Scanner(System.in);
+        System.out.println("Enter ticket id: ");
+        int ticketId = returnScanner.nextInt();
+        boolean found = false;
+
+        for (Ticket t : tickets) {
+           if (t.getCode() == ticketId){
+               found = true;
+               t.setEndTime(LocalDateTime.now());
+               System.out.println("Helmet condition Good(G)/ Bad(B)");
+               returnScanner.nextLine();
+               String helmet = returnScanner.nextLine();
+               System.out.println("Condition Good(G)/ Bad(B)");
+               String condition = returnScanner.nextLine();
+
+               if (helmet.equals("B")){
+                   t.setTotalPayment(5);
+               }
+               if (condition.equals("B")){
+                   t.setTotalPayment(30);
+               }
+
+               System.out.println("Total payment: $" + t.getTotalPayment());
+           }
+        }
+
+        if (!found) {
+            System.out.println("Ticket not found");
+        }
 
     }
 

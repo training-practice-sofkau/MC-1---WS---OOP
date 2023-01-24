@@ -25,6 +25,10 @@ public abstract class User {
         return blocked;
     }
 
+    public void setTicketOn(boolean ticketOn) {
+        this.ticketOn = ticketOn;
+    }
+
     public boolean isTicketOn() {
         return ticketOn;
     }
