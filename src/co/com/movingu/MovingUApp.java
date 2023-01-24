@@ -13,10 +13,10 @@ import java.util.*;
 public class MovingUApp {
     static List<User> users = new ArrayList<>(){{
         add(new Student("Carolina Montoya","0976152443",  24, "201547896", "FIEC"));
-        add(new Trainer("Washington Pesantez", "0976152443", 36, "lecturer"));
+        add(new Trainer("Washington Pesantez", "0976152448", 36, "lecturer"));
     }};
 
-    List<Vehicle> vehicles= new ArrayList<>(){{
+   static List<Vehicle> vehicles= new ArrayList<>(){{
         add(new Bicycle("B-001","red",true, true, "M"));
         add(new Bicycle("B-002","blue",false, false, "M"));
         add(new Bicycle("B-003","red",true, true, "R"));
@@ -64,25 +64,13 @@ public class MovingUApp {
                         registerUser();
                         break;
                     case 2:
-                        Scanner borrowOrReturn = new Scanner(System.in);
-
-                        System.out.println("Enter Borrow/Return");
-                        String optBorrorOrReturn = borrowOrReturn.nextLine();
-
-                        switch (optBorrorOrReturn){
-                            case "Borrow":
-                                borrowVehicle();
-                                break;
-                            case "Return":
-                                returnVehicle();
-                                break;
-                        }
+                        borrowOrReturn();
                         break;
                     case 3:
                         System.out.println("1");
                         break;
                     case 4:
-                        System.out.println("1");
+                        availavility();
                         break;
                     case 5:
                         System.out.println("Closing app....");
@@ -98,6 +86,23 @@ public class MovingUApp {
             }
         }
         opt.close();
+    }
+
+    public static void availavility() {
+        int numBicycle = 0;
+        int numScooters = 0;
+        for (Vehicle v : vehicles){
+            System.out.println(v.getClass().getSimpleName());
+            if (v.getClass().getSimpleName().equals("Bicycle") && v.isAvailable()){
+                numBicycle ++;
+            } else if (v.getClass().getSimpleName().equals("Scooter") && v.isAvailable()) {
+
+                numScooters ++;
+            }
+        }
+        System.out.println(numBicycle);
+        System.out.println(numScooters);
+
     }
 
     public static void registerUser(){
@@ -140,16 +145,39 @@ public class MovingUApp {
         }
     }
 
-    public static void borrowVehicle(){
-        Scanner scannerDni = new Scanner(System.in);
-        System.out.println("Enter DNI");
-        String  userDni = scannerDni.nextLine();
+    public static void borrowOrReturn(){
+        Scanner borrowOrReturn = new Scanner(System.in);
 
-        for (User u : users) {
-            System.out.println(u);
-            
+        System.out.println("Enter Borrow (B) / Return (R)");
+        String optBorrorOrReturn = borrowOrReturn.nextLine();
+
+        switch (optBorrorOrReturn) {
+            case "B":
+                borrowVehicle();
+                break;
+            case "R":
+                returnVehicle();
+                break;
         }
+    }
 
+    public static void borrowVehicle(){
+        Scanner borrowScanner = new Scanner(System.in);
+        System.out.println("Enter DNI");
+        String  userDni = borrowScanner.nextLine();
+        boolean found = false;
+        for (User u: users) {
+            System.out.println(u.getDni().equals(userDni));
+            if (u.getDni().equals(userDni)){
+                found = true;
+                if (!u.isBlocked() && !u.isTicketOn()){
+                    System.out.println("Plese select Bicycle (B)/ Scooter (S)");
+                    String vehicleSelection = borrowScanner.nextLine();
+
+                }
+            }
+
+        }
 
 
     }
