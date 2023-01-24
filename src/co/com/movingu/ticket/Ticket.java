@@ -13,6 +13,7 @@ public class Ticket {
 
     private final String userDni;
 
+
     private final Date borrowingDate;
 
     private String status;
@@ -25,7 +26,7 @@ public class Ticket {
 
     private final String vehicleID;
 
-    private final String[] STATUS_CASES = new String[]{"OK", "Pending", "Active"};
+    public final String[] STATUS_CASES = new String[]{"OK", "Pending", "Active"};
 
     public Ticket(List<Ticket> listOfTickets, String userDni, int typeOfVehicle, String vehicleID) {
         this.ticketId = generateTicket(listOfTickets);
@@ -49,10 +50,10 @@ public class Ticket {
             } else {
                 ticketId = "T-" + (numberOfTickets + 1);
             }
-            System.out.println("The ticket has been generated");
+            System.out.println("---------> The ticket has been generated");
             return ticketId;
         } catch (Exception e) {
-            System.out.println("The ticket couldn't generate");
+            System.out.println("---------> The ticket couldn't generate");
             throw e;
         }
     }
@@ -63,6 +64,9 @@ public class Ticket {
 
     public String getTicketId() {
         return this.ticketId;
+    }
+    public String getVehicleID() {
+        return this.vehicleID;
     }
 
     public Boolean verifySolved() {
@@ -100,14 +104,14 @@ public class Ticket {
     }
 
     public boolean solveTiket() {
-        if (this.totalDebt>0) {
+        if (this.totalDebt==0) {
             this.isSolved = true;
             this.status = this.STATUS_CASES[0];
-            System.out.println("The vehicle has been returned successfully \n the ticket is solved");
+            System.out.println("---------> The vehicle has been returned successfully \n ---------> the ticket is solved");
             return true;
         }else{
             this.status = this.STATUS_CASES[1];
-            System.out.println("The vehicle has been returned successfully \n the ticket remains pending");
+            System.out.println("---------> The vehicle has been returned successfully but the ticket remains pending\n ---------> The total debt is: "+this.totalDebt);
             return false;
         }
     }
@@ -118,5 +122,9 @@ public class Ticket {
         }else{
             return true;
         }
+    }
+    public void cancelFee (){
+        System.out.println("---------> Your debt has been canceled");
+        this.totalDebt=0;
     }
 }
