@@ -3,7 +3,7 @@ package co.com.movingu.vehicle;
 //TO DO: Complete/Rewrite the class according to the requirements
 public class Scooter extends Vehicle{
     private int battery;
-    public static int numAvailable;
+    public static int availableScooter;
 
     public Scooter(String code, String color, boolean availalable, boolean condition, int battery) {
         super(code, color, availalable, condition);
@@ -11,10 +11,10 @@ public class Scooter extends Vehicle{
     }
 
     public void incrementNum(){
-        numAvailable ++;
+        availableScooter ++;
     }
 
     public  void  decrementNum(){
-        numAvailable --;
+        availableScooter --;
     }
 }

@@ -89,15 +89,14 @@ public class MovingUApp {
 
     public static void availavility() {
         for (Vehicle v : vehicles){
-            System.out.println(v.getClass().getSimpleName());
             if (v.getClass().getSimpleName().equals("Bicycle") && v.isAvailable()){
                 v.incrementNum();
             } else if (v.getClass().getSimpleName().equals("Scooter") && v.isAvailable()) {
                 v.incrementNum();
             }
         }
-        System.out.println(Bicycle.numAvailable);
-        System.out.println(Scooter.numAvailable);
+        System.out.println("Bicycle available: " + Bicycle.availableBicyle);
+        System.out.println("Scooter available: " + Scooter.availableScooter);
 
     }
 
