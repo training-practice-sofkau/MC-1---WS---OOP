@@ -1,10 +1,12 @@
 package co.com.movingu;
 
 import co.com.movingu.ticket.Ticket;
+import co.com.movingu.user.User;
 import co.com.movingu.user.Student;
 import co.com.movingu.user.Trainer;
-import co.com.movingu.user.User;
 import co.com.movingu.vehicle.Vehicle;
+import co.com.movingu.vehicle.Bicycle;
+import co.com.movingu.vehicle.Scooter;
 
 import java.util.*;
 
@@ -14,21 +16,21 @@ public class MovingUApp {
         add(new Trainer("Washington Pesantez", "0976152443", 36, "lecturer"));
     }};
 
+    List<Vehicle> vehicles= new ArrayList<>(){{
+        add(new Bicycle("B-001","red",true, true, "M"));
+        add(new Bicycle("B-002","blue",false, false, "M"));
+        add(new Bicycle("B-003","red",true, true, "R"));
+        add(new Bicycle("B-004","green",false, true, "R"));
+        add(new Bicycle("B-005","grey",true, true, "M"));
+        add(new Scooter("S-001","black",false, true, 20));
+        add(new Scooter("S-002","blue",true, true, 50));
+        add(new Scooter("S-003","grey",true, true, 80));
+        add(new Scooter("S-004","grey",true, false, 50));
+        add(new Scooter("S-005","black",false, false, 50));
+
+    }};
+
     public static void main(String[] args) {
-
-        List<Vehicle> vehicles= new ArrayList<>(){{
-            //add(new Bicycle("B-001","red",true, true, "M"));
-            //add(new Bicycle("B-002","blue",false, false, "M"));
-            //add(new Bicycle("B-003","red",true, true, "R"));
-            //add(new Bicycle("B-004","green",false, true, "R"));
-            //add(new Bicycle("B-005","grey",true, true, "M"));
-            //add(new Scooter("S-001","black",false, true, 20));
-            //add(new Scooter("S-002","blue",true, true, 50));
-            //add(new Scooter("S-003","grey",true, true, 80));
-            //add(new Scooter("S-004","grey",true, false, 50));
-            //add(new Scooter("S-005","black",false, false, 50));
-
-        }};
 
         List<Ticket> tickets = new ArrayList<>(){{
             //add(new Ticket());
