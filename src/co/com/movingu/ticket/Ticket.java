@@ -117,21 +117,11 @@ public class Ticket implements DebtInterface, StatusInterface{
 
         }
 
-
-
         if(helmetDamage){
             this.setDebt(this.getDebt()+5);
             System.out.println("Your debt is: " + this.getDebt());
         }
 
-       /*if (helmet) {
-            this.getDebt();
-            System.out.println("Your debt is2: " + this.getDebt());
-        }
-        else {
-            this.setDebt(this.getDebt()+10);
-            System.out.println("Your debt is3: " + this.getDebt());
-        }*/
         if (helmet==false){
             this.setDebt(this.getDebt()+10);
             System.out.println("Your debt is3: " + this.getDebt());
@@ -183,10 +173,15 @@ public class Ticket implements DebtInterface, StatusInterface{
             this.setStatus("OK");
             this.setDebt(0);
             this.getUser().setTicketOn(false);
+            this.getUser().setBlocked(false);
+            this.setHelmet(true);
+            if (this.getBorrowedVehi().getId().startsWith("S")){
+                Scooter borVehi = (Scooter) this.getBorrowedVehi();
+                borVehi.setBatteryStatus(100);
+            }
         }
-
         if ((vehicleDamage||helmetDamage)
-        && payedDebt==false) {
+        || payedDebt==false) {
             this.setStatus("Pending");
         }
 

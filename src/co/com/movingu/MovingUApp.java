@@ -245,6 +245,7 @@ public class MovingUApp {
         ticket.updateDebt(returnedTime, helmet, damaHelmet,
                 damaVehi, type);
         System.out.println("Your debt is: $" + ticket.getDebt());
+        System.out.println("Actual ticket:" + ticket);
     }
 
     public static void payDebt(){
