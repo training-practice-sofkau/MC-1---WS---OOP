@@ -18,4 +18,16 @@ public class Trainer extends User{
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "Trainer{" +
+                "category='" + category + '\'' +
+                ", dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", blocked=" + blocked +
+                ", ticketOn=" + ticketOn +
+                '}';
+    }
 }
