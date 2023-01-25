@@ -21,15 +21,15 @@ public class MovingUApp {
 
     static List<Vehicle> vehicles= new ArrayList<>(){{
         add(new Bicycle("B-001","red",true, true, "M"));
-        add(new Bicycle("B-002","blue",false, false, "M"));
+        add(new Bicycle("B-002","blue",true, false, "M"));
         add(new Bicycle("B-003","red",true, true, "R"));
-        add(new Bicycle("B-004","green",false, true, "R"));
+        add(new Bicycle("B-004","green",true, true, "R"));
         add(new Bicycle("B-005","grey",true, true, "M"));
-        add(new Scooter("S-001","black",false, true, 20));
+        add(new Scooter("S-001","black",true, true, 20));
         add(new Scooter("S-002","blue",true, true, 50));
         add(new Scooter("S-003","grey",true, true, 80));
         add(new Scooter("S-004","grey",true, false, 50));
-        add(new Scooter("S-005","black",false, false, 50));
+        add(new Scooter("S-005","black",true, false, 50));
 
     }};
 
@@ -85,6 +85,10 @@ public class MovingUApp {
                     payDebt();
                     break;
                 }
+                case 4:{
+                    availabilityCheck();
+                    break;
+                }
             }
         } while (option != 5);
 
@@ -92,6 +96,7 @@ public class MovingUApp {
 
     public static void registerUser(){
         Scanner sc = new Scanner(System.in);
+        System.out.println("Please, type the first letter in uppercase");
         System.out.print("Please, choose your User: Student (S)/ Trainer (T): ");
         String type = sc.nextLine();
         System.out.print("Please, type your DNI: ");
@@ -120,6 +125,8 @@ public class MovingUApp {
                 }
             case "T":
                 Scanner sc3 = new Scanner(System.in);
+                System.out.println();
+                System.out.println("Please, type the first letter in uppercase");
                 System.out.print("Please, choose a role, Professor / Lecturer :  ");
                 String role = sc3.nextLine();
                 User s1 = new Trainer(DNI, name, age, role);
@@ -135,6 +142,7 @@ public class MovingUApp {
     public static void borrowVehicle (){
         User user1 = null;
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         System.out.print("please, type your DNI: ");
         String DNI = sc.nextLine();
         for (User user : users) {
@@ -143,9 +151,12 @@ public class MovingUApp {
             }
         }
         if (user1==null){
+            System.out.println();
             System.out.println("User not found");
         }
         else if (!user1.isBlocked() && !user1.isTicketOn()){
+            System.out.println();
+            System.out.println("Please, type the first letter in uppercase");
             System.out.print("Please, select your vehicle, Bicycle / Scooter: ");
             String vehicle = sc.nextLine();
             List <Vehicle> vehicles1=new ArrayList<>();
@@ -154,17 +165,15 @@ public class MovingUApp {
             int duration=0;
             switch (vehicle){
                 case "Bicycle":
-                    //System.out.print("Please, select the kind of Bicycle: Mountain (M) / Road (R): ");
-                    //String kindBicycle = sc.nextLine();
-
                     for (Vehicle v: vehicles) {
                         if (v.getId().startsWith("B") && v.isAvailable()){
                             vehicles1.add(v);
                         }
                     }
-                    System.out.println(vehicles1);
-                    System.out.println(vehicles1.size());
+                    //System.out.println(vehicles1);
+                    //System.out.println(vehicles1.size());
                     if (vehicles1==null){
+                        System.out.println();
                         System.out.println("No Vehicles of kind " + vehicle +
                                         "are available, try later");
                     }
@@ -176,6 +185,7 @@ public class MovingUApp {
                         }
                     }
                     if (vehicles1==null){
+                        System.out.println();
                         System.out.println("No Vehicles of kind " + vehicle +
                                 "are available, try later");
                     }
@@ -184,7 +194,8 @@ public class MovingUApp {
             }
             Random random = new Random();
             randomVehi = vehicles1.get(random.nextInt(vehicles1.size()));
-            System.out.print(randomVehi);
+            // System.out.println(randomVehi);
+            System.out.println();
             System.out.print("how many hours will you use this vehicle?: ");
             duration = sc.nextInt();
             if (tickets.isEmpty()){
@@ -203,30 +214,40 @@ public class MovingUApp {
                     java.time.LocalDateTime.now().plusHours(duration), true, "Active",
                     0,randomVehi, user1);
             user1.setTicketOn(true);
+            ticket.getBorrowedVehi().setAvailable(false);
             tickets.add(ticket);
 
+
             System.out.println("Your ticket number is: " + ticket.getId());
-            System.out.println(tickets);
-            System.out.println(users);
-            System.out.println(tickets.get(0).getBorrowedVehi().getId());
+            //System.out.println(tickets);
+            //System.out.println(users);
+            //System.out.println(tickets.get(0).getBorrowedVehi().getId());
 
                 } else {
-            System.out.println("You can have another ticker for now");
+            System.out.println();
+            System.out.println("You can not have another ticker for now");
         }
 
         }
     public static void returnVehicle () {
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         System.out.print("please, type your Ticket Number: ");
         LocalDateTime returnedTime = java.time.LocalDateTime.now();
         String ticNumber = sc.nextLine();
+        System.out.println("Please, type the first letter in uppercase");
         System.out.print("do you return a helmet? True/False: ");
         boolean helmet = sc.nextBoolean();
 
         Scanner sc1 = new Scanner(System.in);
+        System.out.println();
+        System.out.println("Please, type the first letter in uppercase");
         System.out.print("does the helmet have any damage? True/False: ");
         boolean damaHelmet = sc1.nextBoolean();
         Scanner sc2 = new Scanner(System.in);
+        System.out.println();
+        System.out.println();
+        System.out.println("Please, type the first letter in uppercase");
         System.out.print("does the vehicle have any damage? True/False: ");
         boolean damaVehi = sc2.nextBoolean();
         String type = null;
@@ -244,12 +265,14 @@ public class MovingUApp {
         }
         ticket.updateDebt(returnedTime, helmet, damaHelmet,
                 damaVehi, type);
-        System.out.println("Your debt is: $" + ticket.getDebt());
-        System.out.println("Actual ticket:" + ticket);
+        System.out.println("Your debt is: $ " + ticket.getDebt());
+        //System.out.println("Actual ticket:" + ticket);
     }
 
     public static void payDebt(){
         Scanner sc = new Scanner(System.in);
+        System.out.println();
+        System.out.println("Please, type the first letter in uppercase");
         System.out.print("please, type your Ticket Number: ");
         String ticNumber = sc.nextLine();
         boolean payedDebt = true;
@@ -273,6 +296,26 @@ public class MovingUApp {
                 helmetDamage,
                 payedDebt
                 );
-        System.out.println(ticket);
+        // System.out.println(ticket);
+        System.out.println("your debt was payed.");
+    }
+
+    public static void availabilityCheck(){
+        int avaBicycle = 0;
+        int avaScooter = 0;
+        for (Vehicle i: vehicles
+             ) {
+            if (i instanceof Bicycle && i.isAvailable()){
+                avaBicycle += 1;
+            }
+            else if (i instanceof Scooter && i.isAvailable()){
+                avaScooter += 1;
+            }
+        }
+        System.out.println();
+        System.out.println("Total Vehicles: " + vehicles.size());
+        System.out.println("Available Bicycles  are: " + avaBicycle);
+        System.out.println("Available Scooters are: " + avaScooter);
+
     }
     }

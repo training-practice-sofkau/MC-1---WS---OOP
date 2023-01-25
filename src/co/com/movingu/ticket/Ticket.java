@@ -119,24 +119,24 @@ public class Ticket implements DebtInterface, StatusInterface{
 
         if(helmetDamage){
             this.setDebt(this.getDebt()+5);
-            System.out.println("Your debt is: " + this.getDebt());
+            //System.out.println("Your debt is: " + this.getDebt());
         }
 
         if (helmet==false){
             this.setDebt(this.getDebt()+10);
-            System.out.println("Your debt is3: " + this.getDebt());
+            //System.out.println("Your debt is3: " + this.getDebt());
         }
 
         if (vehicleDamage) {
             switch (typeVehicule){
                 case "Bicycle":{
                     this.setDebt(this.getDebt()+20);
-                    System.out.println("Your debt is Bicy: " + this.getDebt());
+                    //System.out.println("Your debt is Bicy: " + this.getDebt());
                     break;
                 }
                 case  "Scooter":{
                     this.setDebt(this.getDebt()+30);
-                    System.out.println("Your debt is Scooter: " + this.getDebt());
+                    //System.out.println("Your debt is Scooter: " + this.getDebt());
                     break;
                 }
             }
